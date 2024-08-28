@@ -1,0 +1,124 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class BackgroundManager : MonoBehaviour
+{
+    public SpriteRenderer backgroundRenderer;
+    public SpriteRenderer skyRenderer;
+    public Camera mainCamera;
+
+    public Transform leftWall;   // Reference to the left wall
+    public Transform rightWall;  // Reference to the right wall
+    public Transform topWall;    // Reference to the top wall
+    public Transform bottomWall; // Reference to the bottom wall
+
+    private string[] categories = { "Castle", "Lava",  "Nature" };
+    [SerializeField] int category_number;
+    [SerializeField] int selected_image;
+    [SerializeField] float scale_height = 0.85f;
+    [SerializeField] float scale_width = 0.90f;
+    [SerializeField] string selected_category;
+
+    void Start()
+    {
+        // Select a random category
+        category_number = Random.Range(0, categories.Length);
+        category_number = 0;
+        string selectedCategory = categories[category_number];
+
+        // Load sprites from the selected category
+        Sprite backgroundSprite = LoadRandomSpriteFromCategory(selectedCategory, "Background");
+        Sprite skySprite = LoadRandomSpriteFromCategory(selectedCategory, "Sky");
+
+        // Set the sprites while maintaining the scale
+        if (backgroundSprite != null)
+        {
+            backgroundRenderer.sprite = backgroundSprite;
+        }
+
+        if (skySprite != null)
+        {
+            skyRenderer.sprite = skySprite;
+        }
+        else
+        {
+            selected_category = "null";
+        }
+
+        // Scale the sprites to fit the camera view
+        ScaleAndPositionSprites();
+    }
+
+    Sprite LoadRandomSpriteFromCategory(string category, string subfolder)
+    {
+        selected_category = category;
+        string path = "Images/" + category + "/" + subfolder;
+        Sprite[] sprites = Resources.LoadAll<Sprite>(path);
+
+        if (sprites.Length == 0)
+        {
+            Debug.LogWarning("No sprites found in " + path);
+            return null;
+        }
+        selected_image = Random.Range(0, sprites.Length);
+        return sprites[selected_image];
+    }
+
+    void ScaleAndPositionSprites()
+    {
+        if (mainCamera == null)
+        {
+            mainCamera = Camera.main;
+        }
+
+        // Get the height and width of the camera view in world units
+        float height = 2f * mainCamera.orthographicSize;
+        float width = height * mainCamera.aspect;
+
+        // Scale the background to fit the entire camera view
+        backgroundRenderer.transform.localScale = new Vector3(width / backgroundRenderer.sprite.bounds.size.x,
+                                                              height / backgroundRenderer.sprite.bounds.size.y,
+                                                              1);
+
+        // Scale the sky to be slightly smaller, e.g., 90% of the camera view
+        skyRenderer.transform.localScale = new Vector3((width * scale_width) / skyRenderer.sprite.bounds.size.x,
+                                                       (height * scale_height) / skyRenderer.sprite.bounds.size.y,
+                                                       1);
+
+        // Position the walls at the edges of the sky and adjust their scale
+        PositionAndScaleWalls(width * scale_width, height * scale_height);
+    }
+
+    void PositionAndScaleWalls(float skyWidth, float skyHeight)
+    {
+        // Calculate half sizes for positioning
+        float halfSkyWidth = skyWidth / 2f;
+        float halfSkyHeight = skyHeight / 2f;
+
+        // Adjust and position the left and right walls
+        float wallThickness = leftWall.localScale.x; // Assuming the width of the left/right walls is controlled by x scale
+        leftWall.position = new Vector3(-halfSkyWidth + wallThickness / 2, 0, 0);
+        rightWall.position = new Vector3(halfSkyWidth - wallThickness / 2, 0, 0);
+
+        // Adjust the height of the left and right walls to match the sky's height
+        leftWall.localScale = new Vector3(leftWall.localScale.x, skyHeight, leftWall.localScale.z);
+        rightWall.localScale = new Vector3(rightWall.localScale.x, skyHeight, rightWall.localScale.z);
+
+        // Adjust and position the top and bottom walls
+        float wallThicknessY = topWall.localScale.y; // Assuming the height of the top/bottom walls is controlled by y scale
+        topWall.position = new Vector3(0, halfSkyHeight - wallThicknessY / 2, 0);
+        bottomWall.position = new Vector3(0, -halfSkyHeight - 0.90f + wallThicknessY / 2, 0);
+
+        // Adjust the width of the top and bottom walls to match the sky's width
+        topWall.localScale = new Vector3(skyWidth, topWall.localScale.y, topWall.localScale.z);
+        bottomWall.localScale = new Vector3(skyWidth, bottomWall.localScale.y, bottomWall.localScale.z);
+    }
+
+    void Update()
+    {
+        // Optionally call this in Update if the camera size changes dynamically during runtime
+        ScaleAndPositionSprites();
+    }
+}
