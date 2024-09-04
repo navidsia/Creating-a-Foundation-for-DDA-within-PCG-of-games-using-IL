@@ -1,10 +1,8 @@
 using System;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] float speed;
     [SerializeField] float lifeDuration;
     [SerializeField] LayerMask detectionLayer;
     [SerializeField] float detectionRadius;
@@ -12,16 +10,17 @@ public class Projectile : MonoBehaviour
     bool hasShot;
     float _duration;
     Vector2 _direction;
+    float _speed;
     int _damage;
 
-    public void Shoot(Vector2 direction, int damage)
+    public void Shoot(Vector2 direction, float speed, int damage)
     {
         hasShot = true;
         _duration = lifeDuration;
         _direction = direction;
+        _speed = speed;
         _damage = damage;
         gameObject.layer = 7;
-
     }
 
     private void Update()
@@ -34,9 +33,9 @@ public class Projectile : MonoBehaviour
         var hit = Physics2D.OverlapCircle(transform.position, detectionRadius, detectionLayer);
         if (hit)
         {
-            if (hit.gameObject.TryGetComponent<CharacterController>(out var charachter))
+            if (hit.gameObject.TryGetComponent<CharacterController>(out var character))
             {
-                charachter.GetHit(_damage);
+                character.GetHit(_damage);
             }
             Die();
             return;
@@ -55,7 +54,7 @@ public class Projectile : MonoBehaviour
     private void Move()
     {
         var pos = transform.position;
-        pos += (Vector3)_direction * speed * Time.deltaTime;
+        pos += (Vector3)_direction * _speed * Time.deltaTime;
         transform.position = pos;
     }
 

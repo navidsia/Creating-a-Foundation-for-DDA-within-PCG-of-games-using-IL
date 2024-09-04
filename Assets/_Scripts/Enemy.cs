@@ -15,9 +15,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] int damage;
     [SerializeField] EnemyHUDController HUD;
     List<Vector3> patrolPositionCopy;
-    int patrolPosIndex=0;
+    int patrolPosIndex = 0;
 
     float time;
+    private Vector3 previousPosition;
+
     private void Start()
     {
         MaxHealth = Health;
@@ -25,15 +27,16 @@ public class Enemy : MonoBehaviour
         patrolPositionCopy = new List<Vector3>();
         foreach (PatrolMovement t in patrolPositions)
         {
-            patrolPositionCopy.Add(new Vector3(t.patrolPosition.position.x,t.patrolPosition.position.y,
+            patrolPositionCopy.Add(new Vector3(t.patrolPosition.position.x, t.patrolPosition.position.y,
                 t.patrolPosition.position.z));
         }
 
+        // Initialize previousPosition with the starting position
+        previousPosition = transform.position;
     }
 
     public void GetHit(int damage)
     {
-
         if (Health <= 0)
         {
             return;
@@ -43,7 +46,6 @@ public class Enemy : MonoBehaviour
 
         if (Health <= 0)
             Die();
-
     }
 
     private void Die()
@@ -52,50 +54,75 @@ public class Enemy : MonoBehaviour
         Time.timeScale = originalTimeScale;
         Destroy(gameObject);
     }
+
     private void Update()
     {
         time += Time.deltaTime;
-        if(canPatrol)
+
+        if (canPatrol)
         {
             MoveToPosition(patrolPositionCopy[patrolPosIndex], patrolPositions[patrolPosIndex].duration);
+            FaceMovementDirection(); // Check and update facing direction
         }
+
         var hit = Physics2D.OverlapCircle(transform.position, characterDetectionRange, characterLayer);
         if (hit)
         {
             hit.gameObject.GetComponent<CharacterController>().GetHit(damage);
         }
 
+        // Update the previous position for the next frame
+        previousPosition = transform.position;
     }
-    void MoveToPosition(Vector3 pos,float duration)
+
+    void MoveToPosition(Vector3 pos, float duration)
     {
         var t = duration;
         var prevIndex = patrolPosIndex - 1;
         if (patrolPosIndex < 1)
         {
-            prevIndex = patrolPositionCopy.Count-1;
+            prevIndex = patrolPositionCopy.Count - 1;
         }
-        var newPos = Vector3.Lerp(patrolPositionCopy[prevIndex], pos, time/t);
+        var newPos = Vector3.Lerp(patrolPositionCopy[prevIndex], pos, time / t);
         transform.position = newPos;
         CheckPatrolPositionReached();
     }
+
     void CheckPatrolPositionReached()
     {
-        if (Vector3.Distance(patrolPositionCopy[patrolPosIndex],transform.position)<=0.1f)
+        if (Vector3.Distance(patrolPositionCopy[patrolPosIndex], transform.position) <= 0.1f)
         {
             patrolPosIndex++;
-            if(patrolPosIndex >= patrolPositionCopy.Count)
+            if (patrolPosIndex >= patrolPositionCopy.Count)
             {
                 patrolPosIndex = 0;
             }
             time = 0;
         }
     }
+
+    void FaceMovementDirection()
+    {
+        // Calculate the direction of movement by checking the change in position
+        Vector3 movementDirection = transform.position - previousPosition;
+
+        if (movementDirection.x > 0) // Moving right
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        else if (movementDirection.x < 0) // Moving left
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, characterDetectionRange);
     }
 }
+
 [System.Serializable]
 class PatrolMovement
 {

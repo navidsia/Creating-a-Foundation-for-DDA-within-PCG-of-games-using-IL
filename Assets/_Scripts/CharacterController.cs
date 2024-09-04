@@ -72,7 +72,7 @@ public class CharacterController : MonoBehaviour
         Vector2 direction = isRight ? Vector2.right : Vector2.left;
 
         // Pass the Vector2 direction and damage to the Shoot method
-        projectile.Shoot(direction, damage);
+      //  projectile.Shoot(direction, damage);
     }
 
     private void MeleeAttack()
