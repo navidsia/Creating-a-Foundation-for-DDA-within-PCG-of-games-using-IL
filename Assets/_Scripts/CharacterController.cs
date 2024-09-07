@@ -20,7 +20,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] float cameraFallingSpeed = -5f;
     [SerializeField] float total_input;
     [SerializeField] int max_health;
-    [SerializeField] Projectile projectilePrefab;
+    [SerializeField] Projectile BulletPrefab;
 
     // Melee attack fields
     [SerializeField] Transform attackPoint;  // Point from where melee attack originates
@@ -66,7 +66,7 @@ public class CharacterController : MonoBehaviour
     }
     private void Shoot()
     {
-        var projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        var projectile = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
 
         // Convert the direction to a Vector2
         Vector2 direction = isRight ? Vector2.right : Vector2.left;

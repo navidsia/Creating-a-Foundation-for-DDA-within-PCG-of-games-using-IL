@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class boss_moves_script : MonoBehaviour
 {
-    [SerializeField] GameObject projectilePrefab;  // Reference to the projectile prefab
+    [SerializeField] GameObject BulletPrefab;  // Reference to the regular projectile prefab
+    [SerializeField] GameObject BullPrefab;    // Reference to the bull projectile prefab
     [SerializeField] float rain_difficulty = 1;
-    [SerializeField] float rain_spawnInterval = 1f;     // Time interval between spawns
+ //   [SerializeField] float rain_spawnInterval = 1f;     // Time interval between spawns
+    [SerializeField] float bull_difficulty = 1;
     [SerializeField] float rain_minX = -8f;             // Minimum x position (adjust according to your screen width)
     [SerializeField] float rain_maxX = 8f;              // Maximum x position (adjust according to your screen width)
     [SerializeField] float rain_minY = -4.5f;           // Minimum y position (adjust according to your screen height)
@@ -17,26 +19,40 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] float rain_Left_Duration = 4.5f;
     [SerializeField] float rain_Right_Duration = 4.5f;
     [SerializeField] float rain_Bottom_Duration = 4.5f;
-
+    [SerializeField] float bull_Left_Duration = 1f;
+    [SerializeField] float bull_Right_Duration = 1f;
+    // Spawn interval
+    [SerializeField] float rain_Top_Spawn_interval = 4.5f;
+    [SerializeField] float rain_Left_Spawn_interval = 4.5f;
+    [SerializeField] float rain_Right_Spawn_interval = 4.5f;
+    [SerializeField] float rain_Bottom_Spawn_interval = 4.5f;
+    [SerializeField] float bull_Left_Spawn_interval = 0.7f;
+    [SerializeField] float bull_Right_Spawn_interval = 0.7f;
     // Separate rest time fields for each move
     [SerializeField] float rain_Top_RestTime = 2f;
     [SerializeField] float rain_Left_RestTime = 2f;
     [SerializeField] float rain_Right_RestTime = 2f;
     [SerializeField] float rain_Bottom_RestTime = 2f;
+    [SerializeField] float bull_Left_RestTime = 4f;
+    [SerializeField] float bull_Right_RestTime = 4f;
 
     // Separate speed fields for each move
     [SerializeField] float rain_Top_Speed = 5f;
     [SerializeField] float rain_Left_Speed = 5f;
     [SerializeField] float rain_Right_Speed = 5f;
     [SerializeField] float rain_Bottom_Speed = 5f;
+    [SerializeField] float bull_Left_Speed = 5f;
+    [SerializeField] float bull_Right_Speed = 5f;
 
     [SerializeField] int rain_bulletDamage = 1;         // Damage dealt by each bullet
-    [SerializeField] GameObject enemy;             // Reference to the enemy GameObject
+    [SerializeField] int bull_damage = 2;              // Damage dealt by each bull projectile
+    [SerializeField] GameObject enemy;                 // Reference to the enemy GameObject
 
     private List<System.Action> bossMoves = new List<System.Action>();  // List of selected boss moves
     private List<float> moveDurations = new List<float>();              // List of corresponding move durations
     private List<float> restTimes = new List<float>();                  // List of corresponding rest times
     private List<float> moveSpeeds = new List<float>();                 // List of corresponding move speeds
+    private List<float> spawnIntervals = new List<float>();
     private int currentMoveIndex = 0;              // Current boss move index
     private float moveTimer = 0f;                  // Timer to track how long the current move has been running
     private float spawnTimer = 0f;                 // Timer to track the time between bullet spawns
@@ -44,8 +60,17 @@ public class boss_moves_script : MonoBehaviour
 
     private void Start()
     {
+        // Initialize the rain difficulty and spawn interval
         rain_difficulty = Random.Range(1, 5);
-        rain_spawnInterval = 0.5f - rain_difficulty * 0.1f;
+
+        rain_Top_Spawn_interval = 0.5f - rain_difficulty * 0.1f;
+        rain_Left_Spawn_interval = 0.5f - rain_difficulty * 0.1f;
+        rain_Right_Spawn_interval = 0.5f - rain_difficulty * 0.1f;
+        rain_Bottom_Spawn_interval = 0.5f - rain_difficulty * 0.1f;
+        // Initialize the bull difficulty separately
+        float bull_difficulty = Random.Range(1, 5);
+        bull_Left_Speed =4f + bull_difficulty;
+        bull_Right_Speed =4f + bull_difficulty;
 
         // Initialize the list of all possible boss moves and their properties
         List<System.Action> allMoves = new List<System.Action>
@@ -53,7 +78,9 @@ public class boss_moves_script : MonoBehaviour
             rain_Top,
             rain_Left,
             rain_Right,
-            rain_Bottom
+            rain_Bottom,
+            bull_Left,
+            bull_Right
         };
 
         List<float> allDurations = new List<float>
@@ -61,7 +88,9 @@ public class boss_moves_script : MonoBehaviour
             rain_Top_Duration,
             rain_Left_Duration,
             rain_Right_Duration,
-            rain_Bottom_Duration
+            rain_Bottom_Duration,
+            bull_Left_Duration,
+            bull_Right_Duration
         };
 
         List<float> allRestTimes = new List<float>
@@ -69,7 +98,9 @@ public class boss_moves_script : MonoBehaviour
             rain_Top_RestTime,
             rain_Left_RestTime,
             rain_Right_RestTime,
-            rain_Bottom_RestTime
+            rain_Bottom_RestTime,
+            bull_Left_RestTime,
+            bull_Right_RestTime
         };
 
         List<float> allSpeeds = new List<float>
@@ -77,10 +108,23 @@ public class boss_moves_script : MonoBehaviour
             rain_Top_Speed,
             rain_Left_Speed,
             rain_Right_Speed,
-            rain_Bottom_Speed
+            rain_Bottom_Speed,
+            bull_Left_Speed,
+            bull_Right_Speed
         };
-
+        
+            
+       List<float> spawnInterval = new List<float>
+        {
+        rain_Top_Spawn_interval,     
+        rain_Left_Spawn_interval ,   
+        rain_Right_Spawn_interval ,  
+        rain_Bottom_Spawn_interval,  
+        bull_Left_Spawn_interval   , 
+        bull_Right_Spawn_interval   
+    };
         // Randomly select 3 unique boss moves, their durations, rest times, and speeds
+
         for (int i = 0; i < 3; i++)
         {
             int randomIndex = Random.Range(0, allMoves.Count);
@@ -88,11 +132,13 @@ public class boss_moves_script : MonoBehaviour
             moveDurations.Add(allDurations[randomIndex]);
             restTimes.Add(allRestTimes[randomIndex]);
             moveSpeeds.Add(allSpeeds[randomIndex]);
+            spawnIntervals.Add(spawnInterval[randomIndex]);
 
             allMoves.RemoveAt(randomIndex);  // Remove the chosen move to avoid duplicates
             allDurations.RemoveAt(randomIndex);  // Remove the corresponding duration to keep them in sync
             allRestTimes.RemoveAt(randomIndex);  // Remove the corresponding rest time to keep them in sync
             allSpeeds.RemoveAt(randomIndex);  // Remove the corresponding speed to keep them in sync
+            spawnInterval.RemoveAt(randomIndex);
         }
     }
 
@@ -116,14 +162,15 @@ public class boss_moves_script : MonoBehaviour
         // Execute the current boss move for its corresponding duration
         if (moveTimer < moveDurations[currentMoveIndex])
         {
-            // Update the spawn timer
-            spawnTimer += Time.deltaTime;
-
-            // Check if it's time to spawn the next bullet
-            if (spawnTimer >= rain_spawnInterval)
+            // For rain moves, check if it's time to spawn the next bullet
+            if (currentMoveIndex < 4)
             {
-                bossMoves[currentMoveIndex]();  // Execute the current boss move
-                spawnTimer = 0f;  // Reset the spawn timer
+                spawnTimer += Time.deltaTime;
+                if (spawnTimer >= spawnIntervals[currentMoveIndex])
+                {
+                    bossMoves[currentMoveIndex]();  // Execute the current boss move
+                    spawnTimer = 0f;  // Reset the spawn timer
+                }
             }
         }
         else
@@ -156,7 +203,7 @@ public class boss_moves_script : MonoBehaviour
         Vector2 spawnPosition = new Vector2(randomX, rain_maxY);
 
         // Instantiate and shoot the projectile with the appropriate speed
-        SpawnAndShootProjectile(spawnPosition, Vector2.down, moveSpeeds[currentMoveIndex]);
+        SpawnAndShootBullet(spawnPosition, Vector2.down, moveSpeeds[currentMoveIndex], BulletPrefab, rain_bulletDamage);
     }
 
     void rain_Left()
@@ -166,7 +213,7 @@ public class boss_moves_script : MonoBehaviour
         Vector2 spawnPosition = new Vector2(rain_minX, randomY);
 
         // Instantiate and shoot the projectile with the appropriate speed
-        SpawnAndShootProjectile(spawnPosition, Vector2.right, moveSpeeds[currentMoveIndex]);
+        SpawnAndShootBullet(spawnPosition, Vector2.right, moveSpeeds[currentMoveIndex], BulletPrefab, rain_bulletDamage);
     }
 
     void rain_Right()
@@ -176,7 +223,7 @@ public class boss_moves_script : MonoBehaviour
         Vector2 spawnPosition = new Vector2(rain_maxX, randomY);
 
         // Instantiate and shoot the projectile with the appropriate speed
-        SpawnAndShootProjectile(spawnPosition, Vector2.left, moveSpeeds[currentMoveIndex]);
+        SpawnAndShootBullet(spawnPosition, Vector2.left, moveSpeeds[currentMoveIndex], BulletPrefab, rain_bulletDamage);
     }
 
     void rain_Bottom()
@@ -186,19 +233,50 @@ public class boss_moves_script : MonoBehaviour
         Vector2 spawnPosition = new Vector2(randomX, rain_minY);
 
         // Instantiate and shoot the projectile with the appropriate speed
-        SpawnAndShootProjectile(spawnPosition, Vector2.up, moveSpeeds[currentMoveIndex]);
+        SpawnAndShootBullet(spawnPosition, Vector2.up, moveSpeeds[currentMoveIndex], BulletPrefab, rain_bulletDamage);
     }
 
-    void SpawnAndShootProjectile(Vector2 spawnPosition, Vector2 direction, float speed)
+    void bull_Left()
     {
+        // Spawn the bull on the left side, glued to the ground
+        Vector2 spawnPosition = new Vector2(rain_minX, rain_minY + 0.5f);
+
         // Instantiate the projectile at the spawn position
-        GameObject newProjectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+        GameObject newProjectile = Instantiate(BullPrefab, spawnPosition, Quaternion.identity);
+
+        // Flip the X-axis by inverting the local scale
+        Vector3 localScale = newProjectile.transform.localScale;
+        localScale.x *= -1; // Flip the x-axis
+        newProjectile.transform.localScale = localScale;
 
         // Get the Projectile component from the instantiated object and shoot it with the given speed
         var projectileScript = newProjectile.GetComponent<Projectile>();
         if (projectileScript != null)
         {
-            projectileScript.Shoot(direction, speed, rain_bulletDamage); // Shoot the projectile in the specified direction with the specified speed
+            projectileScript.Shoot(Vector2.right, moveSpeeds[currentMoveIndex], bull_damage); // Shoot the projectile in the specified direction with the specified speed and damage
+        }
+
+    }
+
+    void bull_Right()
+    {
+        // Spawn the bull on the right side, glued to the ground
+        Vector2 spawnPosition = new Vector2(rain_maxX, rain_minY+0.5f);
+
+        // Instantiate and shoot the bull projectile to the left
+        SpawnAndShootBullet(spawnPosition, Vector2.left, moveSpeeds[currentMoveIndex], BullPrefab, bull_damage);
+    }
+
+    void SpawnAndShootBullet(Vector2 spawnPosition, Vector2 direction, float speed, GameObject prefab, int damage)
+    {
+        // Instantiate the projectile at the spawn position
+        GameObject newProjectile = Instantiate(prefab, spawnPosition, Quaternion.identity);
+
+        // Get the Projectile component from the instantiated object and shoot it with the given speed
+        var projectileScript = newProjectile.GetComponent<Projectile>();
+        if (projectileScript != null)
+        {
+            projectileScript.Shoot(direction, speed, damage); // Shoot the projectile in the specified direction with the specified speed and damage
         }
     }
 }
