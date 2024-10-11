@@ -186,6 +186,8 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] float maxY = 4.5f;
 
 
+
+
     public Enemy enemy_script;
     [SerializeField] GameObject enemy;
     [SerializeField] GameObject Charachter;
