@@ -13,6 +13,12 @@ public class BackgroundManager : MonoBehaviour
     public Transform bottomWall; // Reference to the bottom wall
     public SpriteRenderer bottomWallRenderer; // Renderer for the bottom wall
 
+    public Vector3 GetLeftWallPosition() => leftWall.position;
+    public Vector3 GetRightWallPosition() => rightWall.position;
+    public Vector3 GetTopWallPosition() => topWall.position;
+    public Vector3 GetBottomWallPosition() => bottomWall.position;
+
+
     private string[] categories = { "Castle", "Lava", "Nature" };
     [SerializeField] int category_number;
     [SerializeField] int selected_image = -1;

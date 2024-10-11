@@ -1,21 +1,23 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
     public int MaxHealth;
     public int Health;
     [SerializeField] bool canPatrol;
-    [SerializeField] List<PatrolMovement> patrolPositions;
-    [SerializeField] LayerMask characterLayer;
     [SerializeField] float characterDetectionRange;
     [SerializeField] int damage;
     [SerializeField] EnemyHUDController HUD;
-    List<Vector3> patrolPositionCopy;
-    int patrolPosIndex = 0;
+    [SerializeField] float movementSpeed = 2f;
+    [SerializeField] LayerMask characterLayer;
+
+    private List<Vector3> patrolPositions;
+    private int patrolPosIndex = 0;
+    private BackgroundManager backgroundManager;
 
     float time;
     private Vector3 previousPosition;
@@ -24,17 +26,19 @@ public class Enemy : MonoBehaviour
     {
         MaxHealth = Health;
         HUD.Setup(this);
-        patrolPositionCopy = new List<Vector3>();
-        foreach (PatrolMovement t in patrolPositions)
-        {
-            patrolPositionCopy.Add(new Vector3(t.patrolPosition.position.x, t.patrolPosition.position.y,
-                t.patrolPosition.position.z));
-        }
+
+        // Get the BackgroundManager reference
+        backgroundManager = FindObjectOfType<BackgroundManager>();
+
+        patrolPositions = GeneratePatrolPositions();
 
         // Initialize previousPosition with the starting position
         previousPosition = transform.position;
     }
-
+    public void SetCanPatrol(bool value)
+    {
+        canPatrol = value;
+    }
     public void GetHit(int damage)
     {
         if (Health <= 0)
@@ -52,6 +56,7 @@ public class Enemy : MonoBehaviour
     {
         float originalTimeScale = Time.timeScale;
         Time.timeScale = originalTimeScale;
+        SceneManager.LoadScene(1);
         Destroy(gameObject);
     }
 
@@ -61,8 +66,8 @@ public class Enemy : MonoBehaviour
 
         if (canPatrol)
         {
-            MoveToPosition(patrolPositionCopy[patrolPosIndex], patrolPositions[patrolPosIndex].duration);
-            FaceMovementDirection(); // Check and update facing direction
+            MoveToPosition(patrolPositions[patrolPosIndex], movementSpeed);
+            FaceMovementDirection();
         }
 
         var hit = Physics2D.OverlapCircle(transform.position, characterDetectionRange, characterLayer);
@@ -71,33 +76,60 @@ public class Enemy : MonoBehaviour
             hit.gameObject.GetComponent<CharacterController>().GetHit(damage);
         }
 
-        // Update the previous position for the next frame
         previousPosition = transform.position;
     }
 
-    void MoveToPosition(Vector3 pos, float duration)
+    // Generate 4 patrol positions in the 4 quarters using wall positions
+    List<Vector3> GeneratePatrolPositions()
     {
-        var t = duration;
-        var prevIndex = patrolPosIndex - 1;
-        if (patrolPosIndex < 1)
-        {
-            prevIndex = patrolPositionCopy.Count - 1;
-        }
-        var newPos = Vector3.Lerp(patrolPositionCopy[prevIndex], pos, time / t);
-        transform.position = newPos;
+        // Get the wall positions from the BackgroundManager
+        Vector3 leftWallPos = backgroundManager.GetLeftWallPosition();
+        Vector3 rightWallPos = backgroundManager.GetRightWallPosition();
+        Vector3 topWallPos = backgroundManager.GetTopWallPosition();
+        Vector3 bottomWallPos = backgroundManager.GetBottomWallPosition();
+
+        // Calculate the center points of each quarter based on wall positions
+        Vector3 bottomRight = new Vector3(
+            Random.Range(0, rightWallPos.x - 0.2f),
+            Random.Range(bottomWallPos.y + 0.9f, 0),
+            0);
+
+        Vector3 bottomLeft = new Vector3(
+            Random.Range(leftWallPos.x + 0.2f, 0),
+            Random.Range(bottomWallPos.y + 0.2f, 0),
+            0);
+
+        Vector3 topRight = new Vector3(
+            Random.Range(0, rightWallPos.x - 0.2f),
+            Random.Range(0, topWallPos.y - 0.2f),
+            0);
+
+        Vector3 topLeft = new Vector3(
+            Random.Range(leftWallPos.x + 0.2f, 0),
+            Random.Range(0, topWallPos.y - 0.2f),
+            0);
+
+        // Return the patrol positions in order (starting from bottom-right)
+        return new List<Vector3> { bottomRight, topRight, topLeft, bottomLeft };
+    }
+
+    // Moves the enemy towards the next patrol position
+    void MoveToPosition(Vector3 targetPosition, float speed)
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         CheckPatrolPositionReached();
     }
 
+    // Check if the patrol position is reached and update the index accordingly
     void CheckPatrolPositionReached()
     {
-        if (Vector3.Distance(patrolPositionCopy[patrolPosIndex], transform.position) <= 0.1f)
+        if (Vector3.Distance(transform.position, patrolPositions[patrolPosIndex]) <= 0.1f)
         {
             patrolPosIndex++;
-            if (patrolPosIndex >= patrolPositionCopy.Count)
+            if (patrolPosIndex >= patrolPositions.Count)
             {
-                patrolPosIndex = 0;
+                patrolPosIndex = 0; // Loop back to the starting position (bottom-right)
             }
-            time = 0;
         }
     }
 
@@ -121,11 +153,4 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, characterDetectionRange);
     }
-}
-
-[System.Serializable]
-class PatrolMovement
-{
-    public Transform patrolPosition;
-    public float duration;
 }

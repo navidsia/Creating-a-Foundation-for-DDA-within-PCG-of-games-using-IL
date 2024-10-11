@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.MLAgents.Integrations.Match3;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,7 +31,10 @@ public class CharacterController : MonoBehaviour
 
     [SerializeField] PhysicsMaterial2D noFrictionMaterial;
     [SerializeField] PhysicsMaterial2D groundFrictionMaterial;
-
+    [SerializeField] float rollSpeed =5f;  // Speed for the roll movement
+    [SerializeField] float speed_of_this_shit;  // Speed for the roll movement
+    [SerializeField] float rollDuration = 0.4f;  // Duration for the roll
+    [SerializeField] bool isRolling = false;  // To track if currently rolling
     Rigidbody2D rigidbody2D;
     int _jumpCount;
     public bool isOnGround;
@@ -38,7 +42,6 @@ public class CharacterController : MonoBehaviour
     bool isHittable;
     public bool FreeFalling;
     public bool can_attack = true;
-
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -53,6 +56,7 @@ public class CharacterController : MonoBehaviour
         GroundDetection();
         MoveLogic(horizontalInput);
         FlipCheck(horizontalInput);
+
         if (Input.GetKeyDown(jumpKey))
         {
             Jump();
@@ -60,8 +64,14 @@ public class CharacterController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             MeleeAttack();
-            //Shoot();
         }
+
+        // Roll logic
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+         Roll();
+        }
+
         UpdateFriction();
     }
     private void Shoot()
@@ -74,7 +84,31 @@ public class CharacterController : MonoBehaviour
         // Pass the Vector2 direction and damage to the Shoot method
       //  projectile.Shoot(direction, damage);
     }
+    private void Roll()
+    {
+        if (!isRolling)
+        {
+            // Play attack animation
+            animator.SetBool("is_rolling", true);
+            isRolling = true;
+            //// Determine the roll direction based on the character's facing direction
+            //float rollDirection = transform.localScale.x; // Assuming positive scale.x means facing right
 
+            //// Apply force for rolling
+            //Vector2 rollForce = new Vector2(50f * rollDirection, 0f);
+            //rigidbody2D.AddForce(rollForce, ForceMode2D.Impulse);
+
+            //// Detect enemies in range of attack
+
+            Invoke("ResetRollCooldown", 0.36f);
+        }
+    }
+    private void ResetRollCooldown()
+    {
+        isRolling = false;
+        animator.SetBool("is_rolling", false);
+
+    }
     private void MeleeAttack()
     {
         // Play attack animation
@@ -96,7 +130,7 @@ public class CharacterController : MonoBehaviour
         }
 
         can_attack = false;
-        Invoke("StopAttack", 0.04f);
+
         Invoke("ResetAttackCooldown", 0.3f);
     }
 
@@ -115,6 +149,9 @@ public class CharacterController : MonoBehaviour
     private void ResetAttackCooldown()
     {
         can_attack = true;
+        animator.SetBool("attack1", false);
+        animator.SetBool("attack2", false);
+        animator.SetBool("attack3", false);
     }
 
     private void CheckHeightDeath()
@@ -195,11 +232,27 @@ public class CharacterController : MonoBehaviour
 
     private void MoveLogic(float input)
     {
-        total_input = input;
-        animator.SetBool("IsMoving", Mathf.Abs(input) > 0);
-        var v = rigidbody2D.velocity;
-        v.x = input * movementSpeed;
-        rigidbody2D.velocity = new Vector2(v.x, rigidbody2D.velocity.y);
+        if (isRolling)
+        {
+            int current_Direction = 1;
+            if (!isRight)
+            {
+                current_Direction = -1;
+            }
+         
+            var v = rigidbody2D.velocity;
+            v.x = current_Direction * movementSpeed * 2;
+            rigidbody2D.velocity = new Vector2(v.x, rigidbody2D.velocity.y);
+        }
+        else
+        {
+            total_input = input;
+            animator.SetBool("IsMoving", Mathf.Abs(input) > 0);
+            var v = rigidbody2D.velocity;
+            v.x = input * movementSpeed;
+            rigidbody2D.velocity = new Vector2(v.x, rigidbody2D.velocity.y);
+        }
+
     }
 
     private void Jump()
