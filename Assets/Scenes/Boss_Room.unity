@@ -1802,6 +1802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 4091050425883742138, guid: f07dcef7001e1b14bb88a00719779c51, type: 3}
   BullPrefab: {fileID: 4091050425883742138, guid: 44cf02855227ad64fa36e3933d6c7157, type: 3}
+  WeightedBulletPrefab: {fileID: 4091050425883742138, guid: d7b7c0d0715812648a2708f28e3b63b1, type: 3}
   canpatrol: 1
   characterPosition: {x: 0, y: 0}
   rain_Top_difficulty: 1
@@ -1936,6 +1937,30 @@ MonoBehaviour:
   Crusher_Bot_RestTime: 4
   Crusher_Bot_Speed: 5
   Crusher_Bot_damage: 1
+  Spiral_Clockwise_Difficulty: 1
+  Spiral_Clockwise_Duration: 0.7
+  Spiral_Clockwise_Spawn_interval: 0.7
+  Spiral_Clockwise_RestTime: 4
+  Spiral_Clockwise_Speed: 5
+  Spiral_Clockwise_damage: 1
+  Spiral_AntiClockwise_Difficulty: 1
+  Spiral_AntiClockwise_Duration: 0.7
+  Spiral_AntiClockwise_Spawn_interval: 0.7
+  Spiral_AntiClockwise_RestTime: 4
+  Spiral_AntiClockwise_Speed: 5
+  Spiral_AntiClockwise_damage: 1
+  Circle_Weighted_Difficulty: 1
+  Circle_Weighted_Duration: 0.7
+  Circle_Weighted_Spawn_interval: 0.7
+  Circle_Weighted_RestTime: 4
+  Circle_Weighted_Speed: 5
+  Circle_Weighted_damage: 1
+  Star_Weighted_Difficulty: 1
+  Star_Weighted_Duration: 0.7
+  Star_Weighted_Spawn_interval: 0.7
+  Star_Weighted_RestTime: 4
+  Star_Weighted_Speed: 5
+  Star_Weighted_damage: 1
   minX: -8
   maxX: 8
   minY: -4.5

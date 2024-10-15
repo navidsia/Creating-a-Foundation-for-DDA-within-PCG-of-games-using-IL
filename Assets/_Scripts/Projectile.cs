@@ -6,29 +6,39 @@ public class Projectile : MonoBehaviour
     [SerializeField] float lifeDuration;
     [SerializeField] LayerMask detectionLayer;
     [SerializeField] float detectionRadius;
+    [SerializeField] bool not_weighted = true;
 
     bool hasShot;
     float _duration;
-    Vector2 _direction;
-    float _speed;
     int _damage;
+    Rigidbody2D _rigidbody;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+    }
 
     public void Shoot(Vector2 direction, float speed, int damage)
     {
         hasShot = true;
         _duration = lifeDuration;
-        _direction = direction;
-        _speed = speed;
         _damage = damage;
         gameObject.layer = 7;
+
+        // Set the velocity of the Rigidbody2D based on the direction and speed
+        _rigidbody.velocity = direction * speed;
+
+        // Optional: Disable gravity if you want a non-weighted projectile
+        if (not_weighted)
+        {
+            _rigidbody.gravityScale = 0;
+        }
     }
 
     private void Update()
     {
         if (!hasShot)
             return;
-
-        Move();
 
         var hit = Physics2D.OverlapCircle(transform.position, detectionRadius, detectionLayer);
         if (hit)
@@ -49,13 +59,6 @@ public class Projectile : MonoBehaviour
                 Die();
             }
         }
-    }
-
-    private void Move()
-    {
-        var pos = transform.position;
-        pos += (Vector3)_direction * _speed * Time.deltaTime;
-        transform.position = pos;
     }
 
     void Die()

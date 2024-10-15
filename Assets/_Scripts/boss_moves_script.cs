@@ -6,6 +6,7 @@ public class boss_moves_script : MonoBehaviour
 {
     [SerializeField] GameObject BulletPrefab;
     [SerializeField] GameObject BullPrefab;
+    [SerializeField] GameObject WeightedBulletPrefab;
 
     [SerializeField] bool canpatrol = true;
     [SerializeField] Vector2 characterPosition;
@@ -146,7 +147,6 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] int Half_Shuriken_AntiClockwise_damage = 1;
 
 
-
     [SerializeField] int Half2_Shuriken_Clockwise_Difficulty = 1;
     [SerializeField] float Half2_Shuriken_Clockwise_Duration = 0.7f;
     [SerializeField] float Half2_Shuriken_Clockwise_Spawn_interval = 0.7f;
@@ -178,6 +178,73 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] float Crusher_Bot_RestTime = 4f;
     [SerializeField] float Crusher_Bot_Speed = 5f;
     [SerializeField] int Crusher_Bot_damage = 1;
+
+
+
+    [SerializeField] int Spiral_Clockwise_Difficulty = 1;
+    [SerializeField] float Spiral_Clockwise_Duration = 0.7f;
+    [SerializeField] float Spiral_Clockwise_Spawn_interval = 0.7f;
+    [SerializeField] float Spiral_Clockwise_RestTime = 4f;
+    [SerializeField] float Spiral_Clockwise_Speed = 5f;
+    [SerializeField] int Spiral_Clockwise_damage = 1;
+
+
+    [SerializeField] int Spiral_AntiClockwise_Difficulty = 1;
+    [SerializeField] float Spiral_AntiClockwise_Duration = 0.7f;
+    [SerializeField] float Spiral_AntiClockwise_Spawn_interval = 0.7f;
+    [SerializeField] float Spiral_AntiClockwise_RestTime = 4f;
+    [SerializeField] float Spiral_AntiClockwise_Speed = 5f;
+    [SerializeField] int Spiral_AntiClockwise_damage = 1;
+
+
+    [SerializeField] int Circle_Weighted_Difficulty = 1;
+    [SerializeField] float Circle_Weighted_Duration = 1f;
+    [SerializeField] float Circle_Weighted_Spawn_interval = 0.7f;
+    [SerializeField] float Circle_Weighted_RestTime = 4f;
+    [SerializeField] float Circle_Weighted_Speed = 5f;
+    [SerializeField] int Circle_Weighted_damage = 1;
+
+    [SerializeField] int Star_Weighted_Difficulty = 1;
+    [SerializeField] float Star_Weighted_Duration = 1f;
+    [SerializeField] float Star_Weighted_Spawn_interval = 0.7f;
+    [SerializeField] float Star_Weighted_RestTime = 4f;
+    [SerializeField] float Star_Weighted_Speed = 5f;
+    [SerializeField] int Star_Weighted_damage = 1;
+
+
+
+
+
+    [SerializeField] int Shotgun_Clockwise_Difficulty = 1;
+    [SerializeField] float Shotgun_Clockwise_Duration = 0.7f;
+    [SerializeField] float Shotgun_Clockwise_Spawn_interval = 0.7f;
+    [SerializeField] float Shotgun_Clockwise_RestTime = 4f;
+    [SerializeField] float Shotgun_Clockwise_Speed = 5f;
+    [SerializeField] int Shotgun_Clockwise_damage = 1;
+
+
+    [SerializeField] int Shotgun_AntiClockwise_Difficulty = 1;
+    [SerializeField] float Shotgun_AntiClockwise_Duration = 0.7f;
+    [SerializeField] float Shotgun_AntiClockwise_Spawn_interval = 0.7f;
+    [SerializeField] float Shotgun_AntiClockwise_RestTime = 4f;
+    [SerializeField] float Shotgun_AntiClockwise_Speed = 5f;
+    [SerializeField] int Shotgun_AntiClockwise_damage = 1;
+
+
+    [SerializeField] int Circle_Weighted_Random_Difficulty = 1;
+    [SerializeField] float Circle_Weighted_Random_Duration = 4.5f;
+    [SerializeField] float Circle_Weighted_Random_Spawn_interval = 4.5f;
+    [SerializeField] float Circle_Weighted_Random_RestTime = 2f;
+    [SerializeField] float Circle_Weighted_Random_Speed = 5f;
+    [SerializeField] int Circle_Weighted_Random_damage = 1;
+
+
+    [SerializeField] int Eruption_Difficulty = 1;
+    [SerializeField] float Eruption_Duration = 4.5f;
+    [SerializeField] float Eruption_Spawn_interval = 4.5f;
+    [SerializeField] float Eruption_RestTime = 2f;
+    [SerializeField] float Eruption_Speed = 5f;
+    [SerializeField] int Eruption_damage = 1;
 
 
     [SerializeField] float minX = -8f;
@@ -228,6 +295,13 @@ public class boss_moves_script : MonoBehaviour
         Half_Shuriken_AntiClockwise_Difficulty = Random.Range(1, 5);
         Half2_Shuriken_Clockwise_Difficulty = Random.Range(1, 5);
         Half2_Shuriken_AntiClockwise_Difficulty = Random.Range(1, 5);
+        Spiral_Clockwise_Difficulty = Random.Range(1, 5);
+        Spiral_AntiClockwise_Difficulty = Random.Range(1, 5);
+        Circle_Difficulty = Random.Range(1, 5);
+        Shotgun_Clockwise_Difficulty = Random.Range(1, 5);
+        Shotgun_AntiClockwise_Difficulty = Random.Range(1, 5);
+        Circle_Weighted_Random_Difficulty = Random.Range(1, 5);
+        Eruption_Difficulty = Random.Range(1, 5);
         //rain_Bottom_difficulty = Random.Range(1, 5);
 
         rain_Top_Spawn_interval = 0.7f - rain_Top_difficulty * 0.1f;
@@ -239,144 +313,184 @@ public class boss_moves_script : MonoBehaviour
         bull_Right_Speed = 4f + bull_Right_difficulty;
 
         circle_Random_Spawn_interval = 0.3f - circle_Random_Difficulty * 0.05f;
-
+        Circle_Weighted_Random_Spawn_interval = 0.3f - Circle_Weighted_Random_Difficulty * 0.05f;
+        Eruption_Spawn_interval = 0.3f - Eruption_Difficulty * 0.05f;
 
         Uzi_Spawn_interval = 0.2f;
         Uzi_Duration = Uzi_Difficulty;
 
         M4_Spawn_interval = 0.2f;
-        M4_Duration = 1 + M4_Difficulty/2;
+        M4_Duration = 1 + M4_Difficulty / 2;
 
         List<System.Action> allMoves = new List<System.Action>
         {
-            rain_Top,
-            rain_Left,
-            rain_Right,
-            bull_Left,
-            bull_Right,
-            circleShoot,
-            circle_Random,
-            circle_Clockwise,
-            circle_AntiClockwise,
-            Shotgun,
-            Uzi,
-            Star,
-            Pump_Shotgun,
-            Shuriken_Clockwise,
-            Shuriken_AntiClockwise,
-            M4,
-            Half_Shuriken_Clockwise,
-            Half_Shuriken_AntiClockwise,
-            Half2_Shuriken_Clockwise,
-            Half2_Shuriken_AntiClockwise,
-            Crusher_Top,
-            Crusher_Bot
+            //rain_Top,
+            //rain_Left,
+            //rain_Right,
+            //bull_Left,
+            //bull_Right,
+            //circleShoot,
+            //circle_Random,
+            //circle_Clockwise,
+            //circle_AntiClockwise,
+            //Shotgun,
+            //Uzi,
+            //Star,
+            //Pump_Shotgun,
+            //Shuriken_Clockwise,
+            //Shuriken_AntiClockwise,
+            //M4,
+            //Half_Shuriken_Clockwise,
+            //Half_Shuriken_AntiClockwise,
+            //Half2_Shuriken_Clockwise,
+            //Half2_Shuriken_AntiClockwise,
+            //Crusher_Top,
+            //Crusher_Bot,
+            //Spiral_Clockwise,
+            //Spiral_AntiClockwise,
+            //circle_Weighted_Shoot,
+            //Star_Weighted,
+            //Shotgun_Clockwise,
+            Shotgun_AntiClockwise,
+            Circle_Weighted_Random,
+            Eruption 
 
     };
 
         List<float> allDurations = new List<float>
         {
-            rain_Top_Duration,
-            rain_Left_Duration,
-            rain_Right_Duration,
-            bull_Left_Duration,
-            bull_Right_Duration,
-            Circle_Duration,
-            circle_Random_Duration,
-            circle_Clockwise_Duration,
-            circle_AntiClockwise_Duration,
-            Shotgun_Duration,
-            Uzi_Duration,
-            Star_Duration,
-            Pump_Shotgun_Duration,
-            Shuriken_Clockwise_Duration,
-            Shuriken_AntiClockwise_Duration,
-            M4_Duration,
-            Half_Shuriken_Clockwise_Duration,
-            Half_Shuriken_AntiClockwise_Duration,
-            Half2_Shuriken_Clockwise_Duration,
-            Half2_Shuriken_AntiClockwise_Duration,
-            Crusher_Top_Duration,
-            Crusher_Bot_Duration
-
+            //rain_Top_Duration,
+            //rain_Left_Duration,
+            //rain_Right_Duration,
+            //bull_Left_Duration,
+            //bull_Right_Duration,
+            //Circle_Duration,
+            //circle_Random_Duration,
+            //circle_Clockwise_Duration,
+            //circle_AntiClockwise_Duration,
+            //Shotgun_Duration,
+            //Uzi_Duration,
+            //Star_Duration,
+            //Pump_Shotgun_Duration,
+            //Shuriken_Clockwise_Duration,
+            //Shuriken_AntiClockwise_Duration,
+            //M4_Duration,
+            //Half_Shuriken_Clockwise_Duration,
+            //Half_Shuriken_AntiClockwise_Duration,
+            //Half2_Shuriken_Clockwise_Duration,
+            //Half2_Shuriken_AntiClockwise_Duration,
+            //Crusher_Top_Duration,
+            //Crusher_Bot_Duration,
+            //Spiral_Clockwise_Duration,
+            //Spiral_AntiClockwise_Duration,
+            //Circle_Weighted_Duration,
+            //Star_Weighted_Duration,
+            //Shotgun_Clockwise_Duration,
+            Shotgun_AntiClockwise_Duration,
+            Circle_Weighted_Random_Duration,
+            Eruption_Duration
         };
 
         List<float> allRestTimes = new List<float>
         {
-            rain_Top_RestTime,
-            rain_Left_RestTime,
-            rain_Right_RestTime,
-            bull_Left_RestTime,
-            bull_Right_RestTime,
-            Circle_RestTime,
-            circle_Random_RestTime ,
-            circle_Clockwise_RestTime,
-            circle_AntiClockwise_RestTime,
-            Shotgun_RestTime,
-            Uzi_RestTime,
-            Star_RestTime,
-            Pump_Shotgun_RestTime,
-            Shuriken_Clockwise_RestTime,
-            Shuriken_AntiClockwise_RestTime,
-            M4_RestTime,
-            Half_Shuriken_Clockwise_RestTime,
-            Half_Shuriken_AntiClockwise_RestTime,
-            Half2_Shuriken_Clockwise_RestTime,
-            Half2_Shuriken_AntiClockwise_RestTime,
-            Crusher_Top_RestTime,
-            Crusher_Bot_RestTime
+            //rain_Top_RestTime,
+            //rain_Left_RestTime,
+            //rain_Right_RestTime,
+            //bull_Left_RestTime,
+            //bull_Right_RestTime,
+            //Circle_RestTime,
+            //circle_Random_RestTime ,
+            //circle_Clockwise_RestTime,
+            //circle_AntiClockwise_RestTime,
+            //Shotgun_RestTime,
+            //Uzi_RestTime,
+            //Star_RestTime,
+            //Pump_Shotgun_RestTime,
+            //Shuriken_Clockwise_RestTime,
+            //Shuriken_AntiClockwise_RestTime,
+            //M4_RestTime,
+            //Half_Shuriken_Clockwise_RestTime,
+            //Half_Shuriken_AntiClockwise_RestTime,
+            //Half2_Shuriken_Clockwise_RestTime,
+            //Half2_Shuriken_AntiClockwise_RestTime,
+            //Crusher_Top_RestTime,
+            //Crusher_Bot_RestTime,
+            //Spiral_Clockwise_RestTime,
+            //Spiral_AntiClockwise_RestTime,
+            //Circle_Weighted_RestTime,
+            //Star_Weighted_RestTime,
+            //Shotgun_Clockwise_RestTime,
+            Shotgun_AntiClockwise_RestTime,
+            Circle_Weighted_Random_RestTime,
+            Eruption_RestTime
         };
 
         List<float> allSpeeds = new List<float>
         {
-            rain_Top_Speed,
-            rain_Left_Speed,
-            rain_Right_Speed,
-            bull_Left_Speed,
-            bull_Right_Speed,
-            Circle_Speed ,
-            circle_Random_Speed,
-            circle_Clockwise_Speed,
-            circle_AntiClockwise_Speed,
-            Shotgun_Speed,
-            Uzi_Speed,
-            Star_Speed,
-            Pump_Shotgun_Speed,
-            Shuriken_Clockwise_Speed,
-            Shuriken_AntiClockwise_Speed,
-            M4_Speed ,
-            Half_Shuriken_Clockwise_Speed,
-            Half_Shuriken_AntiClockwise_Speed,
-            Half2_Shuriken_Clockwise_Speed,
-            Half2_Shuriken_AntiClockwise_Speed,
-            Crusher_Top_Speed,
-            Crusher_Bot_Speed
+            //rain_Top_Speed,
+            //rain_Left_Speed,
+            //rain_Right_Speed,
+            //bull_Left_Speed,
+            //bull_Right_Speed,
+            //Circle_Speed ,
+            //circle_Random_Speed,
+            //circle_Clockwise_Speed,
+            //circle_AntiClockwise_Speed,
+            //Shotgun_Speed,
+            //Uzi_Speed,
+            //Star_Speed,
+            //Pump_Shotgun_Speed,
+            //Shuriken_Clockwise_Speed,
+            //Shuriken_AntiClockwise_Speed,
+            //M4_Speed ,
+            //Half_Shuriken_Clockwise_Speed,
+            //Half_Shuriken_AntiClockwise_Speed,
+            //Half2_Shuriken_Clockwise_Speed,
+            //Half2_Shuriken_AntiClockwise_Speed,
+            //Crusher_Top_Speed,
+            //Crusher_Bot_Speed,
+            //Spiral_Clockwise_Speed,
+            //Spiral_AntiClockwise_Speed,
+            //Circle_Weighted_Speed,
+            //Star_Weighted_Speed,
+            //Shotgun_Clockwise_Speed,
+            Shotgun_AntiClockwise_Speed,
+            Circle_Weighted_Random_Speed,
+            Eruption_Speed
         };
 
         List<float> spawnInterval = new List<float>
         {
-            rain_Top_Spawn_interval,
-            rain_Left_Spawn_interval,
-            rain_Right_Spawn_interval,
-            bull_Left_Spawn_interval,
-            bull_Right_Spawn_interval,
-            Circle_Spawn_interval ,
-            circle_Random_Spawn_interval,
-            circle_Clockwise_Spawn_interval,
-            circle_AntiClockwise_Spawn_interval,
-            Shotgun_Spawn_interval,
-            Uzi_Spawn_interval,
-            Star_Spawn_interval,
-            Pump_Shotgun_Spawn_interval,
-            Shuriken_Clockwise_Spawn_interval,
-            Shuriken_AntiClockwise_Spawn_interval,
-            M4_Spawn_interval,
-            Half_Shuriken_Clockwise_Spawn_interval,
-            Half_Shuriken_AntiClockwise_Spawn_interval,
-            Half2_Shuriken_Clockwise_Spawn_interval,
-            Half2_Shuriken_AntiClockwise_Spawn_interval,
-            Crusher_Top_Spawn_interval,
-            Crusher_Bot_Spawn_interval
+            //rain_Top_Spawn_interval,
+            //rain_Left_Spawn_interval,
+            //rain_Right_Spawn_interval,
+            //bull_Left_Spawn_interval,
+            //bull_Right_Spawn_interval,
+            //Circle_Spawn_interval ,
+            //circle_Random_Spawn_interval,
+            //circle_Clockwise_Spawn_interval,
+            //circle_AntiClockwise_Spawn_interval,
+            //Shotgun_Spawn_interval,
+            //Uzi_Spawn_interval,
+            //Star_Spawn_interval,
+            //Pump_Shotgun_Spawn_interval,
+            //Shuriken_Clockwise_Spawn_interval,
+            //Shuriken_AntiClockwise_Spawn_interval,
+            //M4_Spawn_interval,
+            //Half_Shuriken_Clockwise_Spawn_interval,
+            //Half_Shuriken_AntiClockwise_Spawn_interval,
+            //Half2_Shuriken_Clockwise_Spawn_interval,
+            //Half2_Shuriken_AntiClockwise_Spawn_interval,
+            //Crusher_Top_Spawn_interval,
+            //Crusher_Bot_Spawn_interval,
+            //Spiral_Clockwise_Spawn_interval,
+            //Spiral_AntiClockwise_Spawn_interval,
+            //Circle_Weighted_Spawn_interval,
+            //Star_Weighted_Spawn_interval,
+            //Shotgun_Clockwise_Spawn_interval,
+            Shotgun_AntiClockwise_Spawn_interval,
+            Circle_Weighted_Random_Spawn_interval,
+            Eruption_Spawn_interval
 
         };
 
@@ -512,7 +626,7 @@ public class boss_moves_script : MonoBehaviour
     void circleShoot()
     {
 
-        int numBullets = 8 + 2 * circle_AntiClockwise_Difficulty;
+        int numBullets = 8 + 2 * Circle_Difficulty;
         float angleStep = 360f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 
@@ -520,7 +634,7 @@ public class boss_moves_script : MonoBehaviour
         {
             float angle = i * angleStep;
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-            SpawnAndShootBullet(bossPosition, direction, circle_Random_Speed, BulletPrefab, Star_damage);
+            SpawnAndShootBullet(bossPosition, direction, Circle_Speed, BulletPrefab, Circle_damage);
         }
 
 
@@ -547,7 +661,7 @@ public class boss_moves_script : MonoBehaviour
         float angleStep = 360f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 
-        StartCoroutine(Shoot_Clockwise_BulletsWithDelay(numBullets, angleStep));
+        StartCoroutine(Circle_Clockwise_BulletsWithDelay(numBullets, angleStep));
 
     }
 
@@ -558,9 +672,9 @@ public class boss_moves_script : MonoBehaviour
         float angleStep = 360f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 
-        StartCoroutine(Shoot_AntiClockwise_BulletsWithDelay(numBullets, angleStep));
+        StartCoroutine(Circle_AntiClockwise_BulletsWithDelay(numBullets, angleStep));
     }
-    IEnumerator Shoot_Clockwise_BulletsWithDelay(int numBullets, float angleStep)
+    IEnumerator Circle_Clockwise_BulletsWithDelay(int numBullets, float angleStep)
     {
         enemy_script.SetCanPatrol(false);
         for (int i = 0; i < numBullets; i++)
@@ -574,7 +688,7 @@ public class boss_moves_script : MonoBehaviour
         }
         enemy_script.SetCanPatrol(true);
     }
-    IEnumerator Shoot_AntiClockwise_BulletsWithDelay(int numBullets, float angleStep)
+    IEnumerator Circle_AntiClockwise_BulletsWithDelay(int numBullets, float angleStep)
     {
         enemy_script.SetCanPatrol(false);
         for (int i = 0; i < numBullets; i++)
@@ -695,7 +809,7 @@ public class boss_moves_script : MonoBehaviour
             {
                 float angle = angleBase + i * angleStep;
                 Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-                SpawnAndShootBullet(bossPosition, direction, circle_Random_Speed, BulletPrefab, Star_damage);
+                SpawnAndShootBullet(bossPosition, direction, Star_Speed, BulletPrefab, Star_damage);
 
             }
             angleBase = angleBase + 30;
@@ -713,7 +827,7 @@ public class boss_moves_script : MonoBehaviour
 
         enemy_script.SetCanPatrol(false);
         int numBullets = 4 + Pump_Shotgun_Difficulty;
-        Shotgun_Speed = 4f + Shotgun_Difficulty;
+        Shotgun_Speed = 4f + Pump_Shotgun_Difficulty;
         float angleStep = 40f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
         Vector2 characterPosition = Charachter.transform.position;
@@ -815,7 +929,7 @@ public class boss_moves_script : MonoBehaviour
 
     void Crusher_Top()
     {
-        int numBullets = 3 + 2 * Crusher_Top_Difficulty;
+        int numBullets = 4 + 2 * Crusher_Top_Difficulty;
         float angleStep = 180f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 
@@ -842,9 +956,9 @@ public class boss_moves_script : MonoBehaviour
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             SpawnAndShootBullet(bossPosition, direction, Crusher_Top_Speed, BulletPrefab, Crusher_Top_damage);
 
-             bossPosition = enemy.transform.position;
-             angle = 90 - i * angleStep;
-             direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            bossPosition = enemy.transform.position;
+            angle = 90 - i * angleStep;
+            direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             SpawnAndShootBullet(bossPosition, direction, Crusher_Top_Speed, BulletPrefab, Crusher_Top_damage);
 
 
@@ -862,9 +976,9 @@ public class boss_moves_script : MonoBehaviour
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             SpawnAndShootBullet(bossPosition, direction, Crusher_Bot_Speed, BulletPrefab, Crusher_Bot_damage);
 
-             bossPosition = enemy.transform.position;
-             angle = -90 - i * angleStep;
-             direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            bossPosition = enemy.transform.position;
+            angle = -90 - i * angleStep;
+            direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             SpawnAndShootBullet(bossPosition, direction, Crusher_Bot_Speed, BulletPrefab, Crusher_Bot_damage);
 
             yield return new WaitForSeconds(0.1f); // Delay between each shot
@@ -1009,6 +1123,234 @@ public class boss_moves_script : MonoBehaviour
         }
         enemy_script.SetCanPatrol(true);
     }
+
+
+
+
+
+
+
+
+    void Spiral_Clockwise()
+    {
+        int numBullets = 8 + 4 * Spiral_Clockwise_Difficulty;
+        float angleStep = 45f;
+        Vector2 bossPosition = enemy.transform.position;
+
+        StartCoroutine(Spiral_Clockwise_BulletsWithDelay(numBullets, angleStep));
+
+    }
+
+
+    void Spiral_AntiClockwise()
+    {
+        int numBullets = 8 + 4 * Spiral_AntiClockwise_Difficulty;
+        float angleStep = 45f;
+        Vector2 bossPosition = enemy.transform.position;
+
+        StartCoroutine(Spiral_AntiClockwise_BulletsWithDelay(numBullets, angleStep));
+    }
+    IEnumerator Spiral_Clockwise_BulletsWithDelay(int numBullets, float angleStep)
+    {
+        enemy_script.SetCanPatrol(false);
+        for (int i = 0; i < numBullets; i++)
+        {
+            Vector2 bossPosition = enemy.transform.position;
+            float angle = i * angleStep;
+            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            SpawnAndShootBullet(bossPosition, direction, Spiral_Clockwise_Speed, BulletPrefab, Spiral_Clockwise_damage);
+
+            yield return new WaitForSeconds(0.1f); // Delay between each shot
+        }
+        enemy_script.SetCanPatrol(true);
+    }
+    IEnumerator Spiral_AntiClockwise_BulletsWithDelay(int numBullets, float angleStep)
+    {
+        enemy_script.SetCanPatrol(false);
+        for (int i = 0; i < numBullets; i++)
+        {
+            Vector2 bossPosition = enemy.transform.position;
+            float angle = i * angleStep;
+            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            SpawnAndShootBullet(bossPosition, direction, Spiral_AntiClockwise_Speed, BulletPrefab, Spiral_AntiClockwise_damage);
+
+            yield return new WaitForSeconds(0.1f); // Delay between each shot
+        }
+        enemy_script.SetCanPatrol(true);
+    }
+
+
+
+
+
+    void circle_Weighted_Shoot()
+    {
+
+        int numBullets = 8 + 2 * Circle_Weighted_Difficulty;
+        float angleStep = 360f / numBullets;
+        Vector2 bossPosition = enemy.transform.position;
+
+        for (int i = 0; i < numBullets; i++)
+        {
+            float angle = i * angleStep;
+            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            SpawnAndShootBullet(bossPosition, direction, Circle_Weighted_Speed, WeightedBulletPrefab, Circle_Weighted_damage);
+        }
+
+
+
+    }
+
+
+    void Star_Weighted()
+    {
+
+        enemy_script.SetCanPatrol(false);
+        int numBullets = 6 + Star_Weighted_Difficulty;
+        float angleStep = 360f / numBullets;
+        Vector2 bossPosition = enemy.transform.position;
+
+        //for (int i = 0; i < numBullets; i++)
+        //{
+        //    float angle = i * angleStep;
+        //    Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+        //    SpawnAndShootBullet(bossPosition, direction, circle_Random_Speed, BulletPrefab, Star_damage);
+        //}
+
+
+        StartCoroutine(Shoot_Weighted_Star(numBullets, angleStep));
+
+    }
+
+    IEnumerator Shoot_Weighted_Star(int numBullets, float angleStep)
+    {
+        float angleBase = 0;
+
+        enemy_script.SetCanPatrol(false);
+        for (int j = 0; j < 3; j++)
+        {
+
+            Vector2 bossPosition = enemy.transform.position;
+
+            for (int i = 0; i < numBullets; i++)
+            {
+                float angle = angleBase + i * angleStep;
+                Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+                SpawnAndShootBullet(bossPosition, direction, Star_Speed, WeightedBulletPrefab, Star_damage);
+
+            }
+            //angleBase = angleBase + 30;
+            yield return new WaitForSeconds(0.5f); // Delay between each shot
+
+        }
+        enemy_script.SetCanPatrol(true);
+    }
+
+
+
+
+
+
+
+
+    void Shotgun_Clockwise()
+    {
+        int numBullets = 4 + Shotgun_Clockwise_Difficulty;
+        float angleStep = 90f / numBullets;
+        Vector2 bossPosition = enemy.transform.position;
+        enemy_script.SetCanPatrol(false);
+        StartCoroutine(Shotgun_Clockwise_BulletsWithDelay(numBullets, angleStep));
+
+
+
+    }
+
+    IEnumerator Shotgun_Clockwise_BulletsWithDelay(int numBullets, float angleStep)
+    {
+        float angleBase = 0;
+
+        enemy_script.SetCanPatrol(false);
+        for (int j = 0; j < 4; j++)
+        {
+
+            Vector2 bossPosition = enemy.transform.position;
+
+            for (int i = 0; i < numBullets; i++)
+            {
+                float angle = angleBase + i * angleStep;
+                Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+                SpawnAndShootBullet(bossPosition, direction, Shotgun_Speed, BulletPrefab, Shotgun_damage);
+
+            }
+            angleBase = angleBase + 90;
+            yield return new WaitForSeconds(0.7f); // Delay between each shot
+
+        }
+        enemy_script.SetCanPatrol(true);
+    }
+
+
+
+    void Shotgun_AntiClockwise()
+    {
+        int numBullets = 4 + Shotgun_AntiClockwise_Difficulty;
+        float angleStep = 90f / numBullets;
+        Vector2 bossPosition = enemy.transform.position;
+        enemy_script.SetCanPatrol(false);
+        StartCoroutine(Shotgun_AntiClockwise_BulletsWithDelay(numBullets, angleStep));
+
+
+
+    }
+
+    IEnumerator Shotgun_AntiClockwise_BulletsWithDelay(int numBullets, float angleStep)
+    {
+        float angleBase = 0;
+
+        enemy_script.SetCanPatrol(false);
+        for (int j = 0; j < 4; j++)
+        {
+
+            Vector2 bossPosition = enemy.transform.position;
+
+            for (int i = 0; i < numBullets; i++)
+            {
+                float angle = angleBase + i * angleStep;
+                Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+                SpawnAndShootBullet(bossPosition, direction, Shotgun_Speed, BulletPrefab, Shotgun_damage);
+
+            }
+            angleBase = angleBase - 90;
+            yield return new WaitForSeconds(0.7f); // Delay between each shot
+
+        }
+        enemy_script.SetCanPatrol(true);
+    }
+
+    void Circle_Weighted_Random()
+    {
+        StartCoroutine(set_enemy_patrol(Circle_Weighted_Random_Duration));
+        float angle = Random.Range(0, 360);
+        Vector2 bossPosition = enemy.transform.position;
+
+
+        Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+        SpawnAndShootBullet(bossPosition, direction, Circle_Weighted_Random_Speed, WeightedBulletPrefab, Circle_Weighted_Random_damage);
+    }
+
+
+    void Eruption()
+    {
+        StartCoroutine(set_enemy_patrol(Eruption_Duration));
+        float angle = Random.Range(45, 135);
+        Vector2 bossPosition = enemy.transform.position;
+
+
+        Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+        SpawnAndShootBullet(bossPosition, direction, Eruption_Speed, WeightedBulletPrefab, Eruption_damage);
+    }
+
+
 
 
     IEnumerator set_enemy_patrol(float time)
