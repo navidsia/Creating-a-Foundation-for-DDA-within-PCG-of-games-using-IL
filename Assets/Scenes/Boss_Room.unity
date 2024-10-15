@@ -1961,6 +1961,30 @@ MonoBehaviour:
   Star_Weighted_RestTime: 4
   Star_Weighted_Speed: 5
   Star_Weighted_damage: 1
+  Shotgun_Clockwise_Difficulty: 1
+  Shotgun_Clockwise_Duration: 0.7
+  Shotgun_Clockwise_Spawn_interval: 0.7
+  Shotgun_Clockwise_RestTime: 4
+  Shotgun_Clockwise_Speed: 5
+  Shotgun_Clockwise_damage: 1
+  Shotgun_AntiClockwise_Difficulty: 1
+  Shotgun_AntiClockwise_Duration: 0.7
+  Shotgun_AntiClockwise_Spawn_interval: 0.7
+  Shotgun_AntiClockwise_RestTime: 4
+  Shotgun_AntiClockwise_Speed: 5
+  Shotgun_AntiClockwise_damage: 1
+  Circle_Weighted_Random_Difficulty: 1
+  Circle_Weighted_Random_Duration: 4.5
+  Circle_Weighted_Random_Spawn_interval: 4.5
+  Circle_Weighted_Random_RestTime: 4
+  Circle_Weighted_Random_Speed: 5
+  Circle_Weighted_Random_damage: 1
+  Eruption_Difficulty: 1
+  Eruption_Duration: 4.5
+  Eruption_Spawn_interval: 4.5
+  Eruption_RestTime: 4
+  Eruption_Speed: 7
+  Eruption_damage: 1
   minX: -8
   maxX: 8
   minY: -4.5

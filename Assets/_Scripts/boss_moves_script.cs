@@ -7,6 +7,10 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] GameObject BulletPrefab;
     [SerializeField] GameObject BullPrefab;
     [SerializeField] GameObject WeightedBulletPrefab;
+    [SerializeField] GameObject Left_wall;
+    [SerializeField] GameObject Right_wall;
+    [SerializeField] GameObject Top_wall;
+    [SerializeField] GameObject Buttom_wall;
 
     [SerializeField] bool canpatrol = true;
     [SerializeField] Vector2 characterPosition;
@@ -273,6 +277,10 @@ public class boss_moves_script : MonoBehaviour
 
     private void Start()
     {
+        minX = Left_wall.transform.position.x;
+        maxX = Right_wall.transform.position.x;
+        minY = Buttom_wall.transform.position.y + 0.5f;
+        maxY = Top_wall.transform.position.y;
         rain_Top_difficulty = Random.Range(1, 5);
         rain_Left_difficulty = Random.Range(1, 5);
         rain_Right_difficulty = Random.Range(1, 5);
