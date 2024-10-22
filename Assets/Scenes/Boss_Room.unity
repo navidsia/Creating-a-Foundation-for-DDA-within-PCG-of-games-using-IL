@@ -1800,9 +1800,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2f2b5b7b92d44f4197f49d6d7c71f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectilePrefabs:
+  - {fileID: 4091050425883742138, guid: f219c0eb4f8fb604db20ae2e529d8440, type: 3}
+  - {fileID: 4091050425883742138, guid: 4f68784ef31a0fa4ea652eeeb101966d, type: 3}
+  - {fileID: 4091050425883742138, guid: 721f758334c26094da7a36941f05cba9, type: 3}
+  - {fileID: 4091050425883742138, guid: ef2159c20bb3ab647ad7914c5fcb0d4a, type: 3}
+  - {fileID: 4091050425883742138, guid: 96f9f570927f98947befdebcaf0c7fed, type: 3}
   BulletPrefab: {fileID: 4091050425883742138, guid: f07dcef7001e1b14bb88a00719779c51, type: 3}
   BullPrefab: {fileID: 4091050425883742138, guid: 44cf02855227ad64fa36e3933d6c7157, type: 3}
   WeightedBulletPrefab: {fileID: 4091050425883742138, guid: d7b7c0d0715812648a2708f28e3b63b1, type: 3}
+  Left_wall: {fileID: 109609803}
+  Right_wall: {fileID: 321625401}
+  Top_wall: {fileID: 682097778}
+  Buttom_wall: {fileID: 2108366946}
   canpatrol: 1
   characterPosition: {x: 0, y: 0}
   rain_Top_difficulty: 1

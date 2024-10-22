@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class boss_moves_script : MonoBehaviour
 {
+    [SerializeField] private List<GameObject> projectilePrefabs; // List of projectiles
+    [SerializeField] private List<GameObject> WeightedprojectilePrefab;
     [SerializeField] GameObject BulletPrefab;
     [SerializeField] GameObject BullPrefab;
     [SerializeField] GameObject WeightedBulletPrefab;
@@ -256,13 +258,18 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] float minY = -4.5f;
     [SerializeField] float maxY = 4.5f;
 
+    [SerializeField] int projectile_int_1 = -1;
+    [SerializeField] int projectile_int_2 = -1;
+    [SerializeField] int projectile_int_3 = -1;
 
-
+    [SerializeField] int projectile_weighted1 = -1;
+    [SerializeField] int projectile_weighted2 = -1;
+    [SerializeField] int projectile_weighted3 = -1;
 
     public Enemy enemy_script;
     [SerializeField] GameObject enemy;
     [SerializeField] GameObject Charachter;
-
+    [SerializeField] List<int> bullet_types_integer;
 
 
     private List<System.Action> bossMoves = new List<System.Action>();
@@ -361,7 +368,7 @@ public class boss_moves_script : MonoBehaviour
             //Shotgun_Clockwise,
             Shotgun_AntiClockwise,
             Circle_Weighted_Random,
-            Eruption 
+            Eruption
 
     };
 
@@ -517,6 +524,26 @@ public class boss_moves_script : MonoBehaviour
             allSpeeds.RemoveAt(randomIndex);
             spawnInterval.RemoveAt(randomIndex);
         }
+
+        while (projectile_int_1 == projectile_int_2 || projectile_int_1 == projectile_int_3 || projectile_int_2 == projectile_int_3)
+        {
+            projectile_int_1 = Random.Range(0, 5);
+            projectile_int_2 = Random.Range(0, 5);
+            projectile_int_3 = Random.Range(0, 5);
+        }
+        BulletPrefab = projectilePrefabs[projectile_int_1];
+
+
+
+        while (projectile_weighted1 == projectile_weighted2 || projectile_weighted1 == projectile_weighted3 || projectile_weighted2 == projectile_weighted3)
+        {
+            projectile_weighted1 = Random.Range(0, 5);
+            projectile_weighted2 = Random.Range(0, 5);
+            projectile_weighted3 = Random.Range(0, 5);
+        }
+        WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted1];
+        
+        
     }
 
     private void Update()
@@ -541,6 +568,33 @@ public class boss_moves_script : MonoBehaviour
         }
         else
         {
+             if (currentMoveIndex ==1)
+            {
+                BulletPrefab = projectilePrefabs[projectile_int_1];
+            }
+            if (currentMoveIndex == 2)
+            {
+                BulletPrefab = projectilePrefabs[projectile_int_2];
+            }
+            if (currentMoveIndex == 3)
+            {
+                BulletPrefab = projectilePrefabs[projectile_int_3];
+            }
+
+            if (currentMoveIndex == 1)
+            {
+                WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted1];
+            }
+            if (currentMoveIndex == 2)
+            {
+                WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted2];
+            }
+            if (currentMoveIndex == 3)
+            {
+                WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted3];
+            }
+
+
 
             StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
         }
@@ -1263,7 +1317,7 @@ public class boss_moves_script : MonoBehaviour
 
     void Shotgun_Clockwise()
     {
-        int numBullets = 4 + Shotgun_Clockwise_Difficulty;
+        int numBullets = 3 + Shotgun_Clockwise_Difficulty;
         float angleStep = 90f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
         enemy_script.SetCanPatrol(false);
@@ -1301,7 +1355,7 @@ public class boss_moves_script : MonoBehaviour
 
     void Shotgun_AntiClockwise()
     {
-        int numBullets = 4 + Shotgun_AntiClockwise_Difficulty;
+        int numBullets = 3 + Shotgun_AntiClockwise_Difficulty;
         float angleStep = 90f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
         enemy_script.SetCanPatrol(false);

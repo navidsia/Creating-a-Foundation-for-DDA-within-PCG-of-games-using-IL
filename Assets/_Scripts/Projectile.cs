@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -12,6 +12,8 @@ public class Projectile : MonoBehaviour
     float _duration;
     int _damage;
     Rigidbody2D _rigidbody;
+    Coroutine rotationCoroutine;
+    int rotationDirection; // -1 for left (counterclockwise), 1 for right (clockwise)
 
     private void Awake()
     {
@@ -33,6 +35,12 @@ public class Projectile : MonoBehaviour
         {
             _rigidbody.gravityScale = 0;
         }
+
+        // Randomly choose rotation direction (50% chance for clockwise or counterclockwise)
+        rotationDirection = Random.Range(0, 2) == 0 ? -1 : 1;
+
+        // Start the rotation coroutine
+        rotationCoroutine = StartCoroutine(RotateProjectile());
     }
 
     private void Update()
@@ -61,8 +69,23 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    IEnumerator RotateProjectile()
+    {
+        while (true)
+        {
+            // Rotate the projectile based on the chosen direction
+            transform.Rotate(0, 0, 15 * rotationDirection);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
     void Die()
     {
+        // Stop rotation when the projectile is destroyed
+        if (rotationCoroutine != null)
+        {
+            StopCoroutine(rotationCoroutine);
+        }
         Destroy(gameObject);
     }
 
