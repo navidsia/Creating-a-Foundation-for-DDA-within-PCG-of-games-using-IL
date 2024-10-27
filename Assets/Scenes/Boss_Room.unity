@@ -1806,6 +1806,12 @@ MonoBehaviour:
   - {fileID: 4091050425883742138, guid: 721f758334c26094da7a36941f05cba9, type: 3}
   - {fileID: 4091050425883742138, guid: ef2159c20bb3ab647ad7914c5fcb0d4a, type: 3}
   - {fileID: 4091050425883742138, guid: 96f9f570927f98947befdebcaf0c7fed, type: 3}
+  WeightedprojectilePrefab:
+  - {fileID: 4091050425883742138, guid: 00c2f2c166392044b9bcc7d4fe910a1e, type: 3}
+  - {fileID: 4091050425883742138, guid: 84792eef0f549644ea2d361c739e5d96, type: 3}
+  - {fileID: 4091050425883742138, guid: 9161ee5403e9be641aa9f766612508f7, type: 3}
+  - {fileID: 4091050425883742138, guid: ee381c61d5a370b4cbf6a418e66abec3, type: 3}
+  - {fileID: 4091050425883742138, guid: 6d402a7442cb1ce4bbefcd34b87c816f, type: 3}
   BulletPrefab: {fileID: 4091050425883742138, guid: f07dcef7001e1b14bb88a00719779c51, type: 3}
   BullPrefab: {fileID: 4091050425883742138, guid: 44cf02855227ad64fa36e3933d6c7157, type: 3}
   WeightedBulletPrefab: {fileID: 4091050425883742138, guid: d7b7c0d0715812648a2708f28e3b63b1, type: 3}
@@ -1999,9 +2005,16 @@ MonoBehaviour:
   maxX: 8
   minY: -4.5
   maxY: 4.5
+  projectile_int_1: -1
+  projectile_int_2: -1
+  projectile_int_3: -1
+  projectile_weighted1: -1
+  projectile_weighted2: -1
+  projectile_weighted3: -1
   enemy_script: {fileID: 1503899515}
   enemy: {fileID: 1503899512}
   Charachter: {fileID: 1824300330}
+  bullet_types_integer: 
 --- !u!4 &1097246199
 Transform:
   m_ObjectHideFlags: 0
@@ -2874,8 +2887,32 @@ PrefabInstance:
       objectReference: {fileID: 906964218}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: movementSpeed
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
+      propertyPath: enemyPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
+      propertyPath: enemyPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 2239056736657346838, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
+    - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
+      propertyPath: enemyPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 2239056736657346838, guid: f57e3554da9b6dc4f8a994603ebe2d33, type: 3}
+    - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
+      propertyPath: enemyPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 2239056736657346838, guid: 3f6cc615e7315474f8003f83b1e5c2dd, type: 3}
+    - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
+      propertyPath: enemyPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 2239056736657346838, guid: 538c54f551cdeb84baf63fe738852adb, type: 3}
+    - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
+      propertyPath: enemyPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 2239056736657346838, guid: 9a7af7b76fb4f1e41b87e19379b1aaeb, type: 3}
     - target: {fileID: 7225611782387590537, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9

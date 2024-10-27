@@ -568,31 +568,7 @@ public class boss_moves_script : MonoBehaviour
         }
         else
         {
-             if (currentMoveIndex ==1)
-            {
-                BulletPrefab = projectilePrefabs[projectile_int_1];
-            }
-            if (currentMoveIndex == 2)
-            {
-                BulletPrefab = projectilePrefabs[projectile_int_2];
-            }
-            if (currentMoveIndex == 3)
-            {
-                BulletPrefab = projectilePrefabs[projectile_int_3];
-            }
 
-            if (currentMoveIndex == 1)
-            {
-                WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted1];
-            }
-            if (currentMoveIndex == 2)
-            {
-                WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted2];
-            }
-            if (currentMoveIndex == 3)
-            {
-                WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted3];
-            }
 
 
 
@@ -608,7 +584,31 @@ public class boss_moves_script : MonoBehaviour
         currentMoveIndex++;
 
         if (currentMoveIndex >= bossMoves.Count) currentMoveIndex = 0;
+        if (currentMoveIndex == 1)
+        {
+            BulletPrefab = projectilePrefabs[projectile_int_1];
+        }
+        if (currentMoveIndex == 2)
+        {
+            BulletPrefab = projectilePrefabs[projectile_int_2];
+        }
+        if (currentMoveIndex == 3)
+        {
+            BulletPrefab = projectilePrefabs[projectile_int_3];
+        }
 
+        if (currentMoveIndex == 1)
+        {
+            WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted1];
+        }
+        if (currentMoveIndex == 2)
+        {
+            WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted2];
+        }
+        if (currentMoveIndex == 3)
+        {
+            WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted3];
+        }
         isWaitingForNextMove = false;
         enemy_script.SetCanPatrol(true);
     }

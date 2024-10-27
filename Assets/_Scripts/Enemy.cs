@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +13,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] EnemyHUDController HUD;
     [SerializeField] float movementSpeed = 2f;
     [SerializeField] LayerMask characterLayer;
+    [SerializeField] bool is_grounded = false;
+
+    [SerializeField] List<GameObject> enemyPrefabs; // List to hold enemy prefabs
+    private GameObject selectedPrefab; // The chosen prefab
+
+    private SpriteRenderer shapeSpriteRenderer;
+    private Animator shapeAnimator;
 
     private List<Vector3> patrolPositions;
     private int patrolPosIndex = 0;
@@ -34,11 +40,55 @@ public class Enemy : MonoBehaviour
 
         // Initialize previousPosition with the starting position
         previousPosition = transform.position;
+
+        // Randomly choose an enemy prefab
+        selectedPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+
+        // Get the shape (child object) components
+        Transform shapeTransform = transform.Find("Shape");
+        shapeSpriteRenderer = shapeTransform.GetComponent<SpriteRenderer>();
+        shapeAnimator = shapeTransform.GetComponent<Animator>();
+
+        // Apply the sprite renderer and animator from the selected prefab
+        ApplyRandomPrefabAppearance();
     }
+
+    private void ApplyRandomPrefabAppearance()
+    {
+        // Get the prefab's SpriteRenderer and Animator from the shape object
+        Transform prefabShapeTransform = selectedPrefab.transform.Find("Shape");
+        SpriteRenderer prefabSpriteRenderer = prefabShapeTransform.GetComponent<SpriteRenderer>();
+        Animator prefabAnimator = prefabShapeTransform.GetComponent<Animator>();
+
+        // Apply the prefab's sprite to the current enemy's sprite renderer
+        shapeSpriteRenderer.sprite = prefabSpriteRenderer.sprite;
+
+        // Apply the prefab's AnimatorController to the current enemy's animator
+        RuntimeAnimatorController prefabAnimatorController = prefabAnimator.runtimeAnimatorController;
+        shapeAnimator.runtimeAnimatorController = prefabAnimatorController;
+
+        // Set the shape's scale to match the selected prefab's shape scale
+        Transform shapeTransform = transform.Find("Shape");
+        shapeTransform.localScale = prefabShapeTransform.localScale;
+
+        // Apply collider properties to match the prefab
+        CircleCollider2D currentCollider = GetComponent<CircleCollider2D>();
+        CircleCollider2D prefabCollider = selectedPrefab.GetComponent<CircleCollider2D>();
+
+        if (currentCollider != null && prefabCollider != null)
+        {
+            currentCollider.radius = prefabCollider.radius;
+            currentCollider.offset = prefabCollider.offset;
+        }
+    }
+
+
+
     public void SetCanPatrol(bool value)
     {
         canPatrol = value;
     }
+
     public void GetHit(int damage)
     {
         if (Health <= 0)
@@ -79,48 +129,42 @@ public class Enemy : MonoBehaviour
         previousPosition = transform.position;
     }
 
-    // Generate 4 patrol positions in the 4 quarters using wall positions
     List<Vector3> GeneratePatrolPositions()
     {
-        // Get the wall positions from the BackgroundManager
         Vector3 leftWallPos = backgroundManager.GetLeftWallPosition();
         Vector3 rightWallPos = backgroundManager.GetRightWallPosition();
         Vector3 topWallPos = backgroundManager.GetTopWallPosition();
         Vector3 bottomWallPos = backgroundManager.GetBottomWallPosition();
 
-        // Calculate the center points of each quarter based on wall positions
         Vector3 bottomRight = new Vector3(
-            Random.Range(0, rightWallPos.x - 0.2f),
-            Random.Range(bottomWallPos.y + 0.9f, 0),
+            Random.Range(0, rightWallPos.x - 0.5f),
+            Random.Range(bottomWallPos.y + 1f, 0),
             0);
 
         Vector3 bottomLeft = new Vector3(
-            Random.Range(leftWallPos.x + 0.2f, 0),
-            Random.Range(bottomWallPos.y + 0.2f, 0),
+            Random.Range(leftWallPos.x + 0.5f, 0),
+            Random.Range(bottomWallPos.y + 1f, 0),
             0);
 
         Vector3 topRight = new Vector3(
-            Random.Range(0, rightWallPos.x - 0.2f),
-            Random.Range(0, topWallPos.y - 0.2f),
+            Random.Range(0, rightWallPos.x - 0.5f),
+            Random.Range(0, topWallPos.y - 0.5f),
             0);
 
         Vector3 topLeft = new Vector3(
-            Random.Range(leftWallPos.x + 0.2f, 0),
-            Random.Range(0, topWallPos.y - 0.2f),
+            Random.Range(leftWallPos.x + 0.5f, 0),
+            Random.Range(0, topWallPos.y - 0.5f),
             0);
 
-        // Return the patrol positions in order (starting from bottom-right)
         return new List<Vector3> { bottomRight, topRight, topLeft, bottomLeft };
     }
 
-    // Moves the enemy towards the next patrol position
     void MoveToPosition(Vector3 targetPosition, float speed)
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
         CheckPatrolPositionReached();
     }
 
-    // Check if the patrol position is reached and update the index accordingly
     void CheckPatrolPositionReached()
     {
         if (Vector3.Distance(transform.position, patrolPositions[patrolPosIndex]) <= 0.1f)
@@ -128,21 +172,20 @@ public class Enemy : MonoBehaviour
             patrolPosIndex++;
             if (patrolPosIndex >= patrolPositions.Count)
             {
-                patrolPosIndex = 0; // Loop back to the starting position (bottom-right)
+                patrolPosIndex = 0;
             }
         }
     }
 
     void FaceMovementDirection()
     {
-        // Calculate the direction of movement by checking the change in position
         Vector3 movementDirection = transform.position - previousPosition;
 
-        if (movementDirection.x > 0) // Moving right
+        if (movementDirection.x > 0)
         {
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
-        else if (movementDirection.x < 0) // Moving left
+        else if (movementDirection.x < 0)
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
         }
