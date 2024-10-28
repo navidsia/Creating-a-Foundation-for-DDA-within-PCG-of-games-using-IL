@@ -6,40 +6,40 @@ using UnityEngine.SceneManagement;
 public class CharacterController : MonoBehaviour
 {
     [SerializeField] GameObject shape;
-    [SerializeField] float movementSpeed;
+    [SerializeField] public float movementSpeed;
     [SerializeField] float jumpForce;
     [SerializeField] float groundDetectionRange;
     [SerializeField] int damage;
-    [SerializeField] int health;
+    [SerializeField] public int health;
     [SerializeField] LayerMask groundMask;
     [SerializeField] int maxJumpCount;
     [SerializeField] KeyCode jumpKey;
-    [SerializeField] float deathHeight;
+    [SerializeField] public float deathHeight;
     [SerializeField] Animator animator;
     [SerializeField] float maxFallingSpeed = -20f;
     [SerializeField] float limitFallingSpeed = -19.9f;
     [SerializeField] float cameraFallingSpeed = -5f;
     [SerializeField] float total_input;
-    [SerializeField] int max_health;
+    [SerializeField] public int max_health;
     [SerializeField] Projectile BulletPrefab;
 
     // Melee attack fields
-    [SerializeField] Transform attackPoint;  // Point from where melee attack originates
-    [SerializeField] float attackRange = 0.5f;
-    [SerializeField] float attackAngle = 120f; // Attack angle in degrees
+    [SerializeField] Transform attackPoint;  
+    [SerializeField] public float attackRange = 0.5f;
+    [SerializeField] float attackAngle = 120f; 
     [SerializeField] LayerMask enemyLayers;
 
     [SerializeField] PhysicsMaterial2D noFrictionMaterial;
     [SerializeField] PhysicsMaterial2D groundFrictionMaterial;
-    [SerializeField] float rollSpeed =5f;  // Speed for the roll movement
-    [SerializeField] float speed_of_this_shit;  // Speed for the roll movement
-    [SerializeField] float rollDuration = 0.4f;  // Duration for the roll
-    [SerializeField] bool isRolling = false;  // To track if currently rolling
-    Rigidbody2D rigidbody2D;
-    int _jumpCount;
+    [SerializeField] float rollSpeed = 5f;  
+    [SerializeField] float speed_of_this_shit;  
+    [SerializeField] float rollDuration = 0.4f;  
+    [SerializeField] bool isRolling = false;  
+    public Rigidbody2D rigidbody2D;
+    public int _jumpCount;
     public bool isOnGround;
-    bool isRight = true;
-    bool isHittable;
+    public bool isRight = true;
+    public bool isHittable;
     public bool FreeFalling;
     public bool can_attack = true;
     void Start()
@@ -84,7 +84,7 @@ public class CharacterController : MonoBehaviour
         // Pass the Vector2 direction and damage to the Shoot method
       //  projectile.Shoot(direction, damage);
     }
-    private void Roll()
+    public void Roll()
     {
         if (!isRolling)
         {
@@ -109,7 +109,7 @@ public class CharacterController : MonoBehaviour
         animator.SetBool("is_rolling", false);
 
     }
-    private void MeleeAttack()
+    public void MeleeAttack()
     {
         // Play attack animation
         int which_attack = Random.Range(1, 4);
@@ -230,7 +230,7 @@ public class CharacterController : MonoBehaviour
         animator.SetBool("is_on_ground", hit);
     }
 
-    private void MoveLogic(float input)
+    public void MoveLogic(float input)
     {
         if (isRolling)
         {
@@ -255,7 +255,7 @@ public class CharacterController : MonoBehaviour
 
     }
 
-    private void Jump()
+    public void Jump()
     {
         if (_jumpCount >= maxJumpCount)
             return;
