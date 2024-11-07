@@ -34,8 +34,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] float rollSpeed = 5f;  
     [SerializeField] float speed_of_this_shit;  
     [SerializeField] float rollDuration = 0.4f;  
-    [SerializeField] bool isRolling = false;  
-    public Rigidbody2D rigidbody2D;
+    [SerializeField] bool isRolling = false;
+    [SerializeField] Rigidbody2D rigidbody2D;
     public int _jumpCount;
     public bool isOnGround;
     public bool isRight = true;
@@ -44,7 +44,7 @@ public class CharacterController : MonoBehaviour
     public bool can_attack = true;
     void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+
         isHittable = true;
     }
 
@@ -230,7 +230,7 @@ public class CharacterController : MonoBehaviour
         animator.SetBool("is_on_ground", hit);
     }
 
-    public void MoveLogic(float input)
+    private void MoveLogic(float input)
     {
         if (isRolling)
         {

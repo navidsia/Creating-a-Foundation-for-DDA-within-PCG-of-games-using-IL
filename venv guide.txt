@@ -1,0 +1,418 @@
+Microsoft Windows [Version 10.0.19045.4046]
+(c) Microsoft Corporation. All rights reserved.
+
+G:\final arshad git\final_arshad_game_git>python -m venv venv
+
+G:\final arshad git\final_arshad_game_git>python -m venv venv
+
+G:\final arshad git\final_arshad_game_git>venv\Scripts\activate
+
+(venv) G:\final arshad git\final_arshad_game_git>python -m pip install --upgrade pip
+Requirement already satisfied: pip in g:\final arshad git\final_arshad_game_git\venv\lib\site-packages (22.0.4)
+Collecting pip
+  Downloading pip-24.3.1-py3-none-any.whl (1.8 MB)
+     ---- ----------------------------------- 0.2/1.8 MB 724.0 kB/s eta 0:00:03
+ERROR: Exception:
+Traceback (most recent call last):
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\urllib3\response.py", line 438, in _error_catcher
+    yield
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\urllib3\response.py", line 519, in read
+    data = self._fp.read(amt) if not fp_closed else b""
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\cachecontrol\filewrapper.py", line 90, in read
+    data = self.__fp.read(amt)
+  File "C:\Users\navid\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 463, in read
+    n = self.readinto(b)
+  File "C:\Users\navid\AppData\Local\Programs\Python\Python39\lib\http\client.py", line 507, in readinto
+    n = self.fp.readinto(b)
+  File "C:\Users\navid\AppData\Local\Programs\Python\Python39\lib\socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+  File "C:\Users\navid\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1242, in recv_into
+    return self.read(nbytes, buffer)
+  File "C:\Users\navid\AppData\Local\Programs\Python\Python39\lib\ssl.py", line 1100, in read
+    return self._sslobj.read(len, buffer)
+socket.timeout: The read operation timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\cli\base_command.py", line 167, in exc_logging_wrapper
+    status = run_func(*args)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\cli\req_command.py", line 205, in wrapper
+    return func(self, options, args)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\commands\install.py", line 339, in run
+    requirement_set = resolver.resolve(
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\resolution\resolvelib\resolver.py", line 94, in resolve
+    result = self._result = resolver.resolve(
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\resolvelib\resolvers.py", line 481, in resolve
+    state = resolution.resolve(requirements, max_rounds=max_rounds)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\resolvelib\resolvers.py", line 348, in resolve
+    self._add_to_criteria(self.state.criteria, r, parent=None)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\resolvelib\resolvers.py", line 172, in _add_to_criteria
+    if not criterion.candidates:
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\resolvelib\structs.py", line 151, in __bool__
+    return bool(self._sequence)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\resolution\resolvelib\found_candidates.py", line 155, in __bool__
+    return any(self)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\resolution\resolvelib\found_candidates.py", line 143, in <genexpr>
+    return (c for c in iterator if id(c) not in self._incompatible_ids)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\resolution\resolvelib\found_candidates.py", line 97, in _iter_built_with_inserted
+    candidate = func()
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\resolution\resolvelib\factory.py", line 215, in _make_candidate_from_link
+    self._link_candidate_cache[link] = LinkCandidate(
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\resolution\resolvelib\candidates.py", line 288, in __init__
+    super().__init__(
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\resolution\resolvelib\candidates.py", line 158, in __init__
+    self.dist = self._prepare()
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\resolution\resolvelib\candidates.py", line 227, in _prepare
+    dist = self._prepare_distribution()
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\resolution\resolvelib\candidates.py", line 299, in _prepare_distribution
+    return preparer.prepare_linked_requirement(self._ireq, parallel_builds=True)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\operations\prepare.py", line 487, in prepare_linked_requirement
+    return self._prepare_linked_requirement(req, parallel_builds)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\operations\prepare.py", line 532, in _prepare_linked_requirement
+    local_file = unpack_url(
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\operations\prepare.py", line 214, in unpack_url
+    file = get_http_url(
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\operations\prepare.py", line 94, in get_http_url
+    from_path, content_type = download(link, temp_dir.path)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\network\download.py", line 146, in __call__
+    for chunk in chunks:
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\cli\progress_bars.py", line 304, in _rich_progress_bar
+    for chunk in iterable:
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_internal\network\utils.py", line 63, in response_chunks
+    for chunk in response.raw.stream(
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\urllib3\response.py", line 576, in stream
+    data = self.read(amt=amt, decode_content=decode_content)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\urllib3\response.py", line 541, in read
+    raise IncompleteRead(self._fp_bytes_read, self.length_remaining)
+  File "C:\Users\navid\AppData\Local\Programs\Python\Python39\lib\contextlib.py", line 137, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\pip\_vendor\urllib3\response.py", line 443, in _error_catcher
+    raise ReadTimeoutError(self._pool, None, "Read timed out.")
+pip._vendor.urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
+WARNING: You are using pip version 22.0.4; however, version 24.3.1 is available.
+You should consider upgrading via the 'G:\final arshad git\final_arshad_game_git\venv\Scripts\python.exe -m pip install --upgrade pip' command.
+
+(venv) G:\final arshad git\final_arshad_game_git>G:\final arshad git\final_arshad_game_git\venv\Scripts\python.exe -m pip install --upgrade pip
+'G:\final' is not recognized as an internal or external command,
+operable program or batch file.
+
+(venv) G:\final arshad git\final_arshad_game_git>venv\Scripts\python.exe -m pip install --upgrade pip
+Requirement already satisfied: pip in g:\final arshad git\final_arshad_game_git\venv\lib\site-packages (22.0.4)
+Collecting pip
+  Downloading pip-24.3.1-py3-none-any.whl (1.8 MB)
+     ---------------------------------------- 1.8/1.8 MB 92.4 kB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 22.0.4
+    Uninstalling pip-22.0.4:
+      Successfully uninstalled pip-22.0.4
+Successfully installed pip-24.3.1
+
+(venv) G:\final arshad git\final_arshad_game_git>pip install mlagents
+Collecting mlagents
+  Downloading mlagents-0.30.0.tar.gz (131 kB)
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Preparing metadata (pyproject.toml) ... done
+Collecting grpcio>=1.11.0 (from mlagents)
+  Downloading grpcio-1.67.1-cp39-cp39-win_amd64.whl.metadata (4.0 kB)
+Collecting h5py>=2.9.0 (from mlagents)
+  Downloading h5py-3.12.1-cp39-cp39-win_amd64.whl.metadata (2.5 kB)
+Collecting mlagents-envs==0.30.0 (from mlagents)
+  Downloading mlagents_envs-0.30.0.tar.gz (56 kB)
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Preparing metadata (pyproject.toml) ... done
+Collecting numpy<2.0,>=1.13.3 (from mlagents)
+  Downloading numpy-1.26.4-cp39-cp39-win_amd64.whl.metadata (61 kB)
+Collecting Pillow>=4.2.1 (from mlagents)
+  Downloading pillow-11.0.0-cp39-cp39-win_amd64.whl.metadata (9.3 kB)
+Collecting protobuf>=3.6 (from mlagents)
+  Downloading protobuf-5.28.3-cp39-cp39-win_amd64.whl.metadata (592 bytes)
+Collecting pyyaml>=3.1.0 (from mlagents)
+  Downloading PyYAML-6.0.2-cp39-cp39-win_amd64.whl.metadata (2.1 kB)
+Collecting tensorboard>=1.15 (from mlagents)
+  Using cached tensorboard-2.18.0-py3-none-any.whl.metadata (1.6 kB)
+Collecting attrs>=19.3.0 (from mlagents)
+  Using cached attrs-24.2.0-py3-none-any.whl.metadata (11 kB)
+Collecting pypiwin32==223 (from mlagents)
+  Using cached pypiwin32-223-py3-none-any.whl.metadata (236 bytes)
+Collecting cattrs<1.7,>=1.1.0 (from mlagents)
+  Using cached cattrs-1.5.0-py3-none-any.whl.metadata (16 kB)
+Collecting cloudpickle (from mlagents-envs==0.30.0->mlagents)
+  Downloading cloudpickle-3.1.0-py3-none-any.whl.metadata (7.0 kB)
+Collecting gym>=0.21.0 (from mlagents-envs==0.30.0->mlagents)
+  Downloading gym-0.26.2.tar.gz (721 kB)
+     ---------------------------------------- 721.7/721.7 kB 919.1 kB/s eta 0:00:00
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Preparing metadata (pyproject.toml) ... done
+Collecting pettingzoo==1.15.0 (from mlagents-envs==0.30.0->mlagents)
+  Downloading PettingZoo-1.15.0.tar.gz (756 kB)
+     ---------------------------------------- 756.7/756.7 kB 163.2 kB/s eta 0:00:00
+  Installing build dependencies ... done
+  Getting requirements to build wheel ... done
+  Preparing metadata (pyproject.toml) ... done
+Collecting numpy<2.0,>=1.13.3 (from mlagents)
+  Downloading numpy-1.21.2-cp39-cp39-win_amd64.whl.metadata (2.1 kB)
+Collecting filelock>=3.4.0 (from mlagents-envs==0.30.0->mlagents)
+  Downloading filelock-3.16.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting pywin32>=223 (from pypiwin32==223->mlagents)
+  Downloading pywin32-308-cp39-cp39-win_amd64.whl.metadata (8.3 kB)
+Collecting absl-py>=0.4 (from tensorboard>=1.15->mlagents)
+  Using cached absl_py-2.1.0-py3-none-any.whl.metadata (2.3 kB)
+Collecting markdown>=2.6.8 (from tensorboard>=1.15->mlagents)
+  Using cached Markdown-3.7-py3-none-any.whl.metadata (7.0 kB)
+Collecting packaging (from tensorboard>=1.15->mlagents)
+  Downloading packaging-24.1-py3-none-any.whl.metadata (3.2 kB)
+Requirement already satisfied: setuptools>=41.0.0 in g:\final arshad git\final_arshad_game_git\venv\lib\site-packages (from tensorboard>=1.15->mlagents) (58.1.0)
+Collecting six>1.9 (from tensorboard>=1.15->mlagents)
+  Downloading six-1.16.0-py2.py3-none-any.whl.metadata (1.8 kB)
+Collecting tensorboard-data-server<0.8.0,>=0.7.0 (from tensorboard>=1.15->mlagents)
+  Using cached tensorboard_data_server-0.7.2-py3-none-any.whl.metadata (1.1 kB)
+Collecting werkzeug>=1.0.1 (from tensorboard>=1.15->mlagents)
+  Downloading werkzeug-3.1.1-py3-none-any.whl.metadata (3.7 kB)
+Collecting gym-notices>=0.0.4 (from gym>=0.21.0->mlagents-envs==0.30.0->mlagents)
+  Downloading gym_notices-0.0.8-py3-none-any.whl.metadata (1.0 kB)
+Collecting importlib-metadata>=4.8.0 (from gym>=0.21.0->mlagents-envs==0.30.0->mlagents)
+  Downloading importlib_metadata-8.5.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting MarkupSafe>=2.1.1 (from werkzeug>=1.0.1->tensorboard>=1.15->mlagents)
+  Downloading MarkupSafe-3.0.2-cp39-cp39-win_amd64.whl.metadata (4.1 kB)
+Collecting zipp>=3.20 (from importlib-metadata>=4.8.0->gym>=0.21.0->mlagents-envs==0.30.0->mlagents)
+  Downloading zipp-3.20.2-py3-none-any.whl.metadata (3.7 kB)
+Downloading numpy-1.21.2-cp39-cp39-win_amd64.whl (14.0 MB)
+   ---------------------------------------- 14.0/14.0 MB 442.5 kB/s eta 0:00:00
+Using cached pypiwin32-223-py3-none-any.whl (1.7 kB)
+Using cached attrs-24.2.0-py3-none-any.whl (63 kB)
+Using cached cattrs-1.5.0-py3-none-any.whl (19 kB)
+Downloading grpcio-1.67.1-cp39-cp39-win_amd64.whl (4.4 MB)
+   ---------------------------------------- 4.4/4.4 MB 692.6 kB/s eta 0:00:00
+Downloading h5py-3.12.1-cp39-cp39-win_amd64.whl (3.0 MB)
+   ---------------------------------------- 3.0/3.0 MB 932.3 kB/s eta 0:00:00
+Downloading pillow-11.0.0-cp39-cp39-win_amd64.whl (2.6 MB)
+   ---------------------------------------- 2.6/2.6 MB 617.2 kB/s eta 0:00:00
+Downloading protobuf-5.28.3-cp39-cp39-win_amd64.whl (431 kB)
+Downloading PyYAML-6.0.2-cp39-cp39-win_amd64.whl (162 kB)
+Using cached tensorboard-2.18.0-py3-none-any.whl (5.5 MB)
+Using cached absl_py-2.1.0-py3-none-any.whl (133 kB)
+Downloading filelock-3.16.1-py3-none-any.whl (16 kB)
+Downloading cloudpickle-3.1.0-py3-none-any.whl (22 kB)
+Using cached Markdown-3.7-py3-none-any.whl (106 kB)
+Downloading pywin32-308-cp39-cp39-win_amd64.whl (6.6 MB)
+   ---------------------------------------- 6.6/6.6 MB 397.5 kB/s eta 0:00:00
+Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+Using cached tensorboard_data_server-0.7.2-py3-none-any.whl (2.4 kB)
+Downloading werkzeug-3.1.1-py3-none-any.whl (224 kB)
+Downloading packaging-24.1-py3-none-any.whl (53 kB)
+Downloading gym_notices-0.0.8-py3-none-any.whl (3.0 kB)
+Downloading importlib_metadata-8.5.0-py3-none-any.whl (26 kB)
+Downloading MarkupSafe-3.0.2-cp39-cp39-win_amd64.whl (15 kB)
+Downloading zipp-3.20.2-py3-none-any.whl (9.2 kB)
+Building wheels for collected packages: mlagents, mlagents-envs, pettingzoo, gym
+  Building wheel for mlagents (pyproject.toml) ... done
+  Created wheel for mlagents: filename=mlagents-0.30.0-py3-none-any.whl size=168456 sha256=58234c115a8ced5fcbe794050f08929fe31e944f48a1ff88499cad84f6eef27d
+  Stored in directory: c:\users\navid\appdata\local\pip\cache\wheels\5c\8a\c3\39cf65990bffb0b634f7be00d00b2f376e0cc080cef2862988
+  Building wheel for mlagents-envs (pyproject.toml) ... done
+  Created wheel for mlagents-envs: filename=mlagents_envs-0.30.0-py3-none-any.whl size=88763 sha256=94f06bb9ffa735d59fa6fb42a2a627e0244d95143dda24bf3eb6f2381bc15ad7
+  Stored in directory: c:\users\navid\appdata\local\pip\cache\wheels\57\59\8f\64ce14f4ac14b1c3c39a2d13f4052a672be991239f07adf152
+  Building wheel for pettingzoo (pyproject.toml) ... done
+  Created wheel for pettingzoo: filename=PettingZoo-1.15.0-py3-none-any.whl size=875645 sha256=7627abcd78fbe290f499739f06a7710bb17d0c3170a629e282cead7d3405b2e0
+  Stored in directory: c:\users\navid\appdata\local\pip\cache\wheels\28\41\39\907f7364e5f371af41f720f4e5ca07f42e35e57b42f0382895
+  Building wheel for gym (pyproject.toml) ... done
+  Created wheel for gym: filename=gym-0.26.2-py3-none-any.whl size=827633 sha256=0f2dec66b7b9f5ef677e8ff2560c37264b8276294a0677beb9932acbac20ffd1
+  Stored in directory: c:\users\navid\appdata\local\pip\cache\wheels\af\2b\30\5e78b8b9599f2a2286a582b8da80594f654bf0e18d825a4405
+Successfully built mlagents mlagents-envs pettingzoo gym
+Installing collected packages: pywin32, gym-notices, zipp, tensorboard-data-server, six, pyyaml, pypiwin32, protobuf, Pillow, packaging, numpy, MarkupSafe, grpcio, filelock, cloudpickle, attrs, absl-py, werkzeug, importlib-metadata, h5py, cattrs, markdown, gym, tensorboard, pettingzoo, mlagents-envs, mlagents
+Successfully installed MarkupSafe-3.0.2 Pillow-11.0.0 absl-py-2.1.0 attrs-24.2.0 cattrs-1.5.0 cloudpickle-3.1.0 filelock-3.16.1 grpcio-1.67.1 gym-0.26.2 gym-notices-0.0.8 h5py-3.12.1 importlib-metadata-8.5.0 markdown-3.7 mlagents-0.30.0 mlagents-envs-0.30.0 numpy-1.21.2 packaging-24.1 pettingzoo-1.15.0 protobuf-5.28.3 pypiwin32-223 pywin32-308 pyyaml-6.0.2 six-1.16.0 tensorboard-2.18.0 tensorboard-data-server-0.7.2 werkzeug-3.1.1 zipp-3.20.2
+
+(venv) G:\final arshad git\final_arshad_game_git>pip3 install torch torchvision torchaudio
+Collecting torch
+  Downloading torch-2.5.1-cp39-cp39-win_amd64.whl.metadata (28 kB)
+Collecting torchvision
+  Downloading torchvision-0.20.1-cp39-cp39-win_amd64.whl.metadata (6.2 kB)
+Collecting torchaudio
+  Downloading torchaudio-2.5.1-cp39-cp39-win_amd64.whl.metadata (6.5 kB)
+Requirement already satisfied: filelock in g:\final arshad git\final_arshad_game_git\venv\lib\site-packages (from torch) (3.16.1)
+Collecting typing-extensions>=4.8.0 (from torch)
+  Downloading typing_extensions-4.12.2-py3-none-any.whl.metadata (3.0 kB)
+Collecting networkx (from torch)
+  Downloading networkx-3.2.1-py3-none-any.whl.metadata (5.2 kB)
+Collecting jinja2 (from torch)
+  Downloading jinja2-3.1.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting fsspec (from torch)
+  Downloading fsspec-2024.10.0-py3-none-any.whl.metadata (11 kB)
+Collecting sympy==1.13.1 (from torch)
+  Downloading sympy-1.13.1-py3-none-any.whl.metadata (12 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy==1.13.1->torch)
+  Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Requirement already satisfied: numpy in g:\final arshad git\final_arshad_game_git\venv\lib\site-packages (from torchvision) (1.21.2)
+Requirement already satisfied: pillow!=8.3.*,>=5.3.0 in g:\final arshad git\final_arshad_game_git\venv\lib\site-packages (from torchvision) (11.0.0)
+Requirement already satisfied: MarkupSafe>=2.0 in g:\final arshad git\final_arshad_game_git\venv\lib\site-packages (from jinja2->torch) (3.0.2)
+Downloading torch-2.5.1-cp39-cp39-win_amd64.whl (203.0 MB)
+   ---------------------------------------- 203.0/203.0 MB 274.0 kB/s eta 0:00:00
+Downloading sympy-1.13.1-py3-none-any.whl (6.2 MB)
+   ---------------------------------------- 6.2/6.2 MB 640.8 kB/s eta 0:00:00
+Downloading torchvision-0.20.1-cp39-cp39-win_amd64.whl (1.6 MB)
+   ---------------------------------------- 1.6/1.6 MB 594.5 kB/s eta 0:00:00
+Downloading torchaudio-2.5.1-cp39-cp39-win_amd64.whl (2.4 MB)
+   ---------------------------------------- 2.4/2.4 MB 604.2 kB/s eta 0:00:00
+Downloading typing_extensions-4.12.2-py3-none-any.whl (37 kB)
+Downloading fsspec-2024.10.0-py3-none-any.whl (179 kB)
+Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+Downloading networkx-3.2.1-py3-none-any.whl (1.6 MB)
+   ---------------------------------------- 1.6/1.6 MB 615.8 kB/s eta 0:00:00
+Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+   ---------------------------------------- 536.2/536.2 kB 398.3 kB/s eta 0:00:00
+Installing collected packages: mpmath, typing-extensions, sympy, networkx, jinja2, fsspec, torch, torchvision, torchaudio
+Successfully installed fsspec-2024.10.0 jinja2-3.1.4 mpmath-1.3.0 networkx-3.2.1 sympy-1.13.1 torch-2.5.1 torchaudio-2.5.1 torchvision-0.20.1 typing-extensions-4.12.2
+
+(venv) G:\final arshad git\final_arshad_game_git>pip install protobuf==3.20.3
+Collecting protobuf==3.20.3
+  Downloading protobuf-3.20.3-cp39-cp39-win_amd64.whl.metadata (699 bytes)
+Downloading protobuf-3.20.3-cp39-cp39-win_amd64.whl (904 kB)
+   ---------------------------------------- 904.2/904.2 kB 501.2 kB/s eta 0:00:00
+Installing collected packages: protobuf
+  Attempting uninstall: protobuf
+    Found existing installation: protobuf 5.28.3
+    Uninstalling protobuf-5.28.3:
+      Successfully uninstalled protobuf-5.28.3
+Successfully installed protobuf-3.20.3
+
+(venv) G:\final arshad git\final_arshad_game_git>mlagents-learn -h
+G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\torch\__init__.py:1144: UserWarning: torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\torch\csrc\tensor\python_tensor.cpp:434.)
+  _C._set_default_tensor_type(t)
+usage: mlagents-learn.exe [-h] [--env ENV_PATH] [--resume] [--deterministic] [--force] [--run-id RUN_ID]
+                          [--initialize-from RUN_ID] [--seed SEED] [--inference] [--base-port BASE_PORT]
+                          [--num-envs NUM_ENVS] [--num-areas NUM_AREAS] [--debug] [--env-args ...]
+                          [--max-lifetime-restarts MAX_LIFETIME_RESTARTS]
+                          [--restarts-rate-limit-n RESTARTS_RATE_LIMIT_N]
+                          [--restarts-rate-limit-period-s RESTARTS_RATE_LIMIT_PERIOD_S] [--torch] [--tensorflow]
+                          [--results-dir RESULTS_DIR] [--width WIDTH] [--height HEIGHT]
+                          [--quality-level QUALITY_LEVEL] [--time-scale TIME_SCALE]
+                          [--target-frame-rate TARGET_FRAME_RATE] [--capture-frame-rate CAPTURE_FRAME_RATE]
+                          [--no-graphics] [--torch-device DEVICE]
+                          [trainer_config_path]
+
+positional arguments:
+  trainer_config_path
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --env ENV_PATH        Path to the Unity executable to train (default: None)
+  --resume              Whether to resume training from a checkpoint. Specify a --run-id to use this option. If set,
+                        the training code loads an already trained model to initialize the neural network before
+                        resuming training. This option is only valid when the models exist, and have the same behavior
+                        names as the current agents in your scene. (default: False)
+  --deterministic       Whether to select actions deterministically in policy. `dist.mean` for continuous action
+                        space, and `dist.argmax` for deterministic action space (default: False)
+  --force               Whether to force-overwrite this run-id's existing summary and model data. (Without this flag,
+                        attempting to train a model with a run-id that has been used before will throw an error.
+                        (default: False)
+  --run-id RUN_ID       The identifier for the training run. This identifier is used to name the subdirectories in
+                        which the trained model and summary statistics are saved as well as the saved model itself. If
+                        you use TensorBoard to view the training statistics, always set a unique run-id for each
+                        training run. (The statistics for all runs with the same id are combined as if they were
+                        produced by a the same session.) (default: ppo)
+  --initialize-from RUN_ID
+                        Specify a previously saved run ID from which to initialize the model from. This can be used,
+                        for instance, to fine-tune an existing model on a new environment. Note that the previously
+                        saved models must have the same behavior parameters as your current environment. (default:
+                        None)
+  --seed SEED           A number to use as a seed for the random number generator used by the training code (default:
+                        -1)
+  --inference           Whether to run in Python inference mode (i.e. no training). Use with --resume to load a model
+                        trained with an existing run ID. (default: False)
+  --base-port BASE_PORT
+                        The starting port for environment communication. Each concurrent Unity environment instance
+                        will get assigned a port sequentially, starting from the base-port. Each instance will use the
+                        port (base_port + worker_id), where the worker_id is sequential IDs given to each instance
+                        from 0 to (num_envs - 1). Note that when training using the Editor rather than an executable,
+                        the base port will be ignored. (default: 5005)
+  --num-envs NUM_ENVS   The number of concurrent Unity environment instances to collect experiences from when training
+                        (default: 1)
+  --num-areas NUM_AREAS
+                        The number of parallel training areas in each Unity environment instance. (default: 1)
+  --debug               Whether to enable debug-level logging for some parts of the code (default: False)
+  --env-args ...        Arguments passed to the Unity executable. Be aware that the standalone build will also process
+                        these as Unity Command Line Arguments. You should choose different argument names if you want
+                        to create environment-specific arguments. All arguments after this flag will be passed to the
+                        executable. (default: None)
+  --max-lifetime-restarts MAX_LIFETIME_RESTARTS
+                        The max number of times a single Unity executable can crash over its lifetime before ml-agents
+                        exits. Can be set to -1 if no limit is desired. (default: 10)
+  --restarts-rate-limit-n RESTARTS_RATE_LIMIT_N
+                        The maximum number of times a single Unity executable can crash over a period of time (period
+                        set in restarts-rate-limit-period-s). Can be set to -1 to not use rate limiting with restarts.
+                        (default: 1)
+  --restarts-rate-limit-period-s RESTARTS_RATE_LIMIT_PERIOD_S
+                        The period of time --restarts-rate-limit-n applies to. (default: 60)
+  --torch               (Removed) Use the PyTorch framework. (default: False)
+  --tensorflow          (Removed) Use the TensorFlow framework. (default: False)
+  --results-dir RESULTS_DIR
+                        Results base directory (default: results)
+
+Engine Configuration:
+  --width WIDTH         The width of the executable window of the environment(s) in pixels (ignored for editor
+                        training). (default: 84)
+  --height HEIGHT       The height of the executable window of the environment(s) in pixels (ignored for editor
+                        training) (default: 84)
+  --quality-level QUALITY_LEVEL
+                        The quality level of the environment(s). Equivalent to calling QualitySettings.SetQualityLevel
+                        in Unity. (default: 5)
+  --time-scale TIME_SCALE
+                        The time scale of the Unity environment(s). Equivalent to setting Time.timeScale in Unity.
+                        (default: 20)
+  --target-frame-rate TARGET_FRAME_RATE
+                        The target frame rate of the Unity environment(s). Equivalent to setting
+                        Application.targetFrameRate in Unity. (default: -1)
+  --capture-frame-rate CAPTURE_FRAME_RATE
+                        The capture frame rate of the Unity environment(s). Equivalent to setting
+                        Time.captureFramerate in Unity. (default: 60)
+  --no-graphics         Whether to run the Unity executable in no-graphics mode (i.e. without initializing the
+                        graphics driver. Use this only if your agents don't use visual observations. (default: False)
+
+Torch Configuration:
+  --torch-device DEVICE
+                        Settings for the default torch.device used in training, for example, "cpu", "cuda", or
+                        "cuda:0" (default: None)
+
+(venv) G:\final arshad git\final_arshad_game_git>
+
+
+
+
+
+
+Microsoft Windows [Version 10.0.19045.4046]
+(c) Microsoft Corporation. All rights reserved.
+
+G:\final arshad git\final_arshad_game_git>venv\scripts\activate
+
+(venv) G:\final arshad git\final_arshad_game_git>mlagents-learn --run-id=test1
+G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\torch\__init__.py:1144: UserWarning: torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\torch\csrc\tensor\python_tensor.cpp:434.)
+  _C._set_default_tensor_type(t)
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information:
+  ml-agents: 0.30.0,
+  ml-agents-envs: 0.30.0,
+  Communicator API: 1.5.0,
+  PyTorch: 2.5.1+cpu
+G:\final arshad git\final_arshad_game_git\venv\lib\site-packages\torch\__init__.py:1144: UserWarning: torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\torch\csrc\tensor\python_tensor.cpp:434.)
+  _C._set_default_tensor_type(t)
+[INFO] Listening on port 5004. Start training by pressing the Play button in the Unity Editor.

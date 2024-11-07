@@ -116,7 +116,7 @@ public class CharacterAgent : Agent
         }
 
         // Move agent
-        agentRigidbody.velocity = new Vector2(moveInput * movementSpeed, agentRigidbody.velocity.y);
+      //  agentRigidbody.velocity = new Vector2(moveInput * movementSpeed, agentRigidbody.velocity.y);
 
         // Perform jump if requested
         if (jumpAction == 1 && characterController.isOnGround)

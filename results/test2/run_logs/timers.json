@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1730641012",
+        "python_version": "3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "G:\\final arshad git\\final_arshad_game_git\\venv\\Scripts\\mlagents-learn --run-id=test2",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.5.1+cpu",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1730641341"
+    },
+    "total": 329.6065213,
+    "count": 1,
+    "self": 0.06333910000000742,
+    "children": {
+        "run_training.setup": {
+            "total": 0.13367249999999986,
+            "count": 1,
+            "self": 0.13367249999999986
+        },
+        "TrainerController.start_learning": {
+            "total": 329.4095097,
+            "count": 1,
+            "self": 0.00029360000002043307,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 329.4091823,
+                    "count": 1,
+                    "self": 329.4091823
+                },
+                "TrainerController._save_models": {
+                    "total": 3.3799999982875306e-05,
+                    "count": 1,
+                    "self": 3.3799999982875306e-05
+                }
+            }
+        }
+    }
+}
