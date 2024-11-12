@@ -56,7 +56,7 @@ void Start()
         CheckFreeFalling();
         var horizontalInput = Input.GetAxisRaw("Horizontal");
         GroundDetection();
-        MoveLogic(horizontalInput);
+        //MoveLogic(horizontalInput);
         FlipCheck(horizontalInput);
 
         if (Input.GetKeyDown(jumpKey))
@@ -65,15 +65,15 @@ void Start()
         }
         if (Input.GetMouseButtonDown(0))
         {
-            MeleeAttack();
+           MeleeAttack();
         }
 
         // Roll logic
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-         Roll();
+      //   Roll();
         }
-
+        GetFacingDirection();
         UpdateFriction();
     }
     private void Shoot()
@@ -232,7 +232,7 @@ void Start()
         animator.SetBool("is_on_ground", hit);
     }
 
-    private void MoveLogic(float input)
+    public void MoveLogic(float input)
     {
         if (isRolling)
         {

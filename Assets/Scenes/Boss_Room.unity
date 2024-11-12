@@ -2660,7 +2660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Record: 0
+  Record: 1
   NumStepsToRecord: 0
   DemonstrationName: record-New
   DemonstrationDirectory: Demos
@@ -2699,7 +2699,7 @@ MonoBehaviour:
   Left_wall: {fileID: 109609803}
   Right_wall: {fileID: 321625401}
   Top_wall: {fileID: 682097778}
-  Buttom_wall: {fileID: 2108366946}
+  Bottom_wall: {fileID: 2108366946}
 --- !u!114 &1824300339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2717,12 +2717,12 @@ MonoBehaviour:
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 03000000020000000200000002000000
-    VectorActionSize: 03000000020000000200000002000000
+      BranchSizes: 0200000002000000020000000200000002000000
+    VectorActionSize: 0200000002000000020000000200000002000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 2b706378c6efc79458e9f64f9a2726a4, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: My Behavior
@@ -3007,11 +3007,11 @@ PrefabInstance:
       objectReference: {fileID: 906964218}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: Health
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: MaxHealth
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: movementSpeed

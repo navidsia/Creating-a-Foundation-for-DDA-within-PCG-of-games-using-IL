@@ -65,31 +65,49 @@ public class CharacterAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        int movementAction = actions.DiscreteActions[0];
-        int jumpAction = actions.DiscreteActions[1];
-        int attackAction = actions.DiscreteActions[2];
-        int dashAction = actions.DiscreteActions[3];
+        int movementLeft = actions.DiscreteActions[0];
+        int movementRight = actions.DiscreteActions[1];
+        int jumpAction = actions.DiscreteActions[2];
+        int attackAction = actions.DiscreteActions[3];
+        int dashAction = actions.DiscreteActions[4];
 
         // Movement logic
-        float moveInput = 0f;
-        switch (movementAction)
-        {
-            case 0:
-                moveInput = -1f; // Move left
-                break;
-            case 1:
-                moveInput = 0f; // Idle
-                break;
-            case 2:
-                moveInput = 1f; // Move right
-                break;
-        }
+        //   float moveInput = 0f;
+        //   switch (movementAction)
+        //   {
+        //       case 0:
+        //           moveInput = -1f; // Move left
+        //           break;
+        //       case 1:
+        //           moveInput = 0f; // Idle
+        //           break;
+        //       case 2:
+        //           moveInput = 1f; // Move right
+        //           break;
+        //   }
 
         // Move agent
-        agentRigidbody.velocity = new Vector2(moveInput * movementSpeed, agentRigidbody.velocity.y);
+        //  agentRigidbody.velocity = new Vector2(moveInput * movementSpeed, agentRigidbody.velocity.y);
 
         // Perform jump if requested
-        if (jumpAction == 1 && characterController.isOnGround)
+
+        if (movementLeft == 1  && movementRight == 0)
+        {
+            characterController.MoveLogic(1);
+
+        }
+
+        if (movementRight == 1 && movementLeft == 0)
+        {
+            characterController.MoveLogic(-1);
+        }
+        if (movementRight == 0 && movementLeft == 0)
+        {
+            characterController.MoveLogic(0);
+        }
+
+
+        if (jumpAction == 1)
         {
             characterController.Jump();
         }
@@ -97,7 +115,7 @@ public class CharacterAgent : Agent
         // Perform dash if requested
         if (dashAction == 1)
         {
-            characterController.Roll();
+          //  characterController.Roll();
         }
 
         // Handle attacking
@@ -110,35 +128,36 @@ public class CharacterAgent : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var discreteActions = actionsOut.DiscreteActions;
-        discreteActions[0] = 1; // Default action (no movement)
-        discreteActions[1] = 0; // Default jump
-        discreteActions[2] = 0; // Default attack
-        discreteActions[3] = 0; // Default dash
+        discreteActions[0] = 0; // Default action (no left)
+        discreteActions[1] = 0; // Default action (no right)
+        discreteActions[2] = 0; // Default jump
+        discreteActions[3] = 0; // Default attack
+        discreteActions[4] = 0; // Default dash
 
         // Use independent if statements
         if (Input.GetKey(KeyCode.D))
         {
-            discreteActions[0] = 2; // Move right
+            discreteActions[0] = 1; // Move right
         }
         
         if (Input.GetKey(KeyCode.A))
         {
-            discreteActions[0] = 0; // Move left
+            discreteActions[1] = 1; // Move left
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            discreteActions[1] = 1; // Jump
+            discreteActions[2] = 1; // Jump
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            discreteActions[2] = 1; // Attack
+            discreteActions[3] = 1; // Attack
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            discreteActions[3] = 1; // Dash
+        //    discreteActions[4] = 1; // Dash
         }
     }
 
