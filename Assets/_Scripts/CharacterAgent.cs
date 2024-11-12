@@ -1,26 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using UnityEngine;
 
 public class CharacterAgent : Agent
 {
     private CharacterController characterController;
     private Rigidbody2D agentRigidbody;
-    private bool isRight = true;
-    private int jumpCount = 0;
     public float movementSpeed = 5f;
 
     [SerializeField] private Transform Enemy;
     [SerializeField] GameObject Left_wall;
     [SerializeField] GameObject Right_wall;
     [SerializeField] GameObject Top_wall;
-    [SerializeField] GameObject Buttom_wall;
-
-    private List<int> recordedActions = new List<int>(); // To store user actions
-    private int actionIndex = 0; // To track which action to take from recorded actions
+    [SerializeField] GameObject Bottom_wall;
 
     public override void Initialize()
     {
@@ -30,7 +23,7 @@ public class CharacterAgent : Agent
         GameObject enemyObject = GameObject.FindWithTag("Enemy");
         if (enemyObject != null)
         {
-            Enemy = enemyObject.transform;  // Set Enemy as the transform of the enemy
+            Enemy = enemyObject.transform;
         }
         else
         {
@@ -40,16 +33,13 @@ public class CharacterAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        // Reset position and health
+        // Reset position and state
         if (transform.position.y < -5f)
         {
             characterController.health = characterController.max_health;
             transform.position = new Vector2(0, 0); // Reset position
             agentRigidbody.velocity = Vector2.zero;
         }
-        jumpCount = 0;
-        actionIndex = 0; // Reset action index at the beginning of an episode
-        recordedActions.Clear(); // Clear recorded actions
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -60,7 +50,6 @@ public class CharacterAgent : Agent
         sensor.AddObservation(agentRigidbody.velocity.y);
         sensor.AddObservation(characterController.isOnGround);
         sensor.AddObservation(characterController.health);
-        sensor.AddObservation(isRight);
 
         if (Enemy != null)
         {
@@ -70,7 +59,7 @@ public class CharacterAgent : Agent
 
         sensor.AddObservation(Left_wall.transform.position.x);
         sensor.AddObservation(Right_wall.transform.position.x);
-        sensor.AddObservation(Buttom_wall.transform.position.y + 0.5f);
+        sensor.AddObservation(Bottom_wall.transform.position.y + 0.5f);
         sensor.AddObservation(Top_wall.transform.position.y);
     }
 
@@ -80,25 +69,6 @@ public class CharacterAgent : Agent
         int jumpAction = actions.DiscreteActions[1];
         int attackAction = actions.DiscreteActions[2];
         int dashAction = actions.DiscreteActions[3];
-
-        // Record actions for mimicry if not yet fully recorded
-        if (recordedActions.Count < 400) // Limit recording to a certain number of actions (100 * 4 for 4 actions)
-        {
-            recordedActions.Add(movementAction);
-            recordedActions.Add(jumpAction);
-            recordedActions.Add(attackAction);
-            recordedActions.Add(dashAction);
-        }
-
-        // Mimic user movements during training, if recorded actions exist
-        if (actionIndex < recordedActions.Count)
-        {
-            // Retrieve recorded actions based on the current action index
-            movementAction = recordedActions[actionIndex++];
-            if (actionIndex < recordedActions.Count) jumpAction = recordedActions[actionIndex++];
-            if (actionIndex < recordedActions.Count) attackAction = recordedActions[actionIndex++];
-            if (actionIndex < recordedActions.Count) dashAction = recordedActions[actionIndex++];
-        }
 
         // Movement logic
         float moveInput = 0f;
@@ -116,13 +86,12 @@ public class CharacterAgent : Agent
         }
 
         // Move agent
-      //  agentRigidbody.velocity = new Vector2(moveInput * movementSpeed, agentRigidbody.velocity.y);
+        agentRigidbody.velocity = new Vector2(moveInput * movementSpeed, agentRigidbody.velocity.y);
 
         // Perform jump if requested
         if (jumpAction == 1 && characterController.isOnGround)
         {
             characterController.Jump();
-            jumpCount++;
         }
 
         // Perform dash if requested
@@ -135,7 +104,6 @@ public class CharacterAgent : Agent
         if (attackAction == 1)
         {
             characterController.MeleeAttack();
-            AddReward(1.0f); // Reward for a successful attack
         }
     }
 
@@ -147,11 +115,13 @@ public class CharacterAgent : Agent
         discreteActions[2] = 0; // Default attack
         discreteActions[3] = 0; // Default dash
 
+        // Use independent if statements
         if (Input.GetKey(KeyCode.D))
         {
             discreteActions[0] = 2; // Move right
         }
-        else if (Input.GetKey(KeyCode.A))
+        
+        if (Input.GetKey(KeyCode.A))
         {
             discreteActions[0] = 0; // Move left
         }
@@ -171,4 +141,5 @@ public class CharacterAgent : Agent
             discreteActions[3] = 1; // Dash
         }
     }
+
 }

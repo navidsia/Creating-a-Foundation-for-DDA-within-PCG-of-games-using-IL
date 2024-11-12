@@ -17,15 +17,9 @@ behaviors:
       hidden_units: 128
       num_layers: 2
     reward_signals:
-      extrinsic:
-        gamma: 0.99
-        strength: 1.0
       gail:
-        strength: 0.3
-        demo_path: Demos/record-New.demo 
-    behavioral_cloning:
-      strength: 0.3
-      demo_path: Demos/record-New.demo  
+        strength: 0.9
+        demo_path: Demos/record-New-left-.demo
     max_steps: 500000
     time_horizon: 2056
     summary_freq: 10000

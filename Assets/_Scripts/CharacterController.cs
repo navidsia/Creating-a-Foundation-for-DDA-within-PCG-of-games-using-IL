@@ -42,11 +42,13 @@ public class CharacterController : MonoBehaviour
     public bool isHittable;
     public bool FreeFalling;
     public bool can_attack = true;
-    void Start()
-    {
+void Start()
+{
+    isHittable = true;
 
-        isHittable = true;
-    }
+    Vector3 randomStartPosition = new Vector3(Random.Range(-5f, 5f), Random.Range(1f, 5f), transform.position.z);
+    transform.position = randomStartPosition;
+}
 
     void Update()
     {
