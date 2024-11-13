@@ -113,6 +113,10 @@ void Start()
     }
     public void MeleeAttack()
     {
+        if (can_attack)
+        {
+
+        
         // Play attack animation
         int which_attack = Random.Range(1, 4);
         animator.SetBool("attack"+ which_attack.ToString(), true);
@@ -134,6 +138,7 @@ void Start()
         can_attack = false;
 
         Invoke("ResetAttackCooldown", 0.3f);
+        }
     }
 
     private Vector2 GetFacingDirection()
@@ -204,7 +209,7 @@ void Start()
         SceneManager.LoadScene(1);
     }
 
-    private void FlipCheck(float input)
+    public void FlipCheck(float input)
     {
         if (input < 0 && isRight)
             Flip();
@@ -234,6 +239,7 @@ void Start()
 
     public void MoveLogic(float input)
     {
+        FlipCheck(input);
         if (isRolling)
         {
             int current_Direction = 1;

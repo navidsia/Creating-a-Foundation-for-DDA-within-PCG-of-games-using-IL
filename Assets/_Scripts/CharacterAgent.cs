@@ -94,7 +94,6 @@ public class CharacterAgent : Agent
         if (movementLeft == 1  && movementRight == 0)
         {
             characterController.MoveLogic(1);
-
         }
 
         if (movementRight == 1 && movementLeft == 0)
