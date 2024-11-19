@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
 {
+    [SerializeField] ResultSaver resultSaver;
     [SerializeField] GameObject shape;
     [SerializeField] public float movementSpeed;
     [SerializeField] float jumpForce;
@@ -42,13 +43,24 @@ public class CharacterController : MonoBehaviour
     public bool isHittable;
     public bool FreeFalling;
     public bool can_attack = true;
-void Start()
-{
-    isHittable = true;
+    void Start()
+    {
+        Start_function();
+    }
+    public void Start_function()
+    {
 
-    Vector3 randomStartPosition = new Vector3(Random.Range(-5f, 5f), Random.Range(1f, 5f), transform.position.z);
-    transform.position = randomStartPosition;
-}
+        isHittable = true;
+        health = 5;
+        can_attack = true;
+        isHittable = true;
+        isRight = true;
+        _jumpCount = 0;
+        isOnGround = true;
+        Vector3 randomStartPosition = new Vector3(Random.Range(-7f, 7f), -2.9f, transform.position.z);
+        transform.position = randomStartPosition;
+        HUDController.instance.Repaint(health, max_health);
+    }
 
     void Update()
     {
@@ -75,6 +87,10 @@ void Start()
         }
         GetFacingDirection();
         UpdateFriction();
+    }
+    public int Return_HP_Player()
+    {
+        return health;
     }
     private void Shoot()
     {
@@ -206,7 +222,7 @@ void Start()
 
     private void Die()
     {
-        SceneManager.LoadScene(1);
+        resultSaver.SaveSceneTime();
     }
 
     public void FlipCheck(float input)

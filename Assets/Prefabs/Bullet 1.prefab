@@ -136,6 +136,8 @@ MonoBehaviour:
     m_Bits: 192
   detectionRadius: 0.12
   not_weighted: 1
+  rounded: 0
+  enemy: {fileID: 0}
 --- !u!50 &-7515483333969976608
 Rigidbody2D:
   serializedVersion: 4
@@ -162,4 +164,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

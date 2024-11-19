@@ -26,6 +26,10 @@ public class BackgroundManager : MonoBehaviour
     public bool no_buttom;
     void Start()
     {
+        Start_function();
+    }
+    public void Start_function()
+    {
         // Select a random category
         category_number = Random.Range(0, categories.Length);
         category_number = 0;
@@ -35,14 +39,14 @@ public class BackgroundManager : MonoBehaviour
         Sprite backgroundSprite = LoadRandomSpriteFromCategory(selectedCategory, "Background");
 
 
-       // Sprite bottomWallSprite = LoadRandomSpriteFromCategory(selectedCategory, "Buttom wall");
+        // Sprite bottomWallSprite = LoadRandomSpriteFromCategory(selectedCategory, "Buttom wall");
         // Set the sprite while maintaining the scale
         if (backgroundSprite != null)
         {
             backgroundRenderer.sprite = backgroundSprite;
 
             // Set the bottom wall's sprite to the same as the background sprite
-            if ( Resources.Load<Sprite>("Images/" + selectedCategory + "/" + "Buttom wall/" + backgroundSprite.name) != null)
+            if (Resources.Load<Sprite>("Images/" + selectedCategory + "/" + "Buttom wall/" + backgroundSprite.name) != null)
             {
                 bottomWallRenderer.sprite = Resources.Load<Sprite>("Images/" + selectedCategory + "/" + "Buttom wall/" + backgroundSprite.name);
             }
@@ -62,7 +66,6 @@ public class BackgroundManager : MonoBehaviour
         }
 
 
-    
 
 
         // Scale the sprite to fit the camera height
@@ -74,7 +77,8 @@ public class BackgroundManager : MonoBehaviour
             bottomWall.gameObject.AddComponent<BoxCollider2D>();
         }
     }
-       private Sprite GetTransparentSprite()
+
+    private Sprite GetTransparentSprite()
         {
             // Create a 1x1 pixel texture
             Texture2D texture = new Texture2D(1, 1);

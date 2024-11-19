@@ -123,6 +123,59 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &123434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 123435}
+  - component: {fileID: 123436}
+  m_Layer: 0
+  m_Name: result saver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &123435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123434}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.7709799, y: 1.6209395, z: -0.07275127}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &123436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f53f532a1b833cd4eb5bf49bcff79753, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 1503899515}
+  characterController: {fileID: 1824300333}
+  characterAgent: {fileID: 1824300338}
+  saving: 1
+  behaviorParameters: {fileID: 1824300339}
+  iteration: 1
+  max_iteration: 2
+  backgroundManager: {fileID: 1734592977}
+  boss_moves: {fileID: 1097246198}
 --- !u!1 &109609803
 GameObject:
   m_ObjectHideFlags: 0
@@ -2015,6 +2068,10 @@ MonoBehaviour:
   enemy: {fileID: 1503899512}
   Charachter: {fileID: 1824300330}
   bullet_types_integer: 
+  allDurations: []
+  allRestTimes: []
+  allSpeeds: []
+  spawnInterval: []
 --- !u!4 &1097246199
 Transform:
   m_ObjectHideFlags: 0
@@ -2580,6 +2637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac91e35a0421f34daf96a7feb39408b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resultSaver: {fileID: 123436}
   shape: {fileID: 493417653}
   movementSpeed: 10
   jumpForce: 16
@@ -2627,7 +2685,7 @@ Transform:
   m_GameObject: {fileID: 1824300330}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.56, y: -2.68, z: 0}
+  m_LocalPosition: {x: -7.56, y: -2.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3014,6 +3072,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
+      propertyPath: resultSaver
+      value: 
+      objectReference: {fileID: 123436}
+    - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: movementSpeed
       value: 3
       objectReference: {fileID: 0}
@@ -3116,3 +3178,4 @@ SceneRoots:
   - {fileID: 713476531}
   - {fileID: 1097246199}
   - {fileID: 906964219}
+  - {fileID: 123435}

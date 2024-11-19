@@ -7,7 +7,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] LayerMask detectionLayer;
     [SerializeField] float detectionRadius;
     [SerializeField] bool not_weighted = true;
-
+    [SerializeField] bool rounded = true;
+    [SerializeField] Enemy enemy;
     bool hasShot;
     float _duration;
     int _damage;
@@ -19,7 +20,10 @@ public class Projectile : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
-
+    public void set_enemy(GameObject enemy_input)
+    {
+        enemy = enemy_input.GetComponent<Enemy>(); 
+    }
     public void Shoot(Vector2 direction, float speed, int damage)
     {
         hasShot = true;
@@ -40,7 +44,13 @@ public class Projectile : MonoBehaviour
         rotationDirection = Random.Range(0, 2) == 0 ? -1 : 1;
 
         // Start the rotation coroutine
-        rotationCoroutine = StartCoroutine(RotateProjectile());
+        if (rounded)
+        {
+            rotationCoroutine = StartCoroutine(RotateProjectile());
+        }
+
+        
+
     }
 
     private void Update()
@@ -57,6 +67,10 @@ public class Projectile : MonoBehaviour
             }
             Die();
             return;
+        }
+        if (enemy.Health < 1)
+        {
+            Die();
         }
 
         if (_duration > 0)

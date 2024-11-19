@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] ResultSaver resultSaver;
     public int MaxHealth;
     public int Health;
     [SerializeField] bool canPatrol;
@@ -14,6 +15,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] float movementSpeed = 2f;
     [SerializeField] LayerMask characterLayer;
     [SerializeField] bool is_grounded = false;
+
+    [SerializeField] Vector3 bottomRight;
+    [SerializeField] Vector3 topRight;
+    [SerializeField] Vector3 topLeft;
+    [SerializeField] Vector3 bottomLeft;
 
     [SerializeField] List<GameObject> enemyPrefabs; // List to hold enemy prefabs
     private GameObject selectedPrefab; // The chosen prefab
@@ -30,6 +36,11 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        Start_function();
+    }
+    public void Start_function()
+    {
+        Health = 10;
         MaxHealth = Health;
         HUD.Setup(this);
 
@@ -52,7 +63,10 @@ public class Enemy : MonoBehaviour
         // Apply the sprite renderer and animator from the selected prefab
         ApplyRandomPrefabAppearance();
     }
-
+    public int Return_HP_Enemy()
+    {
+        return Health;
+    }
     private void ApplyRandomPrefabAppearance()
     {
         // Get the prefab's SpriteRenderer and Animator from the shape object
@@ -106,8 +120,9 @@ public class Enemy : MonoBehaviour
     {
         float originalTimeScale = Time.timeScale;
         Time.timeScale = originalTimeScale;
-        SceneManager.LoadScene(1);
-        Destroy(gameObject);
+        resultSaver.SaveSceneTime();
+      //  Destroy(gameObject);
+
     }
 
     private void Update()
@@ -136,26 +151,27 @@ public class Enemy : MonoBehaviour
         Vector3 topWallPos = backgroundManager.GetTopWallPosition();
         Vector3 bottomWallPos = backgroundManager.GetBottomWallPosition();
 
-        Vector3 bottomRight = new Vector3(
-            Random.Range(0, rightWallPos.x - 0.5f),
-            Random.Range(bottomWallPos.y + 1f, 0),
+         bottomRight = new Vector3(
+            Random.Range(0, rightWallPos.x - 1f),
+            Random.Range(bottomWallPos.y + 1.5f, 0),
             0);
 
-        Vector3 bottomLeft = new Vector3(
-            Random.Range(leftWallPos.x + 0.5f, 0),
-            Random.Range(bottomWallPos.y + 1f, 0),
+         bottomLeft = new Vector3(
+            Random.Range(leftWallPos.x + 1f, 0),
+            Random.Range(bottomWallPos.y + 1.5f, 0),
             0);
 
-        Vector3 topRight = new Vector3(
-            Random.Range(0, rightWallPos.x - 0.5f),
-            Random.Range(0, topWallPos.y - 0.5f),
+         topRight = new Vector3(
+            Random.Range(0, rightWallPos.x - 1f),
+            Random.Range(0, topWallPos.y - 1f),
             0);
 
-        Vector3 topLeft = new Vector3(
-            Random.Range(leftWallPos.x + 0.5f, 0),
-            Random.Range(0, topWallPos.y - 0.5f),
+         topLeft = new Vector3(
+            Random.Range(leftWallPos.x + 1f, 0),
+            Random.Range(0, topWallPos.y - 1f),
             0);
 
+        transform.position = bottomRight;
         return new List<Vector3> { bottomRight, topRight, topLeft, bottomLeft };
     }
 

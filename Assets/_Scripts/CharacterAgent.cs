@@ -17,6 +17,10 @@ public class CharacterAgent : Agent
 
     public override void Initialize()
     {
+        Start_function();
+    }
+    public void Start_function()
+    {
         characterController = GetComponent<CharacterController>();
         agentRigidbody = GetComponent<Rigidbody2D>();
 
@@ -59,7 +63,7 @@ public class CharacterAgent : Agent
 
         sensor.AddObservation(Left_wall.transform.position.x);
         sensor.AddObservation(Right_wall.transform.position.x);
-        sensor.AddObservation(Bottom_wall.transform.position.y + 0.5f);
+        sensor.AddObservation(Bottom_wall.transform.position.y);
         sensor.AddObservation(Top_wall.transform.position.y);
     }
 
