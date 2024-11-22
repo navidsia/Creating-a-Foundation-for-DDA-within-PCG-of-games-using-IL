@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float movementSpeed = 2f;
     [SerializeField] LayerMask characterLayer;
     [SerializeField] bool is_grounded = false;
-
+    [SerializeField] public int scenario = 0;
     [SerializeField] Vector3 bottomRight;
     [SerializeField] Vector3 topRight;
     [SerializeField] Vector3 topLeft;
@@ -40,15 +40,14 @@ public class Enemy : MonoBehaviour
     }
     public void Start_function()
     {
-        Health = 10;
-        MaxHealth = Health;
+        Health = MaxHealth;
         HUD.Setup(this);
 
         // Get the BackgroundManager reference
         backgroundManager = FindObjectOfType<BackgroundManager>();
 
         patrolPositions = GeneratePatrolPositions();
-
+        transform.position = patrolPositions[1];
         // Initialize previousPosition with the starting position
         previousPosition = transform.position;
 
@@ -146,6 +145,10 @@ public class Enemy : MonoBehaviour
 
     List<Vector3> GeneratePatrolPositions()
     {
+        if (scenario == 0)
+        {
+
+        
         Vector3 leftWallPos = backgroundManager.GetLeftWallPosition();
         Vector3 rightWallPos = backgroundManager.GetRightWallPosition();
         Vector3 topWallPos = backgroundManager.GetTopWallPosition();
@@ -172,6 +175,82 @@ public class Enemy : MonoBehaviour
             0);
 
         transform.position = bottomRight;
+        }
+        else if (scenario == 1)
+        {
+            bottomRight = new Vector3(5.3f, -1.8f, 0);
+            bottomLeft = new Vector3(-6.7f, -2.9f, 0);
+            topRight = new Vector3(3.2f, 0.5f, 0);
+            topLeft = new Vector3(-1.4f, -2.1f, 0);
+        }
+        else if (scenario == 2)
+        {
+            bottomRight = new Vector3(7.1f, -2.4f, 0);
+            bottomLeft = new Vector3(-4.8f, -1.3f, 0);
+            topRight = new Vector3(3.8f, 0.8f, 0);
+            topLeft = new Vector3(-2.6f, -2.7f, 0);
+        }
+        else if (scenario == 3)
+        {
+            bottomRight = new Vector3(1.2f, -2.5f, 0);
+            bottomLeft = new Vector3(-3.4f, -0.6f, 0);
+            topRight = new Vector3(4.5f, 2.3f, 0);
+            topLeft = new Vector3(-6.3f, -1.2f, 0);
+        }
+        else if (scenario == 4)
+        {
+            bottomRight = new Vector3(6.5f, -0.9f, 0);
+            bottomLeft = new Vector3(-7.2f, -2.8f, 0);
+            topRight = new Vector3(2.1f, 1.5f, 0);
+            topLeft = new Vector3(-4.5f, -0.4f, 0);
+        }
+        else if (scenario == 5)
+        {
+            bottomRight = new Vector3(0.7f, -1.4f, 0);
+            bottomLeft = new Vector3(-5.6f, -0.3f, 0);
+            topRight = new Vector3(6.3f, 2.1f, 0);
+            topLeft = new Vector3(-1.9f, -2.6f, 0);
+        }
+        else if (scenario == 6)
+        {
+            bottomRight = new Vector3(4.2f, -1.1f, 0);
+            bottomLeft = new Vector3(-2.8f, -2.3f, 0);
+            topRight = new Vector3(7.5f, 0.2f, 0);
+            topLeft = new Vector3(-6.1f, -1.9f, 0);
+        }
+        else if (scenario == 7)
+        {
+            bottomRight = new Vector3(2.9f, -0.7f, 0);
+            bottomLeft = new Vector3(-7.4f, -1.2f, 0);
+            topRight = new Vector3(5.6f, 1.9f, 0);
+            topLeft = new Vector3(-3.1f, -2.5f, 0);
+        }
+        else if (scenario == 8)
+        {
+            bottomRight = new Vector3(6.8f, -2.1f, 0);
+            bottomLeft = new Vector3(-1.7f, -1.6f, 0);
+            topRight = new Vector3(0.3f, 2.0f, 0);
+            topLeft = new Vector3(-5.9f, -2.4f, 0);
+        }
+        else if (scenario == 9)
+        {
+            bottomRight = new Vector3(3.4f, -1.7f, 0);
+            bottomLeft = new Vector3(-4.2f, -0.9f, 0);
+            topRight = new Vector3(7.0f, 1.1f, 0);
+            topLeft = new Vector3(-2.3f, -2.2f, 0);
+        }
+        else if (scenario == 10)
+        {
+            bottomRight = new Vector3(1.9f, -2.3f, 0);
+            bottomLeft = new Vector3(-6.4f, -1.0f, 0);
+            topRight = new Vector3(5.1f, 0.7f, 0);
+            topLeft = new Vector3(-7.3f, -2.5f, 0);
+        }
+
+
+
+
+
         return new List<Vector3> { bottomRight, topRight, topLeft, bottomLeft };
     }
 

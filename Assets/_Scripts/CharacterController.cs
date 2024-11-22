@@ -37,6 +37,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] float rollDuration = 0.4f;  
     [SerializeField] bool isRolling = false;
     [SerializeField] Rigidbody2D rigidbody2D;
+    [SerializeField] public int scenario = 0;
     public int _jumpCount;
     public bool isOnGround;
     public bool isRight = true;
@@ -47,18 +48,69 @@ public class CharacterController : MonoBehaviour
     {
         Start_function();
     }
+
     public void Start_function()
     {
 
         isHittable = true;
-        health = 5;
+        health = max_health;
         can_attack = true;
         isHittable = true;
         isRight = true;
         _jumpCount = 0;
         isOnGround = true;
-        Vector3 randomStartPosition = new Vector3(Random.Range(-7f, 7f), -2.9f, transform.position.z);
+        Vector3 randomStartPosition = new Vector3();
+        if (scenario == 0)
+        {
+            randomStartPosition = new Vector3(Random.Range(-7f, 7f), -2.9f, transform.position.z);
+        }
+        else if (scenario == 1)
+        {
+            randomStartPosition = new Vector3(-4f, -2.9f, transform.position.z);
+        }
+        else if (scenario == 2)
+        {
+            randomStartPosition = new Vector3(3f, -2.9f, transform.position.z);
+        }
+        else if (scenario == 3)
+        {
+            randomStartPosition = new Vector3(6.5f, -2.9f, transform.position.z);
+        }
+        else if (scenario == 4)
+        {
+            randomStartPosition = new Vector3(-5f, -2.9f, transform.position.z);
+        }
+        else if (scenario == 5)
+        {
+            randomStartPosition = new Vector3(0f, -2.9f, transform.position.z);
+        }
+        else if (scenario == 6)
+        {
+            randomStartPosition = new Vector3(1f, -2.9f, transform.position.z);
+        }
+        else if (scenario == 7)
+        {
+            randomStartPosition = new Vector3(-2f, -2.9f, transform.position.z);
+        }
+        else if (scenario == 8)
+        {
+            randomStartPosition = new Vector3(2f, -2.9f, transform.position.z);
+        }
+        else if (scenario == 9)
+        {
+            randomStartPosition = new Vector3(6f, -2.9f, transform.position.z);
+        }
+        else if (scenario == 10)
+        {
+            randomStartPosition = new Vector3(-6.5f, -2.9f, transform.position.z);
+        }
+
         transform.position = randomStartPosition;
+        if (randomStartPosition[0] > 0)
+        {
+            Flip();
+        }
+
         HUDController.instance.Repaint(health, max_health);
     }
 
@@ -87,6 +139,10 @@ public class CharacterController : MonoBehaviour
         }
         GetFacingDirection();
         UpdateFriction();
+    }
+    public void SetisHittable(bool value)
+    {
+        isHittable = value;
     }
     public int Return_HP_Player()
     {

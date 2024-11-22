@@ -14,7 +14,7 @@ public class CharacterAgent : Agent
     [SerializeField] GameObject Right_wall;
     [SerializeField] GameObject Top_wall;
     [SerializeField] GameObject Bottom_wall;
-
+    [SerializeField] bool can_move=true;
     public override void Initialize()
     {
         Start_function();
@@ -34,7 +34,10 @@ public class CharacterAgent : Agent
             Debug.LogError("Enemy object not found. Make sure the enemy has the correct tag.");
         }
     }
-
+    public void SetCan_Move(bool value)
+    {
+        can_move = value;
+    }
     public override void OnEpisodeBegin()
     {
         // Reset position and state
@@ -69,6 +72,10 @@ public class CharacterAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        if (can_move)
+        {
+
+       
         int movementLeft = actions.DiscreteActions[0];
         int movementRight = actions.DiscreteActions[1];
         int jumpAction = actions.DiscreteActions[2];
@@ -127,6 +134,7 @@ public class CharacterAgent : Agent
             characterController.MeleeAttack();
         }
     }
+}
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
@@ -162,6 +170,7 @@ public class CharacterAgent : Agent
         {
         //    discreteActions[4] = 1; // Dash
         }
+
     }
 
 }

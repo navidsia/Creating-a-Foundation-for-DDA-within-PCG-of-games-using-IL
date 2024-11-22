@@ -289,6 +289,7 @@ public class boss_moves_script : MonoBehaviour
     private float spawnTimer = 0f;
     private bool isWaitingForNextMove = false;
 
+    [SerializeField] public bool can_update=true;
 
     [SerializeField] public int scenario = 0;
     private void Start()
@@ -995,6 +996,10 @@ public class boss_moves_script : MonoBehaviour
     }
     private void Update()
     {
+        if (can_update)
+        {
+
+        
         if (enemy == null) return;
 
         if (isWaitingForNextMove) return;
@@ -1021,8 +1026,12 @@ public class boss_moves_script : MonoBehaviour
 
             StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
         }
+        }
     }
-
+    public void SetCanUpdate(bool value)
+    {
+        can_update = value;
+    }
     IEnumerator WaitForNextMove(float restTime)
     {
         isWaitingForNextMove = true;

@@ -170,12 +170,15 @@ MonoBehaviour:
   enemy: {fileID: 1503899515}
   characterController: {fileID: 1824300333}
   characterAgent: {fileID: 1824300338}
-  saving: 1
+  saving: 0
   behaviorParameters: {fileID: 1824300339}
-  iteration: 1
-  max_iteration: 2
+  iteration: 9
+  max_iteration: 10
   backgroundManager: {fileID: 1734592977}
   boss_moves: {fileID: 1097246198}
+  follow_scenario: 1
+  scenario_end: 0
+  Black_Screen: {fileID: 236952292}
 --- !u!1 &109609803
 GameObject:
   m_ObjectHideFlags: 0
@@ -656,6 +659,90 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &236952291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 236952293}
+  - component: {fileID: 236952292}
+  m_Layer: 0
+  m_Name: Black_Screen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &236952292
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236952291}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 15
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &236952293
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236952291}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.02, y: -0.48, z: 0}
+  m_LocalScale: {x: 40, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2072,6 +2159,8 @@ MonoBehaviour:
   allRestTimes: []
   allSpeeds: []
   spawnInterval: []
+  can_update: 1
+  scenario: 0
 --- !u!4 &1097246199
 Transform:
   m_ObjectHideFlags: 0
@@ -2670,6 +2759,7 @@ MonoBehaviour:
   rollDuration: 0.5
   isRolling: 0
   rigidbody2D: {fileID: 1824300332}
+  scenario: 0
   _jumpCount: 0
   isOnGround: 0
   isRight: 1
@@ -2758,6 +2848,7 @@ MonoBehaviour:
   Right_wall: {fileID: 321625401}
   Top_wall: {fileID: 682097778}
   Bottom_wall: {fileID: 2108366946}
+  can_move: 1
 --- !u!114 &1824300339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2771,7 +2862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 13
+    VectorObservationSize: 12
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -2941,7 +3032,7 @@ Transform:
   m_GameObject: {fileID: 2108366946}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0503, y: -4.99, z: 0}
+  m_LocalPosition: {x: 0, y: -4.99, z: 0}
   m_LocalScale: {x: 19.11962, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3065,11 +3156,11 @@ PrefabInstance:
       objectReference: {fileID: 906964218}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: Health
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: MaxHealth
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: resultSaver
@@ -3179,3 +3270,4 @@ SceneRoots:
   - {fileID: 1097246199}
   - {fileID: 906964219}
   - {fileID: 123435}
+  - {fileID: 236952293}

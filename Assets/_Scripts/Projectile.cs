@@ -68,10 +68,6 @@ public class Projectile : MonoBehaviour
             Die();
             return;
         }
-        if (enemy.Health < 1)
-        {
-            Die();
-        }
 
         if (_duration > 0)
         {
