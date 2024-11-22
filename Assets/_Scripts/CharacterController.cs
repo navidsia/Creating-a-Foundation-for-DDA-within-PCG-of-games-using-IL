@@ -44,6 +44,7 @@ public class CharacterController : MonoBehaviour
     public bool isHittable;
     public bool FreeFalling;
     public bool can_attack = true;
+    [SerializeField] public bool can_update=true;
     void Start()
     {
         Start_function();
@@ -108,7 +109,7 @@ public class CharacterController : MonoBehaviour
         transform.position = randomStartPosition;
         if (randomStartPosition[0] > 0)
         {
-            Flip();
+
         }
 
         HUDController.instance.Repaint(health, max_health);
@@ -116,12 +117,16 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
+        if (can_update)
+        {
+
         CheckHeightDeath();
         CheckFreeFalling();
         var horizontalInput = Input.GetAxisRaw("Horizontal");
         GroundDetection();
         //MoveLogic(horizontalInput);
         FlipCheck(horizontalInput);
+
 
         if (Input.GetKeyDown(jumpKey))
         {
@@ -139,6 +144,8 @@ public class CharacterController : MonoBehaviour
         }
         GetFacingDirection();
         UpdateFriction();
+        }
+
     }
     public void SetisHittable(bool value)
     {

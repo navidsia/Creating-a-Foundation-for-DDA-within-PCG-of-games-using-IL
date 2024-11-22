@@ -54,6 +54,7 @@ public class ResultSaver : MonoBehaviour
             characterAgent.SetCan_Move(false);
             enemy.SetCanPatrol(false);
             characterController.SetisHittable(false);
+            characterController.can_update = false;
             boss_moves.SetCanUpdate(false);
 
             // Start fading to black
@@ -103,9 +104,14 @@ public class ResultSaver : MonoBehaviour
             {
                 EditorApplication.isPlaying = false;
             }
-            boss_moves.scenario = iteration;
-            enemy.scenario = iteration;
-            characterController.scenario = iteration;
+             if (follow_scenario)
+            {
+                boss_moves.scenario = iteration;
+                enemy.scenario = iteration;
+                characterController.scenario = iteration;
+            }
+                
+
             StartCoroutine(ReloadSceneWithDelay());
         }
     }
@@ -140,6 +146,7 @@ public class ResultSaver : MonoBehaviour
         characterAgent.SetCan_Move(true);
         enemy.SetCanPatrol(true);
         characterController.SetisHittable(true);
+        characterController.can_update=true;
         boss_moves.SetCanUpdate(true);
     }
 }
