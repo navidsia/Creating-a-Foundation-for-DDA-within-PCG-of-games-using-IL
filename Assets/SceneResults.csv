@@ -1,22 +1,27 @@
 model name or player,time,player hp,enemy hp,player winner
-player,12.75463,4,0,1
-player,6.959208,5,0,1
-player,25.6146,4,0,1
-player,45.67949,4,0,1
-player,72.03851,2,0,1
-player,95.08633,2,0,1
-player,117.0783,4,0,1
-player,140.26,4,0,1
-player,154.9187,5,0,1
-player,183.8378,3,0,1
-player,207.8545,4,0,1
-10_iteration,31.78,3,0,1
-10_iteration,46.50039,0,7,0
-10_iteration,68.3222,0,4,0
-10_iteration,83.60509,0,6,0
-10_iteration,106.865,0,7,0
-10_iteration,119.8612,0,7,0
-10_iteration,134.5645,0,6,0
-10_iteration,158.0723,0,6,0
-10_iteration,189.1605,0,6,0
-10_iteration,209.0009,0,8,0
+player,54.44022,0,5,0
+player,68.62,10,0,1
+player,101.6469,4,0,1
+player,155.889,0,2,0
+player,190.3709,3,0,1
+player,223.9409,0,5,0
+player,83.66002,0,6,0
+player,97.86791,9,0,1
+player,119.2051,6,0,1
+player,147.6303,5,0,1
+player,163.7998,8,0,1
+player,204.5404,0,2,0
+player,254.2021,0,7,0
+player,267.5557,6,0,1
+player,293.0186,7,0,1
+player,316.4995,3,0,1
+My Behavior,15.66,2,0,1
+My Behavior,40.5,5,0,1
+My Behavior,69.28088,0,7,0
+My Behavior,107.8407,0,3,0
+My Behavior,132.82,3,0,1
+My Behavior,188.8,2,0,1
+My Behavior,241.5215,0,10,0
+My Behavior,258.82,4,0,1
+My Behavior,305.54,1,0,1
+My Behavior,326.7,5,0,1

@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc3ed712f4ed6f4d80325d2e02d1d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resultSaver: {fileID: 0}
   MaxHealth: 5
   Health: 5
   canPatrol: 1
@@ -59,6 +60,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   is_grounded: 0
+  scenario: 0
+  bottomRight: {x: 0, y: 0, z: 0}
+  topRight: {x: 0, y: 0, z: 0}
+  topLeft: {x: 0, y: 0, z: 0}
+  bottomLeft: {x: 0, y: 0, z: 0}
   enemyPrefabs: []
 --- !u!58 &7248535032231205768
 CircleCollider2D:
@@ -92,9 +98,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.05, y: 0.23}
+  m_Offset: {x: -0.08, y: 0.1}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.2
 --- !u!50 &2496337423448882698
 Rigidbody2D:
   serializedVersion: 4
