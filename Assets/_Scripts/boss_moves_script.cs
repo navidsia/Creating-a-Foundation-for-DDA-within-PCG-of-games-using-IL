@@ -271,6 +271,7 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] GameObject Charachter;
     [SerializeField] List<int> bullet_types_integer;
 
+    [SerializeField] CharacterAgent characterAgent;
 
 
     [SerializeField] List<System.Action> allMoves;
@@ -278,6 +279,7 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] List<float> allRestTimes;
     [SerializeField] List<float> allSpeeds;
     [SerializeField] List<float> spawnInterval;
+
 
     private List<System.Action> bossMoves = new List<System.Action>();
     private List<float> moveDurations = new List<float>();
@@ -1231,6 +1233,7 @@ public class boss_moves_script : MonoBehaviour
 
 
             projectileScript.Shoot(direction, speed, damage);
+            characterAgent.bullets.Add(newProjectile);
         }
     }
 
