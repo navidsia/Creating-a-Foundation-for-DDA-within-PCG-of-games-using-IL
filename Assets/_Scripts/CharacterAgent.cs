@@ -2,7 +2,6 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using System.Collections.Generic;
 
 public class CharacterAgent : Agent
 {
@@ -16,7 +15,6 @@ public class CharacterAgent : Agent
     [SerializeField] GameObject Top_wall;
     [SerializeField] GameObject Bottom_wall;
     [SerializeField] bool can_move=true;
-    [SerializeField] public List<GameObject> bullets;
     public override void Initialize()
     {
         Start_function();
@@ -53,7 +51,6 @@ public class CharacterAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Add basic observations
         sensor.AddObservation(agentRigidbody.position.x);
         sensor.AddObservation(agentRigidbody.position.y);
         sensor.AddObservation(agentRigidbody.velocity.x);
@@ -69,53 +66,12 @@ public class CharacterAgent : Agent
 
         sensor.AddObservation(Left_wall.transform.position.x);
         sensor.AddObservation(Right_wall.transform.position.x);
-        sensor.AddObservation(Bottom_wall.transform.position.y);
+        sensor.AddObservation(Bottom_wall.transform.position.y + 0.5f);
         sensor.AddObservation(Top_wall.transform.position.y);
-
-        // Clean up null bullets from the list
-        bullets.RemoveAll(bullet => bullet == null);
-
-        // Add observations for the nearest 20 bullets
-        List<GameObject> validBullets = new List<GameObject>(bullets);
-        validBullets.Sort((a, b) =>
-        {
-            float distA = Vector2.Distance(agentRigidbody.position, a.transform.position);
-            float distB = Vector2.Distance(agentRigidbody.position, b.transform.position);
-            return distA.CompareTo(distB);
-        });
-
-        for (int i = 0; i < 20; i++)
-        {
-            if (i < validBullets.Count)
-            {
-                var bulletRigidbody = validBullets[i].GetComponent<Rigidbody2D>();
-                if (bulletRigidbody != null)
-                {
-                    sensor.AddObservation(bulletRigidbody.position.x);
-                    sensor.AddObservation(bulletRigidbody.position.y);
-                    sensor.AddObservation(bulletRigidbody.velocity.x);
-                    sensor.AddObservation(bulletRigidbody.velocity.y);
-                }
-            }
-            else
-            {
-                // Add default observations if there are fewer than 20 bullets
-                sensor.AddObservation(0f); // Position x
-                sensor.AddObservation(0f); // Position y
-                sensor.AddObservation(0f); // Velocity x
-                sensor.AddObservation(0f); // Velocity y
-            }
-
-        }
     }
-
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        if (can_move)
-        {
-
-       
         int movementLeft = actions.DiscreteActions[0];
         int movementRight = actions.DiscreteActions[1];
         int jumpAction = actions.DiscreteActions[2];
@@ -174,7 +130,6 @@ public class CharacterAgent : Agent
             characterController.MeleeAttack();
         }
     }
-}
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
@@ -210,7 +165,6 @@ public class CharacterAgent : Agent
         {
         //    discreteActions[4] = 1; // Dash
         }
-
     }
 
 }

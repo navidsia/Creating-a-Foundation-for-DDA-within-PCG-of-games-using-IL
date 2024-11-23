@@ -271,7 +271,7 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] GameObject Charachter;
     [SerializeField] List<int> bullet_types_integer;
 
-    [SerializeField] CharacterAgent characterAgent;
+    
 
 
     [SerializeField] List<System.Action> allMoves;
@@ -1233,7 +1233,6 @@ public class boss_moves_script : MonoBehaviour
 
 
             projectileScript.Shoot(direction, speed, damage);
-            characterAgent.bullets.Add(newProjectile);
         }
     }
 
