@@ -8,7 +8,7 @@ public class ResultSaver : MonoBehaviour
 {
     private float sceneStartTime;
     private string filePath;
-    private int player_winner = 0; // 0 for enemy won and 1 for player won
+    private float player_winner = 0; // 0 for enemy won and 1 for player won
 
     [SerializeField] Enemy enemy;
     [SerializeField] CharacterController characterController;
@@ -22,7 +22,7 @@ public class ResultSaver : MonoBehaviour
     [SerializeField] bool follow_scenario = true;
     [SerializeField] bool scenario_end = false;
     [SerializeField] SpriteRenderer Black_Screen;
-
+    [SerializeField] bool training = false;
     void Start()
     {
         // Record the scene's start time
@@ -49,6 +49,10 @@ public class ResultSaver : MonoBehaviour
 
     private void Update()
     {
+        //if (elapsedTime > 60f)
+        //{
+        //    SaveSceneTime();
+        //}
         if (scenario_end)
         {
             characterAgent.SetCan_Move(false);
@@ -64,19 +68,23 @@ public class ResultSaver : MonoBehaviour
 
     private IEnumerator HandleBlackScreenTransparency(float targetAlpha, float duration)
     {
-        float startAlpha = Black_Screen.color.a;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
+        if (!training)
         {
-            elapsedTime += Time.deltaTime;
-            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / duration);
-            Black_Screen.color = new Color(Black_Screen.color.r, Black_Screen.color.g, Black_Screen.color.b, newAlpha);
-            yield return null;
+            float startAlpha = Black_Screen.color.a;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / duration);
+                Black_Screen.color = new Color(Black_Screen.color.r, Black_Screen.color.g, Black_Screen.color.b, newAlpha);
+                yield return null;
+            }
+
+            // Ensure final alpha is set
+            Black_Screen.color = new Color(Black_Screen.color.r, Black_Screen.color.g, Black_Screen.color.b, targetAlpha);
         }
 
-        // Ensure final alpha is set
-        Black_Screen.color = new Color(Black_Screen.color.r, Black_Screen.color.g, Black_Screen.color.b, targetAlpha);
     }
 
     public void SaveSceneTime()
@@ -91,12 +99,14 @@ public class ResultSaver : MonoBehaviour
                 int playerHP = characterController.Return_HP_Player();
                 int enemyHP = enemy.Return_HP_Enemy();
                 float sceneDuration = Time.time - sceneStartTime; // Calculate time elapsed
+
                 player_winner = playerHP > enemyHP ? 1 : 0;
 
                 string resultData = $"{nnModelName},{sceneDuration},{playerHP},{enemyHP},{player_winner}";
 
                 // Append the time to the file
                 File.AppendAllText(filePath, resultData + "\n");
+                sceneStartTime = Time.time;
             }
 
             iteration++;

@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.MLAgents.Integrations.Match3;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class CharacterController : MonoBehaviour
 {
@@ -60,6 +61,9 @@ public class CharacterController : MonoBehaviour
         isRight = true;
         _jumpCount = 0;
         isOnGround = true;
+        var scale = shape.transform.localScale;
+        scale.x = Mathf.Abs(scale.x);
+        shape.transform.localScale = scale;
         Vector3 randomStartPosition = new Vector3();
         if (scenario == 0)
         {

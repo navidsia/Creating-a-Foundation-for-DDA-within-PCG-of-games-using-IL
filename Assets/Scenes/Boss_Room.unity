@@ -170,15 +170,16 @@ MonoBehaviour:
   enemy: {fileID: 1503899515}
   characterController: {fileID: 1824300333}
   characterAgent: {fileID: 1824300338}
-  saving: 1
+  saving: 0
   behaviorParameters: {fileID: 1824300339}
   iteration: 0
-  max_iteration: 100
+  max_iteration: 1000
   backgroundManager: {fileID: 1734592977}
   boss_moves: {fileID: 1097246198}
   follow_scenario: 0
   scenario_end: 0
   Black_Screen: {fileID: 236952292}
+  training: 0
 --- !u!1 &109609803
 GameObject:
   m_ObjectHideFlags: 0
