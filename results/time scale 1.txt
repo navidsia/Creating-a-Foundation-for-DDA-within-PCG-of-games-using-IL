@@ -1,0 +1,635 @@
+Microsoft Windows [Version 10.0.19045.4046]
+(c) Microsoft Corporation. All rights reserved.
+
+Gfinal arshad gitfinal_arshad_game_gitvenvscriptsactivate
+
+(venv) Gfinal arshad gitfinal_arshad_game_gitmlagents-learn ConfigModel_config.yaml --run-id=test31
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[WARNING] 'encoding_size' was deprecated for RewardSignals. Please use network_settings.
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information
+  ml-agents 0.30.0,
+  ml-agents-envs 0.30.0,
+  Communicator API 1.5.0,
+  PyTorch 2.5.1+cpu
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[INFO] Listening on port 5004. Start training by pressing the Play button in the Unity Editor.
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain My Behaviorteam=0
+[INFO] Hyperparameters for behavior name My Behavior
+        trainer_type   ppo
+        hyperparameters
+          batch_size   256
+          buffer_size  1024
+          learning_rate        0.0003
+          beta 0.0005
+          epsilon      0.2
+          lambd        0.99
+          num_epoch    3
+          shared_critic        False
+          learning_rate_schedule       linear
+          beta_schedule        constant
+          epsilon_schedule     linear
+        network_settings
+          normalize    True
+          hidden_units 256
+          num_layers   4
+          vis_encode_type      simple
+          memory       None
+          goal_conditioning_type       hyper
+          deterministic        False
+        reward_signals
+          gail
+            gamma      0.99
+            strength   0.8
+            network_settings
+              normalize        False
+              hidden_units     256
+              num_layers       4
+              vis_encode_type  simple
+              memory   None
+              goal_conditioning_type   hyper
+              deterministic    False
+            learning_rate      0.0003
+            encoding_size      None
+            use_actions        False
+            use_vail   False
+            demo_path  Demosnavid_9.demo
+        init_path      None
+        keep_checkpoints       5
+        checkpoint_interval    500000
+        max_steps      500000
+        time_horizon   2056
+        summary_freq   10000
+        threaded       False
+        self_play      None
+        behavioral_cloning     None
+[INFO] My Behavior. Step 10000. Time Elapsed 82.088 s. No episode was completed since last summary. Training.
+[WARNING] Restarting worker[0] after 'Communicator has exited.'
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[INFO] Listening on port 5004. Start training by pressing the Play button in the Unity Editor.
+[INFO] Exported resultstest31My BehaviorMy Behavior-10280.onnx
+[INFO] Copied resultstest31My BehaviorMy Behavior-10280.onnx to resultstest31My Behavior.onnx.
+Traceback (most recent call last)
+  File CUsersnavidAppDataLocalProgramsPythonPython39librunpy.py, line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File CUsersnavidAppDataLocalProgramsPythonPython39librunpy.py, line 87, in _run_code
+    exec(code, run_globals)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvScriptsmlagents-learn.exe__main__.py, line 7, in module
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerslearn.py, line 264, in main
+    run_cli(parse_command_line())
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerslearn.py, line 260, in run_cli
+    run_training(run_seed, options, num_areas)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerslearn.py, line 136, in run_training
+    tc.start_learning(env_manager)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagents_envstimers.py, line 305, in wrapped
+    return func(args, kwargs)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerstrainer_controller.py, line 175, in start_learning
+    n_steps = self.advance(env_manager)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagents_envstimers.py, line 305, in wrapped
+    return func(args, kwargs)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerstrainer_controller.py, line 233, in advance
+    new_step_infos = env_manager.get_steps()
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainersenv_manager.py, line 124, in get_steps
+    new_step_infos = self._step()
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 420, in _step
+    self._restart_failed_workers(step)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 328, in _restart_failed_workers
+    self.reset(self.env_parameters)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainersenv_manager.py, line 68, in reset
+    self.first_step_infos = self._reset_env(config)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 446, in _reset_env
+    ew.previous_step = EnvironmentStep(ew.recv().payload, ew.worker_id, {}, {})
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 101, in recv
+    raise env_exception
+mlagents_envs.exception.UnityTimeOutException The Unity environment took too long to respond. Make sure that 
+         The environment does not need user interaction to launch
+         The Agents' Behavior Parameters  Behavior Type is set to Default
+         The environment and the Python interface have compatible versions.
+         If you're running on a headless server without graphics support, turn off display by either passing --no-graphics option or build your Unity executable as server build.
+
+(venv) Gfinal arshad gitfinal_arshad_game_gitmlagents-learn ConfigModel_config.yaml --run-id=test32
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[WARNING] 'encoding_size' was deprecated for RewardSignals. Please use network_settings.
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information
+  ml-agents 0.30.0,
+  ml-agents-envs 0.30.0,
+  Communicator API 1.5.0,
+  PyTorch 2.5.1+cpu
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[INFO] Listening on port 5004. Start training by pressing the Play button in the Unity Editor.
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain My Behaviorteam=0
+[INFO] Hyperparameters for behavior name My Behavior
+        trainer_type   ppo
+        hyperparameters
+          batch_size   256
+          buffer_size  1024
+          learning_rate        0.0003
+          beta 0.0005
+          epsilon      0.2
+          lambd        0.99
+          num_epoch    3
+          shared_critic        False
+          learning_rate_schedule       linear
+          beta_schedule        constant
+          epsilon_schedule     linear
+        network_settings
+          normalize    True
+          hidden_units 256
+          num_layers   4
+          vis_encode_type      simple
+          memory       None
+          goal_conditioning_type       hyper
+          deterministic        False
+        reward_signals
+          gail
+            gamma      0.99
+            strength   0.8
+            network_settings
+              normalize        False
+              hidden_units     256
+              num_layers       4
+              vis_encode_type  simple
+              memory   None
+              goal_conditioning_type   hyper
+              deterministic    False
+            learning_rate      0.0003
+            encoding_size      None
+            use_actions        False
+            use_vail   False
+            demo_path  Demosnavid_9.demo
+        init_path      None
+        keep_checkpoints       5
+        checkpoint_interval    500000
+        max_steps      500000
+        time_horizon   2056
+        summary_freq   10000
+        threaded       False
+        self_play      None
+        behavioral_cloning     None
+[WARNING] Restarting worker[0] after 'The Unity environment took too long to respond. Make sure that 
+         The environment does not need user interaction to launch
+         The Agents' Behavior Parameters  Behavior Type is set to Default
+         The environment and the Python interface have compatible versions.
+         If you're running on a headless server without graphics support, turn off display by either passing --no-graphics option or build your Unity executable as server build.'
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[INFO] Listening on port 5004. Start training by pressing the Play button in the Unity Editor.
+[INFO] Exported resultstest32My BehaviorMy Behavior-8224.onnx
+[INFO] Copied resultstest32My BehaviorMy Behavior-8224.onnx to resultstest32My Behavior.onnx.
+Traceback (most recent call last)
+  File CUsersnavidAppDataLocalProgramsPythonPython39librunpy.py, line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File CUsersnavidAppDataLocalProgramsPythonPython39librunpy.py, line 87, in _run_code
+    exec(code, run_globals)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvScriptsmlagents-learn.exe__main__.py, line 7, in module
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerslearn.py, line 264, in main
+    run_cli(parse_command_line())
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerslearn.py, line 260, in run_cli
+    run_training(run_seed, options, num_areas)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerslearn.py, line 136, in run_training
+    tc.start_learning(env_manager)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagents_envstimers.py, line 305, in wrapped
+    return func(args, kwargs)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerstrainer_controller.py, line 175, in start_learning
+    n_steps = self.advance(env_manager)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagents_envstimers.py, line 305, in wrapped
+    return func(args, kwargs)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerstrainer_controller.py, line 233, in advance
+    new_step_infos = env_manager.get_steps()
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainersenv_manager.py, line 124, in get_steps
+    new_step_infos = self._step()
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 420, in _step
+    self._restart_failed_workers(step)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 328, in _restart_failed_workers
+    self.reset(self.env_parameters)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainersenv_manager.py, line 68, in reset
+    self.first_step_infos = self._reset_env(config)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 446, in _reset_env
+    ew.previous_step = EnvironmentStep(ew.recv().payload, ew.worker_id, {}, {})
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 101, in recv
+    raise env_exception
+mlagents_envs.exception.UnityTimeOutException The Unity environment took too long to respond. Make sure that 
+         The environment does not need user interaction to launch
+         The Agents' Behavior Parameters  Behavior Type is set to Default
+         The environment and the Python interface have compatible versions.
+         If you're running on a headless server without graphics support, turn off display by either passing --no-graphics option or build your Unity executable as server build.
+
+(venv) Gfinal arshad gitfinal_arshad_game_gitmlagents-learn ConfigModel_config.yaml --run-id=test32 --time-scale 1
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[WARNING] 'encoding_size' was deprecated for RewardSignals. Please use network_settings.
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information
+  ml-agents 0.30.0,
+  ml-agents-envs 0.30.0,
+  Communicator API 1.5.0,
+  PyTorch 2.5.1+cpu
+Traceback (most recent call last)
+  File CUsersnavidAppDataLocalProgramsPythonPython39librunpy.py, line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File CUsersnavidAppDataLocalProgramsPythonPython39librunpy.py, line 87, in _run_code
+    exec(code, run_globals)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvScriptsmlagents-learn.exe__main__.py, line 7, in module
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerslearn.py, line 264, in main
+    run_cli(parse_command_line())
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerslearn.py, line 260, in run_cli
+    run_training(run_seed, options, num_areas)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerslearn.py, line 75, in run_training
+    validate_existing_directories(
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainersdirectory_utils.py, line 25, in validate_existing_directories
+    raise UnityTrainerException(
+mlagents.trainers.exception.UnityTrainerException Previous data from this run ID was found. Either specify a new run ID, use --resume to resume this run, or use the --force parameter to overwrite existing data.
+
+(venv) Gfinal arshad gitfinal_arshad_game_gitmlagents-learn ConfigModel_config.yaml --run-id=test33 --time-scale 1
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[WARNING] 'encoding_size' was deprecated for RewardSignals. Please use network_settings.
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information
+  ml-agents 0.30.0,
+  ml-agents-envs 0.30.0,
+  Communicator API 1.5.0,
+  PyTorch 2.5.1+cpu
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[INFO] Listening on port 5004. Start training by pressing the Play button in the Unity Editor.
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain My Behaviorteam=0
+[INFO] Hyperparameters for behavior name My Behavior
+        trainer_type   ppo
+        hyperparameters
+          batch_size   256
+          buffer_size  1024
+          learning_rate        0.0003
+          beta 0.0005
+          epsilon      0.2
+          lambd        0.99
+          num_epoch    3
+          shared_critic        False
+          learning_rate_schedule       linear
+          beta_schedule        constant
+          epsilon_schedule     linear
+        network_settings
+          normalize    True
+          hidden_units 256
+          num_layers   4
+          vis_encode_type      simple
+          memory       None
+          goal_conditioning_type       hyper
+          deterministic        False
+        reward_signals
+          gail
+            gamma      0.99
+            strength   0.8
+            network_settings
+              normalize        False
+              hidden_units     256
+              num_layers       4
+              vis_encode_type  simple
+              memory   None
+              goal_conditioning_type   hyper
+              deterministic    False
+            learning_rate      0.0003
+            encoding_size      None
+            use_actions        False
+            use_vail   False
+            demo_path  Demosnavid_9.demo
+        init_path      None
+        keep_checkpoints       5
+        checkpoint_interval    500000
+        max_steps      500000
+        time_horizon   2056
+        summary_freq   10000
+        threaded       False
+        self_play      None
+        behavioral_cloning     None
+[INFO] My Behavior. Step 10000. Time Elapsed 161.229 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 20000. Time Elapsed 258.606 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 30000. Time Elapsed 354.302 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 40000. Time Elapsed 452.533 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 50000. Time Elapsed 548.561 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 60000. Time Elapsed 644.612 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 70000. Time Elapsed 739.784 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 80000. Time Elapsed 815.740 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 90000. Time Elapsed 911.984 s. No episode was completed since last summary. Training.
+[WARNING] Restarting worker[0] after 'Communicator has exited.'
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[INFO] Listening on port 5004. Start training by pressing the Play button in the Unity Editor.
+[INFO] Learning was interrupted. Please wait while the graph is generated.
+[INFO] Exported resultstest33My BehaviorMy Behavior-94576.onnx
+[INFO] Copied resultstest33My BehaviorMy Behavior-94576.onnx to resultstest33My Behavior.onnx.
+
+(venv) Gfinal arshad gitfinal_arshad_game_gitmlagents-learn ConfigModel_config.yaml --run-id=test34 --time-scale 1
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[WARNING] 'encoding_size' was deprecated for RewardSignals. Please use network_settings.
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information
+  ml-agents 0.30.0,
+  ml-agents-envs 0.30.0,
+  Communicator API 1.5.0,
+  PyTorch 2.5.1+cpu
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[INFO] Listening on port 5004. Start training by pressing the Play button in the Unity Editor.
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain My Behaviorteam=0
+[INFO] Hyperparameters for behavior name My Behavior
+        trainer_type   ppo
+        hyperparameters
+          batch_size   256
+          buffer_size  1024
+          learning_rate        0.0003
+          beta 0.0005
+          epsilon      0.2
+          lambd        0.99
+          num_epoch    3
+          shared_critic        False
+          learning_rate_schedule       linear
+          beta_schedule        constant
+          epsilon_schedule     linear
+        network_settings
+          normalize    True
+          hidden_units 256
+          num_layers   4
+          vis_encode_type      simple
+          memory       None
+          goal_conditioning_type       hyper
+          deterministic        False
+        reward_signals
+          gail
+            gamma      0.99
+            strength   0.8
+            network_settings
+              normalize        False
+              hidden_units     256
+              num_layers       4
+              vis_encode_type  simple
+              memory   None
+              goal_conditioning_type   hyper
+              deterministic    False
+            learning_rate      0.0003
+            encoding_size      None
+            use_actions        False
+            use_vail   False
+            demo_path  Demosnavid_2.demo
+        init_path      None
+        keep_checkpoints       5
+        checkpoint_interval    500000
+        max_steps      500000
+        time_horizon   2056
+        summary_freq   10000
+        threaded       False
+        self_play      None
+        behavioral_cloning     None
+[INFO] My Behavior. Step 10000. Time Elapsed 138.333 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 20000. Time Elapsed 232.203 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 30000. Time Elapsed 326.590 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 40000. Time Elapsed 422.908 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 50000. Time Elapsed 518.707 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 60000. Time Elapsed 615.395 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 70000. Time Elapsed 712.772 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 80000. Time Elapsed 789.957 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 90000. Time Elapsed 885.101 s. No episode was completed since last summary. Training.
+[WARNING] Restarting worker[0] after 'Communicator has exited.'
+[INFO] Learning was interrupted. Please wait while the graph is generated.
+Traceback (most recent call last)
+  File string, line 1, in module
+  File CUsersnavidAppDataLocalProgramsPythonPython39libmultiprocessingspawn.py, line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File CUsersnavidAppDataLocalProgramsPythonPython39libmultiprocessingspawn.py, line 126, in _main
+    self = reduction.pickle.load(from_parent)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 19, in module
+    from mlagents.trainers.env_manager import EnvManager, EnvironmentStep, AllStepResult
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainersenv_manager.py, line 13, in module
+    from mlagents.trainers.agent_processor import AgentManager, AgentManagerQueue
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainersagent_processor.py, line 6, in module
+    from mlagents.torch_utils import torch
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstorch_utils__init__.py, line 1, in module
+    from mlagents.torch_utils.torch import torch as torch  # noqa
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstorch_utilstorch.py, line 34, in module
+    import torch  # noqa I201
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py, line 2475, in module
+    from torch import (
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorchexport__init__.py, line 28, in module
+    from torch.fx.passes.infra.pass_base import PassResult
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorchfxpasses__init__.py, line 7, in module
+    from . import runtime_assert
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorchfxpassesruntime_assert.py, line 23, in module
+    from torch.fx.experimental.proxy_tensor import py_sym_types
+  File frozen importlib._bootstrap, line 1007, in _find_and_load
+  File frozen importlib._bootstrap, line 986, in _find_and_load_unlocked
+  File frozen importlib._bootstrap, line 680, in _load_unlocked
+  File frozen importlib._bootstrap_external, line 846, in exec_module
+  File frozen importlib._bootstrap_external, line 941, in get_code
+  File frozen importlib._bootstrap_external, line 1040, in get_data
+KeyboardInterrupt
+[INFO] Exported resultstest34My BehaviorMy Behavior-92520.onnx
+[INFO] Copied resultstest34My BehaviorMy Behavior-92520.onnx to resultstest34My Behavior.onnx.
+[ERROR] SubprocessEnvManager had workers that didn't signal shutdown
+
+(venv) Gfinal arshad gitfinal_arshad_game_gitmlagents-learn ConfigModel_config.yaml --run-id=test35 --time-scale 1
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[WARNING] 'encoding_size' was deprecated for RewardSignals. Please use network_settings.
+
+            ┐  ╖
+        ╓╖╬│╡  ││╬╖╖
+    ╓╖╬│││││┘  ╬│││││╬╖
+ ╖╬│││││╬╜        ╙╬│││││╖╖                               ╗╗╗
+ ╬╬╬╬╖││╦╖        ╖╬││╗╣╣╣╬      ╟╣╣╬    ╟╣╣╣             ╜╜╜  ╟╣╣
+ ╬╬╬╬╬╬╬╬╖│╬╖╖╓╬╪│╓╣╣╣╣╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╒╣╣╖╗╣╣╣╗   ╣╣╣ ╣╣╣╣╣╣ ╟╣╣╖   ╣╣╣
+ ╬╬╬╬┐  ╙╬╬╬╬│╓╣╣╣╝╜  ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╣╙ ╙╣╣╣  ╣╣╣ ╙╟╣╣╜╙  ╫╣╣  ╟╣╣
+ ╬╬╬╬┐     ╙╬╬╣╣      ╫╣╣╣╬      ╟╣╣╬    ╟╣╣╣ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣     ╣╣╣┌╣╣╜
+ ╬╬╬╜       ╬╬╣╣      ╙╝╣╣╬      ╙╣╣╣╗╖╓╗╣╣╣╜ ╟╣╣╬   ╣╣╣  ╣╣╣  ╟╣╣╦╓    ╣╣╣╣╣
+ ╙   ╓╦╖    ╬╬╣╣   ╓╗╗╖            ╙╝╣╣╣╣╝╜   ╘╝╝╜   ╝╝╝  ╝╝╝   ╙╣╣╣    ╟╣╣╣
+   ╩╬╬╬╬╬╬╦╦╬╬╣╣╗╣╣╣╣╣╣╣╝                                             ╫╣╣╣╣
+      ╙╬╬╬╬╬╬╬╣╣╣╣╣╣╝╜
+          ╙╬╬╬╣╣╣╜
+             ╙
+
+ Version information
+  ml-agents 0.30.0,
+  ml-agents-envs 0.30.0,
+  Communicator API 1.5.0,
+  PyTorch 2.5.1+cpu
+Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py1144 UserWarning torch.set_default_tensor_type() is deprecated as of PyTorch 2.1, please use torch.set_default_dtype() and torch.set_default_device() as alternatives. (Triggered internally at Cactions-runner_workpytorchpytorchbuilderwindowspytorchtorchcsrctensorpython_tensor.cpp434.)
+  _C._set_default_tensor_type(t)
+[INFO] Listening on port 5004. Start training by pressing the Play button in the Unity Editor.
+[INFO] Connected to Unity environment with package version 2.0.1 and communication version 1.5.0
+[INFO] Connected new brain My Behaviorteam=0
+[INFO] Hyperparameters for behavior name My Behavior
+        trainer_type   ppo
+        hyperparameters
+          batch_size   256
+          buffer_size  1024
+          learning_rate        0.0003
+          beta 0.0005
+          epsilon      0.2
+          lambd        0.99
+          num_epoch    3
+          shared_critic        False
+          learning_rate_schedule       linear
+          beta_schedule        constant
+          epsilon_schedule     linear
+        network_settings
+          normalize    True
+          hidden_units 256
+          num_layers   4
+          vis_encode_type      simple
+          memory       None
+          goal_conditioning_type       hyper
+          deterministic        False
+        reward_signals
+          gail
+            gamma      0.99
+            strength   0.8
+            network_settings
+              normalize        False
+              hidden_units     256
+              num_layers       4
+              vis_encode_type  simple
+              memory   None
+              goal_conditioning_type   hyper
+              deterministic    False
+            learning_rate      0.0003
+            encoding_size      None
+            use_actions        False
+            use_vail   False
+            demo_path  Demosnavid_5.demo
+        init_path      None
+        keep_checkpoints       5
+        checkpoint_interval    500000
+        max_steps      500000
+        time_horizon   2056
+        summary_freq   10000
+        threaded       False
+        self_play      None
+        behavioral_cloning     None
+[INFO] My Behavior. Step 10000. Time Elapsed 128.920 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 20000. Time Elapsed 225.240 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 30000. Time Elapsed 321.983 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 40000. Time Elapsed 421.121 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 50000. Time Elapsed 515.717 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 60000. Time Elapsed 610.427 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 70000. Time Elapsed 705.968 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 80000. Time Elapsed 781.320 s. No episode was completed since last summary. Training.
+[INFO] My Behavior. Step 90000. Time Elapsed 878.195 s. No episode was completed since last summary. Training.
+[WARNING] Restarting worker[0] after 'Communicator has exited.'
+[INFO] Learning was interrupted. Please wait while the graph is generated.
+Traceback (most recent call last)
+  File string, line 1, in module
+  File CUsersnavidAppDataLocalProgramsPythonPython39libmultiprocessingspawn.py, line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File CUsersnavidAppDataLocalProgramsPythonPython39libmultiprocessingspawn.py, line 126, in _main
+    self = reduction.pickle.load(from_parent)
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainerssubprocess_env_manager.py, line 19, in module
+    from mlagents.trainers.env_manager import EnvManager, EnvironmentStep, AllStepResult
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainersenv_manager.py, line 13, in module
+    from mlagents.trainers.agent_processor import AgentManager, AgentManagerQueue
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstrainersagent_processor.py, line 6, in module
+    from mlagents.torch_utils import torch
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstorch_utils__init__.py, line 1, in module
+    from mlagents.torch_utils.torch import torch as torch  # noqa
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagesmlagentstorch_utilstorch.py, line 34, in module
+    import torch  # noqa I201
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorch__init__.py, line 2475, in module
+    from torch import (
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorchexport__init__.py, line 28, in module
+    from torch.fx.passes.infra.pass_base import PassResult
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorchfxpasses__init__.py, line 3, in module
+    from . import net_min_base
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorchfxpassesnet_min_base.py, line 13, in module
+    from .split_utils import split_by_tags
+  File Gfinal arshad gitfinal_arshad_game_gitvenvlibsite-packagestorchfxpassessplit_utils.py, line 61, in module
+    @compatibility(is_backward_compatible=False)
+KeyboardInterrupt
+[INFO] Exported resultstest35My BehaviorMy Behavior-90464.onnx
+[INFO] Copied resultstest35My BehaviorMy Behavior-90464.onnx to resultstest35My Behavior.onnx.
+[ERROR] SubprocessEnvManager had workers that didn't signal shutdown
+
+(venv) Gfinal arshad gitfinal_arshad_game_git

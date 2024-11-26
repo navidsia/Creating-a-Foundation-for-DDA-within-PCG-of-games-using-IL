@@ -170,10 +170,10 @@ MonoBehaviour:
   enemy: {fileID: 1503899515}
   characterController: {fileID: 1824300333}
   characterAgent: {fileID: 1824300338}
-  saving: 0
+  saving: 1
   behaviorParameters: {fileID: 1824300339}
   iteration: 0
-  max_iteration: 1000
+  max_iteration: 60
   backgroundManager: {fileID: 1734592977}
   boss_moves: {fileID: 1097246198}
   follow_scenario: 0
@@ -2873,7 +2873,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: b65c0fe2eabb4d5428f7c3256c58d2f5, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: My Behavior

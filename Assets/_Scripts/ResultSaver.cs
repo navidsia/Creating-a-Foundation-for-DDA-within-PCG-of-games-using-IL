@@ -25,6 +25,7 @@ public class ResultSaver : MonoBehaviour
     [SerializeField] bool training = false;
     void Start()
     {
+        Application.runInBackground = true;
         // Record the scene's start time
         sceneStartTime = Time.time;
 

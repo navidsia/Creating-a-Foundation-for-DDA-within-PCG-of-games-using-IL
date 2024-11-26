@@ -154,28 +154,31 @@ public class Enemy : MonoBehaviour
         Vector3 topWallPos = backgroundManager.GetTopWallPosition();
         Vector3 bottomWallPos = backgroundManager.GetBottomWallPosition();
 
+
+
          bottomRight = new Vector3(
-            Random.Range(0, rightWallPos.x - 1f),
+            Random.Range(0, rightWallPos.x - 1.5f),
             Random.Range(bottomWallPos.y + 1.5f, 0),
             0);
 
          bottomLeft = new Vector3(
-            Random.Range(leftWallPos.x + 1f, 0),
+            Random.Range(leftWallPos.x + 1.5f, 0),
             Random.Range(bottomWallPos.y + 1.5f, 0),
             0);
 
          topRight = new Vector3(
-            Random.Range(0, rightWallPos.x - 1f),
-            Random.Range(0, topWallPos.y - 1f),
+            Random.Range(0, rightWallPos.x - 1.5f),
+            Random.Range(0, topWallPos.y - 1.5f),
             0);
 
          topLeft = new Vector3(
-            Random.Range(leftWallPos.x + 1f, 0),
-            Random.Range(0, topWallPos.y - 1f),
+            Random.Range(leftWallPos.x + 1.5f, 0),
+            Random.Range(0, topWallPos.y - 1.5f),
             0);
 
         transform.position = bottomRight;
         }
+        /// VEEERY FUCKING WRONG. FIX TOP LEFT, SECOND SHOULD BE POSITIVE. FUCK ME
         else if (scenario == 1)
         {
             bottomRight = new Vector3(5.3f, -1.8f, 0);

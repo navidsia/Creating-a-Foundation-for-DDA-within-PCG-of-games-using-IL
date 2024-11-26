@@ -38,7 +38,7 @@ behaviors:
         encoding_size: null
         use_actions: false
         use_vail: false
-        demo_path: Demos/navid_best.demo
+        demo_path: Demos/navid_model_4.demo
     init_path: null
     keep_checkpoints: 5
     checkpoint_interval: 500000
