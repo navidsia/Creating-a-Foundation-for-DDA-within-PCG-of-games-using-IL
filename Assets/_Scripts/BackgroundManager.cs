@@ -13,10 +13,10 @@ public class BackgroundManager : MonoBehaviour
     public Transform bottomWall; // Reference to the bottom wall
     public SpriteRenderer bottomWallRenderer; // Renderer for the bottom wall
 
-    public Vector3 GetLeftWallPosition() => leftWall.position;
-    public Vector3 GetRightWallPosition() => rightWall.position;
-    public Vector3 GetTopWallPosition() => topWall.position;
-    public Vector3 GetBottomWallPosition() => bottomWall.position;
+    public Vector3 GetLeftWallPosition() => leftWall.localPosition;
+    public Vector3 GetRightWallPosition() => rightWall.localPosition;
+    public Vector3 GetTopWallPosition() => topWall.localPosition;
+    public Vector3 GetBottomWallPosition() => bottomWall.localPosition;
 
 
     private string[] categories = { "Castle", "Lava", "Nature" };
@@ -133,8 +133,8 @@ public class BackgroundManager : MonoBehaviour
         float backgroundWidth = backgroundRenderer.sprite.bounds.size.x * backgroundRenderer.transform.localScale.x;
         float halfBackgroundWidth = backgroundWidth / 2f;
         float wallThickness = leftWall.localScale.x; // Assuming the width of the left/right walls is controlled by x scale
-        leftWall.position = new Vector3(-halfBackgroundWidth + wallThickness / 2, 0, 0);
-        rightWall.position = new Vector3(halfBackgroundWidth - wallThickness / 2, 0, 0);
+        leftWall.localPosition = new Vector3(-halfBackgroundWidth + wallThickness / 2, 0, 0);
+        rightWall.localPosition = new Vector3(halfBackgroundWidth - wallThickness / 2, 0, 0);
 
         // Adjust the height of the left and right walls to match the background's height
         leftWall.localScale = new Vector3(leftWall.localScale.x, backgroundHeight, leftWall.localScale.z);
@@ -144,8 +144,8 @@ public class BackgroundManager : MonoBehaviour
         float halfHeight = mainCamera.orthographicSize;
         float halfWidth = halfHeight * mainCamera.aspect;
 
-        leftWall.position = new Vector3(-halfWidth + wallThickness / 2, 0, 0);
-        rightWall.position = new Vector3(halfWidth - wallThickness / 2, 0, 0);
+        leftWall.localPosition = new Vector3(-halfWidth + wallThickness / 2, 0, 0);
+        rightWall.localPosition = new Vector3(halfWidth - wallThickness / 2, 0, 0);
 
         // Adjust the height of the left and right walls to match the camera's height
         leftWall.localScale = new Vector3(leftWall.localScale.x, backgroundHeight, leftWall.localScale.z);
@@ -160,7 +160,7 @@ public class BackgroundManager : MonoBehaviour
      //   bottomWall.localScale = new Vector3(scaleFactor * backgroundRenderer.sprite.bounds.size.x, wallThicknessY, bottomWall.localScale.z);
 
         // Adjust the top wall's scale and position
-        topWall.position = new Vector3(0, halfBackgroundHeight - wallThicknessY / 2, 0);
+        topWall.localPosition = new Vector3(0, halfBackgroundHeight - wallThicknessY / 2, 0);
         topWall.localScale = new Vector3(backgroundWidth, topWall.localScale.y, topWall.localScale.z);
 
 
@@ -178,13 +178,13 @@ public class BackgroundManager : MonoBehaviour
         {
             bottomWallRenderer.transform.localScale = new Vector3(scaleFactor, scaleFactor / 10, 1);
 
-            bottomWall.position = new Vector3(0, -(halfBackgroundHeight - wallThicknessY / 2) * 0.95f, 0);
+            bottomWall.localPosition = new Vector3(0, -(halfBackgroundHeight - wallThicknessY / 2) * 0.95f, 0);
         }
         else
         {
             bottomWallRenderer.transform.localScale = new Vector3(20, 1, 1);
 
-            bottomWall.position = new Vector3(0, -(halfBackgroundHeight - wallThicknessY / 2) * 1.1f, 0);
+            bottomWall.localPosition = new Vector3(0, -(halfBackgroundHeight - wallThicknessY / 2) * 1.1f, 0);
         }
 
 

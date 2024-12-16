@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,12 +22,18 @@ public class Enemy : MonoBehaviour
     [SerializeField] Vector3 topLeft;
     [SerializeField] Vector3 bottomLeft;
 
+    [SerializeField] GameObject Environment;
+
     [SerializeField] List<GameObject> enemyPrefabs; // List to hold enemy prefabs
     private GameObject selectedPrefab; // The chosen prefab
 
     private SpriteRenderer shapeSpriteRenderer;
     private Animator shapeAnimator;
-
+    private List<Vector3> speedVectors;
+    private int currentSpeedIndex = 0;
+    private float movementTimer = 0f;
+    private float stopTimer = 0f;
+    private bool isStopped = false;
     private List<Vector3> patrolPositions;
     private int patrolPosIndex = 0;
     private BackgroundManager backgroundManager;
@@ -46,10 +53,8 @@ public class Enemy : MonoBehaviour
         // Get the BackgroundManager reference
         backgroundManager = FindObjectOfType<BackgroundManager>();
 
-        patrolPositions = GeneratePatrolPositions();
-        transform.position = patrolPositions[1];
-        // Initialize previousPosition with the starting position
-        previousPosition = transform.position;
+        InitializeSpeedVectors();
+
 
         // Randomly choose an enemy prefab
         selectedPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
@@ -95,7 +100,56 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void InitializeSpeedVectors()
+    {
+        speedVectors = new List<Vector3>();
 
+        // Define ranges for angles
+        float[][] angleRanges = new float[][]
+        {
+            new float[] { 0, 60 },
+            new float[] { 60, 120 },
+            new float[] { 120, 180 },
+            new float[] { 180, 240 },
+            new float[] { 240, 300 },
+            new float[] { 300, 360 }
+        };
+
+        // Generate speed vectors using sine and cosine of random angles
+        foreach (var range in angleRanges)
+        {
+            float angle = Random.Range(range[0], range[1]) * Mathf.Deg2Rad;
+            speedVectors.Add(new Vector3(5 * Mathf.Cos(angle), 5 * Mathf.Sin(angle), 0));
+        }
+
+        // Shuffle the speed vectors for randomness
+        for (int i = 0; i < speedVectors.Count; i++)
+        {
+            Vector3 temp = speedVectors[i];
+            int randomIndex = Random.Range(0, speedVectors.Count);
+            speedVectors[i] = speedVectors[randomIndex];
+            speedVectors[randomIndex] = temp;
+        }
+    }
+
+    void FaceMovementDirection()
+    {
+        Vector3 movementDirection = transform.localPosition - previousPosition;
+
+        if (movementDirection.x > 0)
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        else if (movementDirection.x < 0)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+    }
+    public void StopMovement(float duration)
+    {
+        isStopped = true;
+        stopTimer = duration;
+    }
 
     public void SetCanPatrol(bool value)
     {
@@ -120,63 +174,107 @@ public class Enemy : MonoBehaviour
         float originalTimeScale = Time.timeScale;
         Time.timeScale = originalTimeScale;
         resultSaver.SaveSceneTime();
-      //  Destroy(gameObject);
+        //  Destroy(gameObject);
 
     }
 
     private void Update()
     {
-        time += Time.deltaTime;
-
-        if (canPatrol)
+        if (isStopped)
         {
-            MoveToPosition(patrolPositions[patrolPosIndex], movementSpeed);
+            stopTimer -= Time.deltaTime;
+            if (stopTimer <= 0)
+            {
+                isStopped = false;
+            }
+            return;
+        }
+        else
+        {
+            MoveEnemy();
             FaceMovementDirection();
         }
 
-        var hit = Physics2D.OverlapCircle(transform.position, characterDetectionRange, characterLayer);
+        
+
+        var hit = Physics2D.OverlapCircle(transform.localPosition, characterDetectionRange, characterLayer);
         if (hit)
         {
             hit.gameObject.GetComponent<CharacterController>().GetHit(damage);
         }
 
-        previousPosition = transform.position;
+        previousPosition = transform.localPosition;
     }
+    private void MoveEnemy()
+    {
+        movementTimer += Time.deltaTime;
 
+        if (movementTimer >= 1f)
+        {
+            currentSpeedIndex = (currentSpeedIndex + 1) % speedVectors.Count;
+            movementTimer = 0f;
+        }
+
+        Vector3 movement = speedVectors[currentSpeedIndex] * Time.deltaTime;
+        transform.localPosition += movement;
+
+        CheckForWallCollision();
+    }
+    private void CheckForWallCollision()
+    {
+
+        if(transform.position.x>7.5f || transform.position.x < -7.5f || transform.position.y<-3.5f || transform.position.y > 5f)
+        {
+            currentSpeedIndex = (currentSpeedIndex + 1) % speedVectors.Count;
+        }
+        //Vector3 pos = transform.localPosition;
+        //Camera mainCamera = Camera.main;
+
+        //if (mainCamera != null)
+        //{
+        //    Vector3 minBounds = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
+        //    Vector3 maxBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+
+        //    if (pos.x <= minBounds.x || pos.x >= maxBounds.x || pos.y <= minBounds.y || pos.y >= maxBounds.y)
+        //    {
+        //        currentSpeedIndex = (currentSpeedIndex + 1) % speedVectors.Count;
+        //    }
+        //}
+    }
     List<Vector3> GeneratePatrolPositions()
     {
         if (scenario == 0)
         {
 
-        
-        Vector3 leftWallPos = backgroundManager.GetLeftWallPosition();
-        Vector3 rightWallPos = backgroundManager.GetRightWallPosition();
-        Vector3 topWallPos = backgroundManager.GetTopWallPosition();
-        Vector3 bottomWallPos = backgroundManager.GetBottomWallPosition();
+
+            Vector3 leftWallPos = backgroundManager.GetLeftWallPosition();
+            Vector3 rightWallPos = backgroundManager.GetRightWallPosition();
+            Vector3 topWallPos = backgroundManager.GetTopWallPosition();
+            Vector3 bottomWallPos = backgroundManager.GetBottomWallPosition();
 
 
 
-         bottomRight = new Vector3(
-            Random.Range(0, rightWallPos.x - 1.5f),
-            Random.Range(bottomWallPos.y + 1.5f, 0),
-            0);
+            bottomRight = new Vector3(
+               Random.Range(0, rightWallPos.x - 1.5f),
+               Random.Range(bottomWallPos.y + 2f, 0),
+               0);
 
-         bottomLeft = new Vector3(
-            Random.Range(leftWallPos.x + 1.5f, 0),
-            Random.Range(bottomWallPos.y + 1.5f, 0),
-            0);
+            bottomLeft = new Vector3(
+               Random.Range(leftWallPos.x + 1.5f, 0),
+               Random.Range(bottomWallPos.y + 2f, 0),
+               0);
 
-         topRight = new Vector3(
-            Random.Range(0, rightWallPos.x - 1.5f),
-            Random.Range(0, topWallPos.y - 1.5f),
-            0);
+            topRight = new Vector3(
+               Random.Range(0, rightWallPos.x - 1.5f),
+               Random.Range(0, topWallPos.y - 1.5f),
+               0);
 
-         topLeft = new Vector3(
-            Random.Range(leftWallPos.x + 1.5f, 0),
-            Random.Range(0, topWallPos.y - 1.5f),
-            0);
+            topLeft = new Vector3(
+               Random.Range(leftWallPos.x + 1.5f, 0),
+               Random.Range(0, topWallPos.y - 1.5f),
+               0);
 
-        transform.position = bottomRight;
+            transform.localPosition = bottomRight;
         }
         /// VEEERY FUCKING WRONG. FIX TOP LEFT, SECOND SHOULD BE POSITIVE. FUCK ME
         else if (scenario == 1)
@@ -250,7 +348,10 @@ public class Enemy : MonoBehaviour
             topLeft = new Vector3(-7.3f, -2.5f, 0);
         }
 
-
+        //bottomRight = bottomRight + Environment.transform.position;
+        //bottomLeft = bottomLeft + Environment.transform.position;
+        //topRight = topRight + Environment.transform.position;
+        //topLeft = topLeft + Environment.transform.position;
 
 
 
@@ -259,13 +360,13 @@ public class Enemy : MonoBehaviour
 
     void MoveToPosition(Vector3 targetPosition, float speed)
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, speed * Time.deltaTime);
         CheckPatrolPositionReached();
     }
 
     void CheckPatrolPositionReached()
     {
-        if (Vector3.Distance(transform.position, patrolPositions[patrolPosIndex]) <= 0.1f)
+        if (Vector3.Distance(transform.localPosition, patrolPositions[patrolPosIndex]) <= 0.1f)
         {
             patrolPosIndex++;
             if (patrolPosIndex >= patrolPositions.Count)
@@ -275,19 +376,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void FaceMovementDirection()
-    {
-        Vector3 movementDirection = transform.position - previousPosition;
 
-        if (movementDirection.x > 0)
-        {
-            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-        else if (movementDirection.x < 0)
-        {
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-        }
-    }
 
     private void OnDrawGizmosSelected()
     {

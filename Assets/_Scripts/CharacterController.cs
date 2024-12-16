@@ -10,6 +10,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] GameObject shape;
     [SerializeField] public float movementSpeed;
     [SerializeField] float jumpForce;
+
     [SerializeField] float groundDetectionRange;
     [SerializeField] int damage;
     [SerializeField] public int health;
@@ -45,7 +46,11 @@ public class CharacterController : MonoBehaviour
     public bool isHittable;
     public bool FreeFalling;
     public bool can_attack = true;
+    public bool can_jump = true;
+    
     [SerializeField] public bool can_update=true;
+    [SerializeField] GameObject Environment;
+    [SerializeField] bool main_env=false;
     void Start()
     {
         Start_function();
@@ -54,10 +59,12 @@ public class CharacterController : MonoBehaviour
     public void Start_function()
     {
 
+
         isHittable = true;
         health = max_health;
         can_attack = true;
         isHittable = true;
+        can_jump = true;
         isRight = true;
         _jumpCount = 0;
         isOnGround = true;
@@ -67,56 +74,62 @@ public class CharacterController : MonoBehaviour
         Vector3 randomStartPosition = new Vector3();
         if (scenario == 0)
         {
-            randomStartPosition = new Vector3(Random.Range(-7f, 7f), -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(Random.Range(-7f, 7f), -2.9f, transform.localPosition.z);
         }
         else if (scenario == 1)
         {
-            randomStartPosition = new Vector3(-4f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(-4f, -2.9f, transform.localPosition.z);
         }
         else if (scenario == 2)
         {
-            randomStartPosition = new Vector3(3f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(3f, -2.9f, transform.localPosition.z);
         }
         else if (scenario == 3)
         {
-            randomStartPosition = new Vector3(6.5f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(6.5f, -2.9f, transform.localPosition.z);
         }
         else if (scenario == 4)
         {
-            randomStartPosition = new Vector3(-5f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(-5f, -2.9f, transform.localPosition.z);
         }
         else if (scenario == 5)
         {
-            randomStartPosition = new Vector3(0f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(0f, -2.9f, transform.localPosition.z);
         }
         else if (scenario == 6)
         {
-            randomStartPosition = new Vector3(1f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(1f, -2.9f, transform.localPosition.z);
         }
         else if (scenario == 7)
         {
-            randomStartPosition = new Vector3(-2f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(-2f, -2.9f, transform.localPosition.z);
         }
         else if (scenario == 8)
         {
-            randomStartPosition = new Vector3(2f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(2f, -2.9f, transform.localPosition.z);
         }
         else if (scenario == 9)
         {
-            randomStartPosition = new Vector3(6f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(6f, -2.9f, transform.localPosition.z);
         }
         else if (scenario == 10)
         {
-            randomStartPosition = new Vector3(-6.5f, -2.9f, transform.position.z);
+            randomStartPosition = new Vector3(-6.5f, -2.9f, transform.localPosition.z);
         }
 
-        transform.position = randomStartPosition;
+     //   transform.localPosition = randomStartPosition;
         if (randomStartPosition[0] > 0)
         {
 
         }
+        
+        if (main_env)
+        {
+            HUDController hudController = Environment.GetComponentInChildren<HUDController>();
+            hudController.Repaint(health, max_health);
+            HUDController.instance.Repaint(health, max_health);
+        }
 
-        HUDController.instance.Repaint(health, max_health);
     }
 
     void Update()
@@ -243,7 +256,13 @@ public class CharacterController : MonoBehaviour
         animator.SetBool("attack2", false);
         animator.SetBool("attack3", false);
     }
+    private void ResetJumpCooldown()
+    {
+        can_jump = true;
 
+    }
+
+    
     private void CheckHeightDeath()
     {
         if (transform.position.y < deathHeight)
@@ -265,7 +284,13 @@ public class CharacterController : MonoBehaviour
         else
             StartInvulnerability();
 
-        HUDController.instance.Repaint(health, max_health);
+        if (main_env)
+        {
+            HUDController hudController = Environment.GetComponentInChildren<HUDController>();
+            hudController.Repaint(health, max_health);
+            HUDController.instance.Repaint(health, max_health);
+        }
+
     }
 
     private void StartInvulnerability()
@@ -348,13 +373,24 @@ public class CharacterController : MonoBehaviour
 
     public void Jump()
     {
-        if (_jumpCount >= maxJumpCount)
-            return;
-        animator.SetBool("is_jumping", true);
-        var v = rigidbody2D.velocity;
-        v.y = jumpForce;
-        rigidbody2D.velocity = v;
-        _jumpCount++;
+        if (can_jump)
+        {
+            if (_jumpCount >= maxJumpCount)
+                return;
+            animator.SetBool("is_jumping", true);
+            var v = rigidbody2D.velocity;
+
+            v.y = jumpForce;
+
+            rigidbody2D.velocity = v;
+            _jumpCount++;
+
+
+            can_jump = false;
+
+            Invoke("ResetJumpCooldown", 0.1f);
+        }
+
     }
 
     private void CheckFreeFalling()

@@ -3,6 +3,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.Barracuda;
+using Unity.MLAgents.Policies;
 
 public class ResultSaver : MonoBehaviour
 {
@@ -23,8 +26,12 @@ public class ResultSaver : MonoBehaviour
     [SerializeField] bool scenario_end = false;
     [SerializeField] SpriteRenderer Black_Screen;
     [SerializeField] bool training = false;
+    [SerializeField] List<NNModel> models;
+    [SerializeField] int current_model;
+    [SerializeField] BehaviorParameters charachter_model;
     void Start()
     {
+        current_model = 0;
         Application.runInBackground = true;
         // Record the scene's start time
         sceneStartTime = Time.time;
@@ -90,6 +97,7 @@ public class ResultSaver : MonoBehaviour
 
     public void SaveSceneTime()
     {
+        
         if (iteration <= max_iteration)
         {
             scenario_end = true;
@@ -113,7 +121,25 @@ public class ResultSaver : MonoBehaviour
             iteration++;
             if (iteration > max_iteration)
             {
-                EditorApplication.isPlaying = false;
+                current_model++;
+                if (current_model >= models.Count)
+                {
+                    EditorApplication.isPlaying = false;
+                }
+                else
+                {
+                    charachter_model.Model = models[current_model];
+                    iteration = 0;
+                    if (follow_scenario)
+                    {
+                        boss_moves.scenario = iteration;
+                        enemy.scenario = iteration;
+                        characterController.scenario = iteration;
+                    }
+                   // StartCoroutine(ReloadSceneWithDelay());
+
+
+                }
             }
              if (follow_scenario)
             {
@@ -125,6 +151,7 @@ public class ResultSaver : MonoBehaviour
 
             StartCoroutine(ReloadSceneWithDelay());
         }
+
     }
 
     private IEnumerator ReloadSceneWithDelay()

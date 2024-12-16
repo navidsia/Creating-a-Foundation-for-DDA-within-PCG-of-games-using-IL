@@ -72,6 +72,10 @@ public class CharacterAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
+        if (can_move)
+        {
+
+        
         int movementLeft = actions.DiscreteActions[0];
         int movementRight = actions.DiscreteActions[1];
         int jumpAction = actions.DiscreteActions[2];
@@ -128,6 +132,7 @@ public class CharacterAgent : Agent
         if (attackAction == 1)
         {
             characterController.MeleeAttack();
+        }
         }
     }
 
