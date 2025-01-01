@@ -15,6 +15,8 @@ public class Projectile : MonoBehaviour
     Rigidbody2D _rigidbody;
     Coroutine rotationCoroutine;
     int rotationDirection; // -1 for left (counterclockwise), 1 for right (clockwise)
+    [SerializeField] CharacterAgent characterAgent;
+
 
     private void Awake()
     {
@@ -24,10 +26,16 @@ public class Projectile : MonoBehaviour
     {
         enemy = enemy_input.GetComponent<Enemy>(); 
     }
+    public void SetCharacterAgent(CharacterAgent agent)
+    {
+        characterAgent = agent;
+        characterAgent.RegisterBullet(this.gameObject); // Add itself to the CharacterAgent's list
+    }
+
     public void Shoot(Vector2 direction, float speed, int damage)
     {
         hasShot = true;
-        _duration = lifeDuration;
+        _duration = 0;
         _damage = damage;
         gameObject.layer = 7;
 
@@ -69,13 +77,13 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        if (_duration > 0)
+        if (_duration < lifeDuration)
         {
-            _duration -= Time.deltaTime;
-            if (_duration <= 0)
-            {
-                Die();
-            }
+            _duration += Time.deltaTime;
+        }
+        else
+        {
+            Die();
         }
     }
 
@@ -91,6 +99,11 @@ public class Projectile : MonoBehaviour
 
     void Die()
     {
+        if (characterAgent != null)
+        {
+            characterAgent.UnregisterBullet(this.gameObject); // Remove itself from the CharacterAgent's list
+        }
+
         // Stop rotation when the projectile is destroyed
         if (rotationCoroutine != null)
         {
@@ -98,6 +111,7 @@ public class Projectile : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
 
     private void OnDrawGizmosSelected()
     {

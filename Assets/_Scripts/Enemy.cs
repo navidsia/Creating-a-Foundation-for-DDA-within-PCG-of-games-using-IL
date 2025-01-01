@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer shapeSpriteRenderer;
     private Animator shapeAnimator;
     private List<Vector3> speedVectors;
-    private int currentSpeedIndex = 0;
+    [SerializeField] int currentSpeedIndex = 0;
     private float movementTimer = 0f;
     private float stopTimer = 0f;
     private bool isStopped = false;
@@ -107,19 +107,21 @@ public class Enemy : MonoBehaviour
         // Define ranges for angles
         float[][] angleRanges = new float[][]
         {
-            new float[] { 0, 60 },
-            new float[] { 60, 120 },
-            new float[] { 120, 180 },
-            new float[] { 180, 240 },
-            new float[] { 240, 300 },
-            new float[] { 300, 360 }
+            new float[] { -22.5f, 22.5f },
+            new float[] { 22.5f, 67.5f },
+            new float[] { 67.5f, 112.5f },
+            new float[] { 112.5f, 157.5f },
+            new float[] { 157.5f, 202.5f },
+            new float[] { 202.5f, 247.5f },
+            new float[] { 247.5f, 292.5f },
+            new float[] { 292.5f, 337.5f }
         };
 
         // Generate speed vectors using sine and cosine of random angles
         foreach (var range in angleRanges)
         {
             float angle = Random.Range(range[0], range[1]) * Mathf.Deg2Rad;
-            speedVectors.Add(new Vector3(5 * Mathf.Cos(angle), 5 * Mathf.Sin(angle), 0));
+            speedVectors.Add(new Vector3(3 * Mathf.Cos(angle), 3 * Mathf.Sin(angle), 0));
         }
 
         // Shuffle the speed vectors for randomness
@@ -197,36 +199,41 @@ public class Enemy : MonoBehaviour
 
         
 
-        var hit = Physics2D.OverlapCircle(transform.localPosition, characterDetectionRange, characterLayer);
+        var hit = Physics2D.OverlapCircle(transform.position, characterDetectionRange, characterLayer);
         if (hit)
         {
             hit.gameObject.GetComponent<CharacterController>().GetHit(damage);
         }
 
-        previousPosition = transform.localPosition;
+        previousPosition = transform.position;
     }
     private void MoveEnemy()
     {
-        movementTimer += Time.deltaTime;
-
-        if (movementTimer >= 1f)
+        if (canPatrol)
         {
-            currentSpeedIndex = (currentSpeedIndex + 1) % speedVectors.Count;
-            movementTimer = 0f;
+            movementTimer += Time.deltaTime;
+
+            if (movementTimer >= 1f)
+            {
+                currentSpeedIndex = (currentSpeedIndex + 1) % speedVectors.Count;
+                movementTimer = 0f;
+                
+            }
+
+            Vector3 movement = speedVectors[currentSpeedIndex] * Time.deltaTime;
+            transform.localPosition += movement;
+
+            CheckForWallCollision();
         }
 
-        Vector3 movement = speedVectors[currentSpeedIndex] * Time.deltaTime;
-        transform.localPosition += movement;
-
-        CheckForWallCollision();
     }
     private void CheckForWallCollision()
     {
 
-        if(transform.position.x>7.5f || transform.position.x < -7.5f || transform.position.y<-3.5f || transform.position.y > 5f)
-        {
-            currentSpeedIndex = (currentSpeedIndex + 1) % speedVectors.Count;
-        }
+        //if(transform.position.x>7.5f || transform.position.x < -7.5f || transform.position.y<-3.5f || transform.position.y > 5f)
+        //{
+        //    currentSpeedIndex = (currentSpeedIndex + 1) % speedVectors.Count;
+        //}
         //Vector3 pos = transform.localPosition;
         //Camera mainCamera = Camera.main;
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using System.Collections.Generic;
 
 public class CharacterAgent : Agent
 {
@@ -9,12 +10,13 @@ public class CharacterAgent : Agent
     private Rigidbody2D agentRigidbody;
     public float movementSpeed = 5f;
 
-    [SerializeField] private Transform Enemy;
+    [SerializeField] Rigidbody2D Enemy;
     [SerializeField] GameObject Left_wall;
     [SerializeField] GameObject Right_wall;
     [SerializeField] GameObject Top_wall;
     [SerializeField] GameObject Bottom_wall;
     [SerializeField] bool can_move=true;
+    [SerializeField] List<GameObject> bullets = new List<GameObject>();
     public override void Initialize()
     {
         Start_function();
@@ -27,12 +29,35 @@ public class CharacterAgent : Agent
         GameObject enemyObject = GameObject.FindWithTag("Enemy");
         if (enemyObject != null)
         {
-            Enemy = enemyObject.transform;
+            Enemy = enemyObject.GetComponent<Rigidbody2D>();
+            if (Enemy == null)
+            {
+                Debug.LogError("Rigidbody2D component not found on the enemy object. Ensure the enemy has a Rigidbody2D component.");
+            }
         }
         else
         {
             Debug.LogError("Enemy object not found. Make sure the enemy has the correct tag.");
         }
+    }
+
+
+    // Method to register a bullet
+    public void RegisterBullet(GameObject bullet)
+    {
+        bullets.Add(bullet);
+    }
+
+    // Method to unregister a bullet
+    public void UnregisterBullet(GameObject bullet)
+    {
+        bullets.Remove(bullet);
+    }
+
+    // Optional: Access the bullet list (e.g., for debugging or other logic)
+    public List<GameObject> GetBullets()
+    {
+        return bullets;
     }
     public void SetCan_Move(bool value)
     {
@@ -51,24 +76,64 @@ public class CharacterAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(agentRigidbody.position.x);
-        sensor.AddObservation(agentRigidbody.position.y);
+        // Agent observations
+        sensor.AddObservation(agentRigidbody.transform.localPosition.x);
+        sensor.AddObservation(agentRigidbody.transform.localPosition.y);
         sensor.AddObservation(agentRigidbody.velocity.x);
         sensor.AddObservation(agentRigidbody.velocity.y);
         sensor.AddObservation(characterController.isOnGround);
         sensor.AddObservation(characterController.health);
 
+        sensor.AddObservation(characterController.isRight);
+        sensor.AddObservation(characterController.isHittable);
+        sensor.AddObservation(characterController.FreeFalling);
+        sensor.AddObservation(characterController.can_attack);
+        sensor.AddObservation(characterController.can_jump);
+        sensor.AddObservation(characterController._jumpCount);
+
+        // Enemy observations
         if (Enemy != null)
         {
-            sensor.AddObservation(Enemy.position.x);
-            sensor.AddObservation(Enemy.position.y);
+            sensor.AddObservation(Enemy.transform.localPosition.x);
+            sensor.AddObservation(Enemy.transform.localPosition.y);
+            sensor.AddObservation(Enemy.velocity.x);
+            sensor.AddObservation(Enemy.velocity.y);
         }
 
-        sensor.AddObservation(Left_wall.transform.position.x);
-        sensor.AddObservation(Right_wall.transform.position.x);
-        sensor.AddObservation(Bottom_wall.transform.position.y + 0.5f);
-        sensor.AddObservation(Top_wall.transform.position.y);
+        // Wall positions
+        sensor.AddObservation(Left_wall.transform.transform.localPosition.x);
+        sensor.AddObservation(Right_wall.transform.transform.localPosition.x);
+        sensor.AddObservation(Bottom_wall.transform.transform.localPosition.y + 0.5f);
+        sensor.AddObservation(Top_wall.transform.transform.localPosition.y);
+
+        // Bullet observations
+        int bulletCount = 0;
+        foreach (var bullet in bullets)
+        {
+            if (bullet == null) continue; // Skip if the bullet has been destroyed
+            var bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
+            if (bulletRigidbody != null)
+            {
+                sensor.AddObservation(bullet.transform.localPosition.x);
+                sensor.AddObservation(bullet.transform.localPosition.y);
+                sensor.AddObservation(bulletRigidbody.velocity.x);
+                sensor.AddObservation(bulletRigidbody.velocity.y);
+                bulletCount++;
+            }
+
+            if (bulletCount >= 20) break; // Limit to a maximum of 20 bullets
+        }
+
+        // Padding for remaining bullets
+        for (int i = bulletCount; i < 20; i++)
+        {
+            sensor.AddObservation(0f); // Padding for localPosition.x
+            sensor.AddObservation(0f); // Padding for localPosition.y
+            sensor.AddObservation(0f); // Padding for velocity.x
+            sensor.AddObservation(0f); // Padding for velocity.y
+        }
     }
+
 
     public override void OnActionReceived(ActionBuffers actions)
     {

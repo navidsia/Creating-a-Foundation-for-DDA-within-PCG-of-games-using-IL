@@ -6,6 +6,7 @@ public class boss_moves_script : MonoBehaviour
 {
     [SerializeField] private List<GameObject> projectilePrefabs; // List of projectiles
     [SerializeField] private List<GameObject> WeightedprojectilePrefab;
+    [SerializeField] CharacterAgent agent;
     [SerializeField] GameObject BulletPrefab;
     [SerializeField] GameObject BullPrefab;
     [SerializeField] GameObject WeightedBulletPrefab;
@@ -41,14 +42,14 @@ public class boss_moves_script : MonoBehaviour
 
     [SerializeField] float bull_Left_difficulty = 1;
     [SerializeField] float bull_Left_Duration = 1f;
-    [SerializeField] float bull_Left_Spawn_interval = 0.7f;
+    [SerializeField] float bull_Left_Spawn_interval = 1.5f;
     [SerializeField] float bull_Left_RestTime = 4f;
     [SerializeField] float bull_Left_Speed = 5f;
     [SerializeField] int bull_Left_damage = 1;
 
     [SerializeField] float bull_Right_difficulty = 1;
-    [SerializeField] float bull_Right_Duration = 1f;
-    [SerializeField] float bull_Right_Spawn_interval = 0.7f;
+    [SerializeField] float bull_Right_Duration =1f;
+    [SerializeField] float bull_Right_Spawn_interval = 1.5f;
     [SerializeField] float bull_Right_RestTime = 4f;
     [SerializeField] float bull_Right_Speed = 5f;
     [SerializeField] int bull_Right_damage = 1;
@@ -265,7 +266,8 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] int projectile_weighted1 = -1;
     [SerializeField] int projectile_weighted2 = -1;
     [SerializeField] int projectile_weighted3 = -1;
-
+    [SerializeField] int current_bullet = -1;
+    [SerializeField] int current_bullet_weighted = -1;
     public Enemy enemy_script;
     [SerializeField] GameObject enemy;
     [SerializeField] GameObject Charachter;
@@ -286,7 +288,7 @@ public class boss_moves_script : MonoBehaviour
     private List<float> restTimes = new List<float>();
     private List<float> moveSpeeds = new List<float>();
     private List<float> spawnIntervals = new List<float>();
-    private int currentMoveIndex = 0;
+    [SerializeField] int currentMoveIndex = 0;
     private float moveTimer = 0f;
     private float spawnTimer = 0f;
     private bool isWaitingForNextMove = false;
@@ -351,7 +353,7 @@ public class boss_moves_script : MonoBehaviour
             Circle_Weighted_Random_Difficulty = Random.Range(1, 5);
             Eruption_Difficulty = Random.Range(1, 5);
             //rain_Bottom_difficulty = Random.Range(1, 5);
-
+            adjust_difficulty_settings();
             allMoves = new List<System.Action>
         {
             rain_Top,
@@ -429,7 +431,7 @@ public class boss_moves_script : MonoBehaviour
             bull_Left_RestTime,
             bull_Right_RestTime,
             Circle_RestTime,
-            circle_Random_RestTime ,
+            circle_Random_RestTime,
             circle_Clockwise_RestTime,
             circle_AntiClockwise_RestTime,
             Shotgun_RestTime,
@@ -897,7 +899,7 @@ public class boss_moves_script : MonoBehaviour
             Shuriken_Clockwise_Difficulty = 2; // Randomly chosen
             Half_Shuriken_Clockwise_Difficulty = 3; // Randomly chosen
             allMoves = new List<System.Action>
-    {
+            {
         circle_Random,
         Shuriken_Clockwise,
         Half_Shuriken_Clockwise
@@ -934,16 +936,29 @@ public class boss_moves_script : MonoBehaviour
 
 
 
-
-        set_moves_and_bullets();
         adjust_difficulty_settings();
+        set_moves_and_bullets();
+        
 
     }
-    public void set_moves_and_bullets()
+    public void set_moves_and_bullets(List<int> indexes =null)
     {
-        for (int i = 0; i < 3; i++)
+        bossMoves = new List<System.Action>();
+        moveDurations= new List<float>();
+        restTimes= new List<float>();
+        moveSpeeds= new List<float>();
+        spawnIntervals= new List<float>();
+        int randomIndex = 0;
+        for (int i = 0; i < 30; i++)
         {
-            int randomIndex = Random.Range(0, allMoves.Count);
+            if (indexes == null)
+            {
+                randomIndex = 0;
+            }
+            else
+            {
+                randomIndex = indexes[i];
+            }
             bossMoves.Add(allMoves[randomIndex]);
             moveDurations.Add(allDurations[randomIndex]);
             restTimes.Add(allRestTimes[randomIndex]);
@@ -983,26 +998,29 @@ public class boss_moves_script : MonoBehaviour
         rain_Right_Spawn_interval = 0.7f - rain_Right_difficulty * 0.1f;
         //rain_Bottom_Spawn_interval = 0.5f - rain_Bottom_difficulty * 0.1f;
 
-        bull_Left_Speed = 4f + bull_Left_difficulty;
-        bull_Right_Speed = 4f + bull_Right_difficulty;
+        bull_Left_Duration = (2f + bull_Left_difficulty)*1.5f;
+        bull_Right_Duration = (2f + bull_Right_difficulty) * 1.5f;
 
         circle_Random_Spawn_interval = 0.3f - circle_Random_Difficulty * 0.05f;
         Circle_Weighted_Random_Spawn_interval = 0.3f - Circle_Weighted_Random_Difficulty * 0.05f;
         Eruption_Spawn_interval = 0.3f - Eruption_Difficulty * 0.05f;
 
         Uzi_Spawn_interval = 0.2f;
-        Uzi_Duration = Uzi_Difficulty;
+        Uzi_Duration =1 + Uzi_Difficulty/2f;
 
-        M4_Spawn_interval = 0.2f;
+        M4_Spawn_interval = 0.3f;
         M4_Duration = 1 + M4_Difficulty / 2;
     }
     private void Update()
     {
         if (can_update)
         {
+            minX = Left_wall.transform.position.x;
+            maxX = Right_wall.transform.position.x;
+            minY = Buttom_wall.transform.position.y + 0.5f;
+            maxY = Top_wall.transform.position.y;
 
-        
-        if (enemy == null) return;
+            if (enemy == null) return;
 
         if (isWaitingForNextMove) return;
 
@@ -1010,7 +1028,7 @@ public class boss_moves_script : MonoBehaviour
 
         if (moveTimer < moveDurations[currentMoveIndex])
         {
-            if (currentMoveIndex < 4)
+            if (currentMoveIndex < 30)
             {
                 spawnTimer += Time.deltaTime;
                 if (spawnTimer >= spawnIntervals[currentMoveIndex])
@@ -1022,10 +1040,6 @@ public class boss_moves_script : MonoBehaviour
         }
         else
         {
-
-
-
-
             StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
         }
         }
@@ -1042,31 +1056,37 @@ public class boss_moves_script : MonoBehaviour
         currentMoveIndex++;
 
         if (currentMoveIndex >= bossMoves.Count) currentMoveIndex = 0;
-        if (currentMoveIndex == 1)
+        if (currentMoveIndex == 0)
         {
             BulletPrefab = projectilePrefabs[projectile_int_1];
-        }
-        if (currentMoveIndex == 2)
-        {
-            BulletPrefab = projectilePrefabs[projectile_int_2];
-        }
-        if (currentMoveIndex == 3)
-        {
-            BulletPrefab = projectilePrefabs[projectile_int_3];
-        }
+            WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted1];
 
+            current_bullet = projectile_int_1;
+            current_bullet_weighted = projectile_weighted1;
+
+        }
         if (currentMoveIndex == 1)
         {
-            WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted1];
+            BulletPrefab = projectilePrefabs[projectile_int_2];
+            WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted2];
+
+            current_bullet = projectile_int_2;
+            current_bullet_weighted = projectile_weighted2;
         }
         if (currentMoveIndex == 2)
         {
-            WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted2];
-        }
-        if (currentMoveIndex == 3)
-        {
+            BulletPrefab = projectilePrefabs[projectile_int_3];
             WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted3];
+
+
+            current_bullet = projectile_int_3;
+            current_bullet_weighted = projectile_weighted3;
         }
+
+
+
+        
+
         isWaitingForNextMove = false;
         enemy_script.SetCanPatrol(true);
     }
@@ -1146,7 +1166,7 @@ public class boss_moves_script : MonoBehaviour
     void circleShoot()
     {
 
-        int numBullets = 8 + 2 * Circle_Difficulty;
+        int numBullets = 10 + 2 * Circle_Difficulty;
         float angleStep = 360f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 
@@ -1200,7 +1220,7 @@ public class boss_moves_script : MonoBehaviour
         for (int i = 0; i < numBullets; i++)
         {
             Vector2 bossPosition = enemy.transform.position;
-            float angle = i * angleStep;
+            float angle = -i * angleStep;
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             SpawnAndShootBullet(bossPosition, direction, circle_Clockwise_Speed, BulletPrefab, circle_Clockwise_damage);
 
@@ -1230,8 +1250,7 @@ public class boss_moves_script : MonoBehaviour
         if (projectileScript != null)
         {
             projectileScript.set_enemy(enemy);
-
-
+        //    projectileScript.SetCharacterAgent(agent);
             projectileScript.Shoot(direction, speed, damage);
         }
     }
@@ -1241,12 +1260,12 @@ public class boss_moves_script : MonoBehaviour
     {
         int numBullets = 9;
         Shotgun_Speed = 4f + Shotgun_Difficulty;
-        float angleStep = 40f / numBullets;
+        float angleStep = 30f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
         Vector2 characterPosition = Charachter.transform.position;
         Vector2 directionToCharacter = characterPosition - bossPosition;
         float baseAngle = Mathf.Atan2(directionToCharacter.y, directionToCharacter.x) * Mathf.Rad2Deg;
-        float startAngle = baseAngle - 20f;
+        float startAngle = baseAngle - 15f;
         for (int i = 0; i < numBullets; i++)
         {
             // Calculate the angle for each bullet
@@ -1349,14 +1368,14 @@ public class boss_moves_script : MonoBehaviour
         StartCoroutine(set_enemy_patrol(2.2f));
 
         enemy_script.SetCanPatrol(false);
-        int numBullets = 4 + Pump_Shotgun_Difficulty;
+        int numBullets = 5;
         Shotgun_Speed = 4f + Pump_Shotgun_Difficulty;
-        float angleStep = 40f / numBullets;
+        float angleStep = 20f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
         Vector2 characterPosition = Charachter.transform.position;
         Vector2 directionToCharacter = characterPosition - bossPosition;
         float baseAngle = Mathf.Atan2(directionToCharacter.y, directionToCharacter.x) * Mathf.Rad2Deg;
-        float startAngle = baseAngle - 20f;
+        float startAngle = baseAngle - 10f;
 
 
 
@@ -1376,9 +1395,9 @@ public class boss_moves_script : MonoBehaviour
     void Shuriken_Clockwise()
     {
 
-        int numBullets = 10 + 4 * Shuriken_Clockwise_Difficulty;
+        int numBullets = 4 + 2 * Shuriken_Clockwise_Difficulty;
 
-        float angleStep = 3f;
+        float angleStep = 5f;
 
         StartCoroutine(Shuriken_Clockwise_BulletsWithDelay(numBullets, angleStep));
 
@@ -1387,8 +1406,8 @@ public class boss_moves_script : MonoBehaviour
 
     void Shuriken_AntiClockwise()
     {
-        int numBullets = 10 + 4 * Shuriken_AntiClockwise_Difficulty;
-        float angleStep = 3f;
+        int numBullets = 4 + 2 * Shuriken_AntiClockwise_Difficulty;
+        float angleStep = 5f;
 
         StartCoroutine(Shuriken_AntiClockwise_BulletsWithDelay(numBullets, angleStep));
     }
@@ -1513,9 +1532,9 @@ public class boss_moves_script : MonoBehaviour
     void Half_Shuriken_Clockwise()
     {
 
-        int numBullets = 35 + 10 * Half_Shuriken_Clockwise_Difficulty;
+        int numBullets = 8 + 4 * Half_Shuriken_Clockwise_Difficulty;
 
-        float angleStep = 2f;
+        float angleStep = 4f;
 
         StartCoroutine(Half_Shuriken_Clockwise_BulletsWithDelay(numBullets, angleStep));
 
@@ -1524,8 +1543,8 @@ public class boss_moves_script : MonoBehaviour
 
     void Half_Shuriken_AntiClockwise()
     {
-        int numBullets = 35 + 10 * Half_Shuriken_AntiClockwise_Difficulty;
-        float angleStep = 2f;
+        int numBullets = 8 + 4 * Half_Shuriken_AntiClockwise_Difficulty;
+        float angleStep = 4f;
 
         StartCoroutine(Half_Shuriken_AntiClockwise_BulletsWithDelay(numBullets, angleStep));
     }
@@ -1584,9 +1603,9 @@ public class boss_moves_script : MonoBehaviour
     void Half2_Shuriken_Clockwise()
     {
 
-        int numBullets = 20 + 8 * Half2_Shuriken_Clockwise_Difficulty;
+        int numBullets = 8 + 4 * Half2_Shuriken_Clockwise_Difficulty;
 
-        float angleStep = 2f;
+        float angleStep = 4f;
 
         StartCoroutine(Half2_Shuriken_Clockwise_BulletsWithDelay(numBullets, angleStep));
 
@@ -1595,8 +1614,8 @@ public class boss_moves_script : MonoBehaviour
 
     void Half2_Shuriken_AntiClockwise()
     {
-        int numBullets = 20 + 8 * Half2_Shuriken_AntiClockwise_Difficulty;
-        float angleStep = 2f;
+        int numBullets = 8 + 4 * Half2_Shuriken_AntiClockwise_Difficulty;
+        float angleStep = 4f;
 
         StartCoroutine(Half2_Shuriken_AntiClockwise_BulletsWithDelay(numBullets, angleStep));
     }
@@ -1679,7 +1698,7 @@ public class boss_moves_script : MonoBehaviour
         for (int i = 0; i < numBullets; i++)
         {
             Vector2 bossPosition = enemy.transform.position;
-            float angle = i * angleStep;
+            float angle =- i * angleStep;
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             SpawnAndShootBullet(bossPosition, direction, Spiral_Clockwise_Speed, BulletPrefab, Spiral_Clockwise_damage);
 
@@ -1709,7 +1728,7 @@ public class boss_moves_script : MonoBehaviour
     void circle_Weighted_Shoot()
     {
 
-        int numBullets = 8 + 2 * Circle_Weighted_Difficulty;
+        int numBullets = 10 + 2 * Circle_Weighted_Difficulty;
         float angleStep = 360f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 

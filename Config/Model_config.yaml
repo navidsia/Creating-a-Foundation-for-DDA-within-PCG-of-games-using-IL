@@ -19,7 +19,7 @@ behaviors:
     reward_signals:
       gail:
         strength: 0.9
-        demo_path: Demos/record-New_0.demo
+        demo_path: Demos/record-New.demo
     max_steps: 500000
     time_horizon: 2056
     summary_freq: 10000
