@@ -16,12 +16,13 @@ public class ResultSaver : MonoBehaviour
     [SerializeField] Enemy enemy;
     [SerializeField] CharacterController characterController;
     [SerializeField] CharacterAgent characterAgent;
-    [SerializeField] bool saving;
+    //[SerializeField] bool saving;
     [SerializeField] Unity.MLAgents.Policies.BehaviorParameters behaviorParameters;
     [SerializeField] int iteration = 1;
     [SerializeField] int max_iteration = 2;
     [SerializeField] BackgroundManager backgroundManager;
     [SerializeField] boss_moves_script boss_moves;
+    [SerializeField] dynamic_difficulty_adjustment_script dda_script;
     [SerializeField] bool follow_scenario = true;
     [SerializeField] bool scenario_end = false;
     [SerializeField] SpriteRenderer Black_Screen;
@@ -40,11 +41,11 @@ public class ResultSaver : MonoBehaviour
         filePath = Application.dataPath + "/SceneResults.csv";
 
         // Check if file exists, create it with a header if not
-        if (!File.Exists(filePath))
-        {
-            string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"}";
-            File.WriteAllText(filePath, headers + "\n"); // Add header
-        }
+        //if (!File.Exists(filePath))
+        //{
+        //    string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"}";
+        //    File.WriteAllText(filePath, headers + "\n"); // Add header
+        //}
 
         if (follow_scenario)
         {
@@ -102,21 +103,35 @@ public class ResultSaver : MonoBehaviour
         {
             scenario_end = true;
             StartCoroutine(HandleBlackScreenTransparency(1f, 5f));
-            if (saving)
-            {
-                string nnModelName = behaviorParameters.Model == null ? "player" : behaviorParameters.Model.name;
-                int playerHP = characterController.Return_HP_Player();
-                int enemyHP = enemy.Return_HP_Enemy();
-                float sceneDuration = Time.time - sceneStartTime; // Calculate time elapsed
+            //if (saving)
+            //{
+            string nnModelName = behaviorParameters.Model == null ? "player" : behaviorParameters.Model.name;
+            int playerHP = characterController.Return_HP_Player();
+            int enemyHP = enemy.Return_HP_Enemy();
+            float sceneDuration = Time.time - sceneStartTime; // Calculate time elapsed
 
-                player_winner = playerHP > enemyHP ? 1 : 0;
 
-                string resultData = $"{nnModelName},{sceneDuration},{playerHP},{enemyHP},{player_winner}";
+            int move1 = boss_moves.selected_indexes[0];
+            int difficulty1 = boss_moves.selected_difficulties[0];
 
-                // Append the time to the file
-                File.AppendAllText(filePath, resultData + "\n");
-                sceneStartTime = Time.time;
-            }
+            int move2 = boss_moves.selected_indexes[1];
+            int difficulty2 = boss_moves.selected_difficulties[1];
+
+            int move3 = boss_moves.selected_indexes[2];
+            int difficulty3 = boss_moves.selected_difficulties[2];
+
+
+            player_winner = playerHP > enemyHP ? 1 : 0;
+
+            string resultData = $"{nnModelName},{sceneDuration},{playerHP},{enemyHP},{player_winner},{move1},{move2},{move3},{difficulty1},{difficulty2},{difficulty3}";
+
+            // Append the time to the file
+            //File.AppendAllText(filePath, resultData + "\n");
+            dda_script.save_results(resultData);
+
+
+            sceneStartTime = Time.time;
+            //}
 
             iteration++;
             if (iteration > max_iteration)

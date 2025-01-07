@@ -15,8 +15,9 @@ public class CharacterAgent : Agent
     [SerializeField] GameObject Right_wall;
     [SerializeField] GameObject Top_wall;
     [SerializeField] GameObject Bottom_wall;
-    [SerializeField] bool can_move=true;
-    [SerializeField] List<GameObject> bullets = new List<GameObject>();
+    [SerializeField] bool can_move = true;
+    [SerializeField] public List<GameObject> bullets;
+
     public override void Initialize()
     {
         Start_function();
@@ -40,25 +41,6 @@ public class CharacterAgent : Agent
             Debug.LogError("Enemy object not found. Make sure the enemy has the correct tag.");
         }
     }
-
-
-    // Method to register a bullet
-    public void RegisterBullet(GameObject bullet)
-    {
-        bullets.Add(bullet);
-    }
-
-    // Method to unregister a bullet
-    public void UnregisterBullet(GameObject bullet)
-    {
-        bullets.Remove(bullet);
-    }
-
-    // Optional: Access the bullet list (e.g., for debugging or other logic)
-    public List<GameObject> GetBullets()
-    {
-        return bullets;
-    }
     public void SetCan_Move(bool value)
     {
         can_move = value;
@@ -76,7 +58,6 @@ public class CharacterAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Agent observations
         sensor.AddObservation(agentRigidbody.transform.localPosition.x);
         sensor.AddObservation(agentRigidbody.transform.localPosition.y);
         sensor.AddObservation(agentRigidbody.velocity.x);
@@ -91,7 +72,7 @@ public class CharacterAgent : Agent
         sensor.AddObservation(characterController.can_jump);
         sensor.AddObservation(characterController._jumpCount);
 
-        // Enemy observations
+
         if (Enemy != null)
         {
             sensor.AddObservation(Enemy.transform.localPosition.x);
@@ -100,104 +81,117 @@ public class CharacterAgent : Agent
             sensor.AddObservation(Enemy.velocity.y);
         }
 
-        // Wall positions
         sensor.AddObservation(Left_wall.transform.transform.localPosition.x);
         sensor.AddObservation(Right_wall.transform.transform.localPosition.x);
         sensor.AddObservation(Bottom_wall.transform.transform.localPosition.y + 0.5f);
         sensor.AddObservation(Top_wall.transform.transform.localPosition.y);
 
-        // Bullet observations
-        int bulletCount = 0;
-        foreach (var bullet in bullets)
+
+        // Remove any null bullets from the list
+        bullets.RemoveAll(bullet => bullet == null);
+
+
+
+        //// Add observations for the nearest 20 bullets
+        //List<GameObject> validBullets = new List<GameObject>(bullets);
+        //validBullets.Sort((a, b) =>
+        //{
+        //    float distA = Vector2.Distance(agentRigidbody.position, a.transform.position);
+        //    float distB = Vector2.Distance(agentRigidbody.position, b.transform.position);
+        //    return distA.CompareTo(distB);
+        //});
+
+
+
+        // Add observations for the first 20 bullets
+        for (int i = 0; i < 20; i++)
         {
-            if (bullet == null) continue; // Skip if the bullet has been destroyed
-            var bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
-            if (bulletRigidbody != null)
+            if (i < bullets.Count)
             {
-                sensor.AddObservation(bullet.transform.localPosition.x);
-                sensor.AddObservation(bullet.transform.localPosition.y);
-                sensor.AddObservation(bulletRigidbody.velocity.x);
-                sensor.AddObservation(bulletRigidbody.velocity.y);
-                bulletCount++;
+                var bulletRigidbody = bullets[i].GetComponent<Rigidbody2D>();
+                if (bulletRigidbody != null)
+                {
+                    sensor.AddObservation(bulletRigidbody.transform.localPosition.x);
+                    sensor.AddObservation(bulletRigidbody.transform.localPosition.y);
+                    sensor.AddObservation(bulletRigidbody.velocity.x);
+                    sensor.AddObservation(bulletRigidbody.velocity.y);
+                }
             }
-
-            if (bulletCount >= 20) break; // Limit to a maximum of 20 bullets
+            else
+            {
+                // Add default observations if there are fewer than 20 bullets
+                sensor.AddObservation(0f); // Position x
+                sensor.AddObservation(0f); // Position y
+                sensor.AddObservation(0f); // Velocity x
+                sensor.AddObservation(0f); // Velocity y
+            }
         }
 
-        // Padding for remaining bullets
-        for (int i = bulletCount; i < 20; i++)
-        {
-            sensor.AddObservation(0f); // Padding for localPosition.x
-            sensor.AddObservation(0f); // Padding for localPosition.y
-            sensor.AddObservation(0f); // Padding for velocity.x
-            sensor.AddObservation(0f); // Padding for velocity.y
-        }
     }
-
 
     public override void OnActionReceived(ActionBuffers actions)
     {
         if (can_move)
         {
 
-        
-        int movementLeft = actions.DiscreteActions[0];
-        int movementRight = actions.DiscreteActions[1];
-        int jumpAction = actions.DiscreteActions[2];
-        int attackAction = actions.DiscreteActions[3];
-        int dashAction = actions.DiscreteActions[4];
 
-        // Movement logic
-        //   float moveInput = 0f;
-        //   switch (movementAction)
-        //   {
-        //       case 0:
-        //           moveInput = -1f; // Move left
-        //           break;
-        //       case 1:
-        //           moveInput = 0f; // Idle
-        //           break;
-        //       case 2:
-        //           moveInput = 1f; // Move right
-        //           break;
-        //   }
+            int movementLeft = actions.DiscreteActions[0];
+            int movementRight = actions.DiscreteActions[1];
+            int jumpAction = actions.DiscreteActions[2];
+            int attackAction = actions.DiscreteActions[3];
+            int dashAction = actions.DiscreteActions[4];
 
-        // Move agent
-        //  agentRigidbody.velocity = new Vector2(moveInput * movementSpeed, agentRigidbody.velocity.y);
+            // Movement logic
+            //   float moveInput = 0f;
+            //   switch (movementAction)
+            //   {
+            //       case 0:
+            //           moveInput = -1f; // Move left
+            //           break;
+            //       case 1:
+            //           moveInput = 0f; // Idle
+            //           break;
+            //       case 2:
+            //           moveInput = 1f; // Move right
+            //           break;
+            //   }
 
-        // Perform jump if requested
+            // Move agent
+            //  agentRigidbody.velocity = new Vector2(moveInput * movementSpeed, agentRigidbody.velocity.y);
 
-        if (movementLeft == 1  && movementRight == 0)
-        {
-            characterController.MoveLogic(1);
-        }
+            // Perform jump if requested
 
-        if (movementRight == 1 && movementLeft == 0)
-        {
-            characterController.MoveLogic(-1);
-        }
-        if (movementRight == 0 && movementLeft == 0)
-        {
-            characterController.MoveLogic(0);
-        }
+            if (movementLeft == 1 && movementRight == 0)
+            {
+                characterController.MoveLogic(1);
+            }
+
+            if (movementRight == 1 && movementLeft == 0)
+            {
+                characterController.MoveLogic(-1);
+            }
+            if (movementRight == 0 && movementLeft == 0)
+            {
+                characterController.MoveLogic(0);
+            }
 
 
-        if (jumpAction == 1)
-        {
-            characterController.Jump();
-        }
+            if (jumpAction == 1)
+            {
+                characterController.Jump();
+            }
 
-        // Perform dash if requested
-        if (dashAction == 1)
-        {
-          //  characterController.Roll();
-        }
+            // Perform dash if requested
+            if (dashAction == 1)
+            {
+                //  characterController.Roll();
+            }
 
-        // Handle attacking
-        if (attackAction == 1)
-        {
-            characterController.MeleeAttack();
-        }
+            // Handle attacking
+            if (attackAction == 1)
+            {
+                characterController.MeleeAttack();
+            }
         }
     }
 
@@ -215,7 +209,7 @@ public class CharacterAgent : Agent
         {
             discreteActions[0] = 1; // Move right
         }
-        
+
         if (Input.GetKey(KeyCode.A))
         {
             discreteActions[1] = 1; // Move left
@@ -233,7 +227,7 @@ public class CharacterAgent : Agent
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-        //    discreteActions[4] = 1; // Dash
+            //    discreteActions[4] = 1; // Dash
         }
     }
 

@@ -1,0 +1,47 @@
+{
+    "My Behavior": {
+        "checkpoints": [
+            {
+                "steps": 499608,
+                "file_path": "results\\test10agents3_ppo8_512\\My Behavior\\My Behavior-499608.onnx",
+                "reward": null,
+                "creation_time": 1735906363.4038332,
+                "auxillary_file_paths": [
+                    "results\\test10agents3_ppo8_512\\My Behavior\\My Behavior-499608.pt"
+                ]
+            },
+            {
+                "steps": 999216,
+                "file_path": "results\\test10agents3_ppo8_512\\My Behavior\\My Behavior-999216.onnx",
+                "reward": null,
+                "creation_time": 1735907711.3882127,
+                "auxillary_file_paths": [
+                    "results\\test10agents3_ppo8_512\\My Behavior\\My Behavior-999216.pt"
+                ]
+            },
+            {
+                "steps": 1007440,
+                "file_path": "results\\test10agents3_ppo8_512\\My Behavior\\My Behavior-1007440.onnx",
+                "reward": null,
+                "creation_time": 1735907712.3657558,
+                "auxillary_file_paths": [
+                    "results\\test10agents3_ppo8_512\\My Behavior\\My Behavior-1007440.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1007440,
+            "file_path": "results\\test10agents3_ppo8_512\\My Behavior.onnx",
+            "reward": null,
+            "creation_time": 1735907712.3657558,
+            "auxillary_file_paths": [
+                "results\\test10agents3_ppo8_512\\My Behavior\\My Behavior-1007440.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.5.1+cpu"
+    }
+}

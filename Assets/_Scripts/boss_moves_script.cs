@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class boss_moves_script : MonoBehaviour
 {
     [SerializeField] private List<GameObject> projectilePrefabs; // List of projectiles
     [SerializeField] private List<GameObject> WeightedprojectilePrefab;
-    [SerializeField] CharacterAgent agent;
+    [SerializeField] CharacterAgent characterAgent;
     [SerializeField] GameObject BulletPrefab;
     [SerializeField] GameObject BullPrefab;
     [SerializeField] GameObject WeightedBulletPrefab;
@@ -18,14 +19,14 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] bool canpatrol = true;
     [SerializeField] Vector2 characterPosition;
 
-    [SerializeField] float rain_Top_difficulty = 1;
+    [SerializeField] int rain_Top_difficulty = 1;
     [SerializeField] float rain_Top_Duration = 4.5f;
     [SerializeField] float rain_Top_Spawn_interval = 4.5f;
     [SerializeField] float rain_Top_RestTime = 2f;
     [SerializeField] float rain_Top_Speed = 5f;
     [SerializeField] int rain_Top_bulletDamage = 1;
 
-    [SerializeField] float rain_Left_difficulty = 1;
+    [SerializeField] int rain_Left_difficulty = 1;
     [SerializeField] float rain_Left_Duration = 4.5f;
     [SerializeField] float rain_Left_Spawn_interval = 4.5f;
     [SerializeField] float rain_Left_RestTime = 2f;
@@ -33,34 +34,34 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] int rain_Left_bulletDamage = 1;
 
 
-    [SerializeField] float rain_Right_difficulty = 1;
+    [SerializeField] int rain_Right_difficulty = 1;
     [SerializeField] float rain_Right_Duration = 4.5f;
     [SerializeField] float rain_Right_Spawn_interval = 4.5f;
     [SerializeField] float rain_Right_RestTime = 2f;
     [SerializeField] float rain_Right_Speed = 5f;
     [SerializeField] int rain_Right_bulletDamage = 1;
 
-    [SerializeField] float bull_Left_difficulty = 1;
+    [SerializeField] int bull_Left_difficulty = 1;
     [SerializeField] float bull_Left_Duration = 1f;
     [SerializeField] float bull_Left_Spawn_interval = 1.5f;
     [SerializeField] float bull_Left_RestTime = 4f;
     [SerializeField] float bull_Left_Speed = 5f;
     [SerializeField] int bull_Left_damage = 1;
 
-    [SerializeField] float bull_Right_difficulty = 1;
-    [SerializeField] float bull_Right_Duration =1f;
+    [SerializeField] int bull_Right_difficulty = 1;
+    [SerializeField] float bull_Right_Duration = 1f;
     [SerializeField] float bull_Right_Spawn_interval = 1.5f;
     [SerializeField] float bull_Right_RestTime = 4f;
     [SerializeField] float bull_Right_Speed = 5f;
     [SerializeField] int bull_Right_damage = 1;
 
 
-    [SerializeField] int Circle_Difficulty = 1;
-    [SerializeField] float Circle_Duration = 1f;
-    [SerializeField] float Circle_Spawn_interval = 0.7f;
-    [SerializeField] float Circle_RestTime = 4f;
-    [SerializeField] float Circle_Speed = 5f;
-    [SerializeField] int Circle_damage = 1;
+    [SerializeField] int circleShoot_Difficulty = 1;
+    [SerializeField] float circleShoot_Duration = 1f;
+    [SerializeField] float circleShoot_Spawn_interval = 0.7f;
+    [SerializeField] float circleShoot_RestTime = 4f;
+    [SerializeField] float circleShoot_Speed = 5f;
+    [SerializeField] int circleShoot_damage = 1;
 
     [SerializeField] int Star_Difficulty = 1;
     [SerializeField] float Star_Duration = 1f;
@@ -204,12 +205,12 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] int Spiral_AntiClockwise_damage = 1;
 
 
-    [SerializeField] int Circle_Weighted_Difficulty = 1;
-    [SerializeField] float Circle_Weighted_Duration = 1f;
-    [SerializeField] float Circle_Weighted_Spawn_interval = 0.7f;
-    [SerializeField] float Circle_Weighted_RestTime = 4f;
-    [SerializeField] float Circle_Weighted_Speed = 5f;
-    [SerializeField] int Circle_Weighted_damage = 1;
+    [SerializeField] int circle_Weighted_Shoot_Difficulty = 1;
+    [SerializeField] float circle_Weighted_Shoot_Duration = 1f;
+    [SerializeField] float circle_Weighted_Shoot_Spawn_interval = 0.7f;
+    [SerializeField] float circle_Weighted_Shoot_RestTime = 4f;
+    [SerializeField] float circle_Weighted_Shoot_Speed = 5f;
+    [SerializeField] int circle_Weighted_Shoot_damage = 1;
 
     [SerializeField] int Star_Weighted_Difficulty = 1;
     [SerializeField] float Star_Weighted_Duration = 1f;
@@ -273,7 +274,7 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] GameObject Charachter;
     [SerializeField] List<int> bullet_types_integer;
 
-    
+
 
 
     [SerializeField] List<System.Action> allMoves;
@@ -283,25 +284,45 @@ public class boss_moves_script : MonoBehaviour
     [SerializeField] List<float> spawnInterval;
 
 
-    private List<System.Action> bossMoves = new List<System.Action>();
-    private List<float> moveDurations = new List<float>();
-    private List<float> restTimes = new List<float>();
-    private List<float> moveSpeeds = new List<float>();
-    private List<float> spawnIntervals = new List<float>();
+
+
+    [SerializeField] List<System.Action> bossMoves = new List<System.Action>();
+    [SerializeField] List<float> moveDurations = new List<float>();
+    [SerializeField] List<float> restTimes = new List<float>();
+    [SerializeField] List<float> moveSpeeds = new List<float>();
+    [SerializeField] List<float> spawnIntervals = new List<float>();
     [SerializeField] int currentMoveIndex = 0;
     private float moveTimer = 0f;
     private float spawnTimer = 0f;
     private bool isWaitingForNextMove = false;
 
-    [SerializeField] public bool can_update=true;
+    [SerializeField] List<int> all_difficulties = new List<int>();
+    [SerializeField] public List<int> selected_indexes ;
+    [SerializeField] public List<int> selected_difficulties;
+
+    [SerializeField] public bool can_update = true;
 
     [SerializeField] public int scenario = 0;
+
+    [SerializeField] public int number_of_moves = 3;
+
+
+
+    [SerializeField] public int randomIndex;
     private void Start()
     {
         Start_function();
     }
     public void Start_function()
     {
+        if (selected_indexes.Count == 0)
+        {
+            selected_indexes = Enumerable.Repeat(-1, number_of_moves).ToList();
+            selected_difficulties = Enumerable.Repeat(-1, number_of_moves).ToList();
+        }
+
+
+
         bossMoves = new List<System.Action>();
         moveDurations = new List<float>();
         restTimes = new List<float>();
@@ -314,64 +335,96 @@ public class boss_moves_script : MonoBehaviour
         minY = Buttom_wall.transform.position.y + 0.5f;
         maxY = Top_wall.transform.position.y;
 
+
+
+
         if (scenario == 0)
         {
 
 
 
-            rain_Top_difficulty = Random.Range(1, 5);
-            rain_Left_difficulty = Random.Range(1, 5);
-            rain_Right_difficulty = Random.Range(1, 5);
-            bull_Left_difficulty = Random.Range(1, 5);
-            bull_Right_difficulty = Random.Range(1, 5);
-            Circle_Difficulty = Random.Range(1, 5);
-            Star_Difficulty = Random.Range(1, 5);
-            circle_Random_Difficulty = Random.Range(1, 5);
-            circle_AntiClockwise_Difficulty = Random.Range(1, 5);
-            circle_Clockwise_Difficulty = Random.Range(1, 5);
-
-            Shotgun_Difficulty = Random.Range(1, 5);
-            Uzi_Difficulty = Random.Range(1, 5);
-            M4_Difficulty = Random.Range(1, 5);
-            Pump_Shotgun_Difficulty = Random.Range(1, 5);
-
-            Shuriken_Clockwise_Difficulty = Random.Range(1, 5);
-            Shuriken_AntiClockwise_Difficulty = Random.Range(1, 5);
-            Half_Shuriken_Clockwise_Difficulty = Random.Range(1, 5);
-            Half_Shuriken_AntiClockwise_Difficulty = Random.Range(1, 5);
-            Half2_Shuriken_Clockwise_Difficulty = Random.Range(1, 5);
-            Half2_Shuriken_AntiClockwise_Difficulty = Random.Range(1, 5);
-
-            Crusher_Top_Difficulty = Random.Range(1, 5);
-            Crusher_Bot_Difficulty = Random.Range(1, 5);
-            Spiral_Clockwise_Difficulty = Random.Range(1, 5);
-            Spiral_AntiClockwise_Difficulty = Random.Range(1, 5);
-            Circle_Weighted_Difficulty = Random.Range(1, 5);
-            Star_Weighted_Difficulty = Random.Range(1, 5);
-            Shotgun_Clockwise_Difficulty = Random.Range(1, 5);
-            Shotgun_AntiClockwise_Difficulty = Random.Range(1, 5);
-            Circle_Weighted_Random_Difficulty = Random.Range(1, 5);
-            Eruption_Difficulty = Random.Range(1, 5);
+            rain_Top_difficulty = 0;
+            rain_Left_difficulty = 0;
+            rain_Right_difficulty = 0;
+            bull_Left_difficulty = 0;
+            bull_Right_difficulty = 0;
+            circleShoot_Difficulty = 0;
+            Star_Difficulty = 0;
+            circle_Random_Difficulty = 0;
+            circle_AntiClockwise_Difficulty = 0;
+            circle_Clockwise_Difficulty = 0;
+            Shotgun_Difficulty = 0;
+            Uzi_Difficulty = 0;
+            M4_Difficulty = 0;
+            Pump_Shotgun_Difficulty = 0;
+            Shuriken_Clockwise_Difficulty = 0;
+            Shuriken_AntiClockwise_Difficulty = 0;
+            Half_Shuriken_Clockwise_Difficulty = 0;
+            Half_Shuriken_AntiClockwise_Difficulty = 0;
+            Half2_Shuriken_Clockwise_Difficulty = 0;
+            Half2_Shuriken_AntiClockwise_Difficulty = 0;
+            Crusher_Top_Difficulty = 0;
+            Crusher_Bot_Difficulty = 0;
+            Spiral_Clockwise_Difficulty = 0;
+            Spiral_AntiClockwise_Difficulty = 0;
+            circle_Weighted_Shoot_Difficulty = 0;
+            Star_Weighted_Difficulty = 0;
+            Shotgun_Clockwise_Difficulty = 0;
+            Shotgun_AntiClockwise_Difficulty = 0;
+            Circle_Weighted_Random_Difficulty = 0;
+            Eruption_Difficulty = 0;
             //rain_Bottom_difficulty = Random.Range(1, 5);
             adjust_difficulty_settings();
+
             allMoves = new List<System.Action>
         {
+                //rain_Top,
+                //rain_Left,
+                //rain_Right,
+                //bull_Left,
+                //bull_Right,
+                //circleShoot,
+                //circle_Random,
+                //circle_Clockwise,
+                //circle_AntiClockwise,
+                //Shotgun,
+                //Uzi,
+                //Star,
+                //Pump_Shotgun,
+                //Shuriken_Clockwise,
+                //Shuriken_AntiClockwise,
+                //M4,
+                //Half_Shuriken_Clockwise,
+                //Half_Shuriken_AntiClockwise,
+                //Half2_Shuriken_Clockwise,
+                //Half2_Shuriken_AntiClockwise,
+                //Crusher_Top,
+                //Crusher_Bot,
+                //Spiral_Clockwise,
+                //Spiral_AntiClockwise,
+                //circle_Weighted_Shoot,
+                //Star_Weighted,
+                //Shotgun_Clockwise,
+                //Shotgun_AntiClockwise,
+                //Circle_Weighted_Random,
+                //Eruption
+
             rain_Top,
             rain_Left,
             rain_Right,
             bull_Left,
             bull_Right,
             circleShoot,
+            Star,
             circle_Random,
-            circle_Clockwise,
             circle_AntiClockwise,
+            circle_Clockwise,
             Shotgun,
             Uzi,
-            Star,
+            M4,
             Pump_Shotgun,
             Shuriken_Clockwise,
             Shuriken_AntiClockwise,
-            M4,
             Half_Shuriken_Clockwise,
             Half_Shuriken_AntiClockwise,
             Half2_Shuriken_Clockwise,
@@ -387,26 +440,57 @@ public class boss_moves_script : MonoBehaviour
             Circle_Weighted_Random,
             Eruption
 
-    };
+        };
 
             allDurations = new List<float>
         {
+            //rain_Top_Duration,
+            //rain_Left_Duration,
+            //rain_Right_Duration,
+            //bull_Left_Duration,
+            //bull_Right_Duration,
+            //Circle_Duration,
+            //circle_Random_Duration,
+            //circle_Clockwise_Duration,
+            //circle_AntiClockwise_Duration,
+            //Shotgun_Duration,
+            //Uzi_Duration,
+            //Star_Duration,
+            //Pump_Shotgun_Duration,
+            //Shuriken_Clockwise_Duration,
+            //Shuriken_AntiClockwise_Duration,
+            //M4_Duration,
+            //Half_Shuriken_Clockwise_Duration,
+            //Half_Shuriken_AntiClockwise_Duration,
+            //Half2_Shuriken_Clockwise_Duration,
+            //Half2_Shuriken_AntiClockwise_Duration,
+            //Crusher_Top_Duration,
+            //Crusher_Bot_Duration,
+            //Spiral_Clockwise_Duration,
+            //Spiral_AntiClockwise_Duration,
+            //Circle_Weighted_Duration,
+            //Star_Weighted_Duration,
+            //Shotgun_Clockwise_Duration,
+            //Shotgun_AntiClockwise_Duration,
+            //Circle_Weighted_Random_Duration,
+            //Eruption_Duration
+
             rain_Top_Duration,
             rain_Left_Duration,
             rain_Right_Duration,
             bull_Left_Duration,
             bull_Right_Duration,
-            Circle_Duration,
+            circleShoot_Duration,
+            Star_Duration,
             circle_Random_Duration,
-            circle_Clockwise_Duration,
             circle_AntiClockwise_Duration,
+            circle_Clockwise_Duration,
             Shotgun_Duration,
             Uzi_Duration,
-            Star_Duration,
+            M4_Duration,
             Pump_Shotgun_Duration,
             Shuriken_Clockwise_Duration,
             Shuriken_AntiClockwise_Duration,
-            M4_Duration,
             Half_Shuriken_Clockwise_Duration,
             Half_Shuriken_AntiClockwise_Duration,
             Half2_Shuriken_Clockwise_Duration,
@@ -415,7 +499,7 @@ public class boss_moves_script : MonoBehaviour
             Crusher_Bot_Duration,
             Spiral_Clockwise_Duration,
             Spiral_AntiClockwise_Duration,
-            Circle_Weighted_Duration,
+            circle_Weighted_Shoot_Duration,
             Star_Weighted_Duration,
             Shotgun_Clockwise_Duration,
             Shotgun_AntiClockwise_Duration,
@@ -423,24 +507,55 @@ public class boss_moves_script : MonoBehaviour
             Eruption_Duration
         };
 
-             allRestTimes = new List<float>
+            allRestTimes = new List<float>
         {
+            //rain_Top_RestTime,
+            //rain_Left_RestTime,
+            //rain_Right_RestTime,
+            //bull_Left_RestTime,
+            //bull_Right_RestTime,
+            //circleShoot_RestTime,
+            //circle_Random_RestTime,
+            //circle_Clockwise_RestTime,
+            //circle_AntiClockwise_RestTime,
+            //Shotgun_RestTime,
+            //Uzi_RestTime,
+            //Star_RestTime,
+            //Pump_Shotgun_RestTime,
+            //Shuriken_Clockwise_RestTime,
+            //Shuriken_AntiClockwise_RestTime,
+            //M4_RestTime,
+            //Half_Shuriken_Clockwise_RestTime,
+            //Half_Shuriken_AntiClockwise_RestTime,
+            //Half2_Shuriken_Clockwise_RestTime,
+            //Half2_Shuriken_AntiClockwise_RestTime,
+            //Crusher_Top_RestTime,
+            //Crusher_Bot_RestTime,
+            //Spiral_Clockwise_RestTime,
+            //Spiral_AntiClockwise_RestTime,
+            //circle_Weighted_Shoot_RestTime,
+            //Star_Weighted_RestTime,
+            //Shotgun_Clockwise_RestTime,
+            //Shotgun_AntiClockwise_RestTime,
+            //Circle_Weighted_Random_RestTime,
+            //Eruption_RestTime
+
             rain_Top_RestTime,
             rain_Left_RestTime,
             rain_Right_RestTime,
             bull_Left_RestTime,
             bull_Right_RestTime,
-            Circle_RestTime,
+            circleShoot_RestTime,
+            Star_RestTime,
             circle_Random_RestTime,
-            circle_Clockwise_RestTime,
             circle_AntiClockwise_RestTime,
+            circle_Clockwise_RestTime,
             Shotgun_RestTime,
             Uzi_RestTime,
-            Star_RestTime,
+            M4_RestTime,
             Pump_Shotgun_RestTime,
             Shuriken_Clockwise_RestTime,
             Shuriken_AntiClockwise_RestTime,
-            M4_RestTime,
             Half_Shuriken_Clockwise_RestTime,
             Half_Shuriken_AntiClockwise_RestTime,
             Half2_Shuriken_Clockwise_RestTime,
@@ -449,7 +564,7 @@ public class boss_moves_script : MonoBehaviour
             Crusher_Bot_RestTime,
             Spiral_Clockwise_RestTime,
             Spiral_AntiClockwise_RestTime,
-            Circle_Weighted_RestTime,
+            circle_Weighted_Shoot_RestTime,
             Star_Weighted_RestTime,
             Shotgun_Clockwise_RestTime,
             Shotgun_AntiClockwise_RestTime,
@@ -457,24 +572,55 @@ public class boss_moves_script : MonoBehaviour
             Eruption_RestTime
         };
 
-             allSpeeds = new List<float>
+            allSpeeds = new List<float>
         {
+            //rain_Top_Speed,
+            //rain_Left_Speed,
+            //rain_Right_Speed,
+            //bull_Left_Speed,
+            //bull_Right_Speed,
+            //circleShoot_Speed ,
+            //circle_Random_Speed,
+            //circle_Clockwise_Speed,
+            //circle_AntiClockwise_Speed,
+            //Shotgun_Speed,
+            //Uzi_Speed,
+            //Star_Speed,
+            //Pump_Shotgun_Speed,
+            //Shuriken_Clockwise_Speed,
+            //Shuriken_AntiClockwise_Speed,
+            //M4_Speed ,
+            //Half_Shuriken_Clockwise_Speed,
+            //Half_Shuriken_AntiClockwise_Speed,
+            //Half2_Shuriken_Clockwise_Speed,
+            //Half2_Shuriken_AntiClockwise_Speed,
+            //Crusher_Top_Speed,
+            //Crusher_Bot_Speed,
+            //Spiral_Clockwise_Speed,
+            //Spiral_AntiClockwise_Speed,
+            //circle_Weighted_Shoot_Speed,
+            //Star_Weighted_Speed,
+            //Shotgun_Clockwise_Speed,
+            //Shotgun_AntiClockwise_Speed,
+            //Circle_Weighted_Random_Speed,
+            //Eruption_Speed
+
             rain_Top_Speed,
             rain_Left_Speed,
             rain_Right_Speed,
             bull_Left_Speed,
             bull_Right_Speed,
-            Circle_Speed ,
+            circleShoot_Speed,
+            Star_Speed,
             circle_Random_Speed,
-            circle_Clockwise_Speed,
             circle_AntiClockwise_Speed,
+            circle_Clockwise_Speed,
             Shotgun_Speed,
             Uzi_Speed,
-            Star_Speed,
+            M4_Speed,
             Pump_Shotgun_Speed,
             Shuriken_Clockwise_Speed,
             Shuriken_AntiClockwise_Speed,
-            M4_Speed ,
             Half_Shuriken_Clockwise_Speed,
             Half_Shuriken_AntiClockwise_Speed,
             Half2_Shuriken_Clockwise_Speed,
@@ -483,32 +629,65 @@ public class boss_moves_script : MonoBehaviour
             Crusher_Bot_Speed,
             Spiral_Clockwise_Speed,
             Spiral_AntiClockwise_Speed,
-            Circle_Weighted_Speed,
+            circle_Weighted_Shoot_Speed,
             Star_Weighted_Speed,
             Shotgun_Clockwise_Speed,
             Shotgun_AntiClockwise_Speed,
             Circle_Weighted_Random_Speed,
             Eruption_Speed
+
         };
 
-             spawnInterval = new List<float>
+            spawnInterval = new List<float>
         {
+            //rain_Top_Spawn_interval,
+            //rain_Left_Spawn_interval,
+            //rain_Right_Spawn_interval,
+            //bull_Left_Spawn_interval,
+            //bull_Right_Spawn_interval,
+            //circleShoot_Spawn_interval ,
+            //circle_Random_Spawn_interval,
+            //circle_Clockwise_Spawn_interval,
+            //circle_AntiClockwise_Spawn_interval,
+            //Shotgun_Spawn_interval,
+            //Uzi_Spawn_interval,
+            //Star_Spawn_interval,
+            //Pump_Shotgun_Spawn_interval,
+            //Shuriken_Clockwise_Spawn_interval,
+            //Shuriken_AntiClockwise_Spawn_interval,
+            //M4_Spawn_interval,
+            //Half_Shuriken_Clockwise_Spawn_interval,
+            //Half_Shuriken_AntiClockwise_Spawn_interval,
+            //Half2_Shuriken_Clockwise_Spawn_interval,
+            //Half2_Shuriken_AntiClockwise_Spawn_interval,
+            //Crusher_Top_Spawn_interval,
+            //Crusher_Bot_Spawn_interval,
+            //Spiral_Clockwise_Spawn_interval,
+            //Spiral_AntiClockwise_Spawn_interval,
+            //circle_Weighted_Shoot_Spawn_interval,
+            //Star_Weighted_Spawn_interval,
+            //Shotgun_Clockwise_Spawn_interval,
+            //Shotgun_AntiClockwise_Spawn_interval,
+            //Circle_Weighted_Random_Spawn_interval,
+            //Eruption_Spawn_interval
+
+
             rain_Top_Spawn_interval,
             rain_Left_Spawn_interval,
             rain_Right_Spawn_interval,
             bull_Left_Spawn_interval,
             bull_Right_Spawn_interval,
-            Circle_Spawn_interval ,
+            circleShoot_Spawn_interval,
+            Star_Spawn_interval,
             circle_Random_Spawn_interval,
-            circle_Clockwise_Spawn_interval,
             circle_AntiClockwise_Spawn_interval,
+            circle_Clockwise_Spawn_interval,
             Shotgun_Spawn_interval,
             Uzi_Spawn_interval,
-            Star_Spawn_interval,
+            M4_Spawn_interval,
             Pump_Shotgun_Spawn_interval,
             Shuriken_Clockwise_Spawn_interval,
             Shuriken_AntiClockwise_Spawn_interval,
-            M4_Spawn_interval,
             Half_Shuriken_Clockwise_Spawn_interval,
             Half_Shuriken_AntiClockwise_Spawn_interval,
             Half2_Shuriken_Clockwise_Spawn_interval,
@@ -517,12 +696,13 @@ public class boss_moves_script : MonoBehaviour
             Crusher_Bot_Spawn_interval,
             Spiral_Clockwise_Spawn_interval,
             Spiral_AntiClockwise_Spawn_interval,
-            Circle_Weighted_Spawn_interval,
+            circle_Weighted_Shoot_Spawn_interval,
             Star_Weighted_Spawn_interval,
             Shotgun_Clockwise_Spawn_interval,
             Shotgun_AntiClockwise_Spawn_interval,
             Circle_Weighted_Random_Spawn_interval,
             Eruption_Spawn_interval
+
 
         };
 
@@ -534,7 +714,7 @@ public class boss_moves_script : MonoBehaviour
         else if (scenario == 1)
         {
             rain_Top_difficulty = 2;
-            Circle_Weighted_Difficulty = 4;
+            circle_Weighted_Shoot_Difficulty = 4;
             circle_Clockwise_Difficulty = 1;
             allMoves = new List<System.Action>
             {
@@ -547,28 +727,28 @@ public class boss_moves_script : MonoBehaviour
             allDurations = new List<float>
             {
                 rain_Top_Duration,
-                Circle_Weighted_Duration,
+                circle_Weighted_Shoot_Duration,
                 circle_Clockwise_Duration
             };
 
             allRestTimes = new List<float>
             {
                 rain_Top_RestTime,
-                Circle_Weighted_RestTime,
+                circle_Weighted_Shoot_RestTime,
                 circle_Clockwise_RestTime
             };
 
             allSpeeds = new List<float>
             {
                 rain_Top_Speed,
-                Circle_Weighted_Speed,
+                circle_Weighted_Shoot_Speed,
                 circle_Clockwise_Speed
             };
 
             spawnInterval = new List<float>
             {
                 rain_Top_Spawn_interval,
-                Circle_Weighted_Spawn_interval,
+                circle_Weighted_Shoot_Spawn_interval,
                 circle_Clockwise_Spawn_interval
             };
         }
@@ -614,7 +794,7 @@ public class boss_moves_script : MonoBehaviour
         }
         else if (scenario == 3)
         {
-            Circle_Difficulty = 2; // Randomly chosen
+            circleShoot_Difficulty = 2; // Randomly chosen
             M4_Difficulty = 4; // Randomly chosen
             Half2_Shuriken_AntiClockwise_Difficulty = 1; // Randomly chosen
             allMoves = new List<System.Action>
@@ -626,28 +806,28 @@ public class boss_moves_script : MonoBehaviour
 
             allDurations = new List<float>
     {
-        Circle_Duration,
+        circleShoot_Duration,
         M4_Duration,
         Half2_Shuriken_AntiClockwise_Duration
     };
 
             allRestTimes = new List<float>
     {
-        Circle_RestTime,
+        circleShoot_RestTime,
         M4_RestTime,
         Half2_Shuriken_AntiClockwise_RestTime
     };
 
             allSpeeds = new List<float>
     {
-        Circle_Speed,
+        circleShoot_Speed,
         M4_Speed,
         Half2_Shuriken_AntiClockwise_Speed
     };
 
             spawnInterval = new List<float>
     {
-        Circle_Spawn_interval,
+        circleShoot_Spawn_interval,
         M4_Spawn_interval,
         Half2_Shuriken_AntiClockwise_Spawn_interval
     };
@@ -935,42 +1115,123 @@ public class boss_moves_script : MonoBehaviour
         }
 
 
+        all_difficulties.Add(rain_Top_difficulty);
+        all_difficulties.Add(rain_Left_difficulty);
+        all_difficulties.Add(rain_Right_difficulty);
+        all_difficulties.Add(bull_Left_difficulty);
+        all_difficulties.Add(bull_Right_difficulty);
+        all_difficulties.Add(circleShoot_Difficulty);
+        all_difficulties.Add(Star_Difficulty);
+        all_difficulties.Add(circle_Random_Difficulty);
+        all_difficulties.Add(circle_AntiClockwise_Difficulty);
+        all_difficulties.Add(circle_Clockwise_Difficulty);
+        all_difficulties.Add(Shotgun_Difficulty);
+        all_difficulties.Add(Uzi_Difficulty);
+        all_difficulties.Add(M4_Difficulty);
+        all_difficulties.Add(Pump_Shotgun_Difficulty);
+        all_difficulties.Add(Shuriken_Clockwise_Difficulty);
+        all_difficulties.Add(Shuriken_AntiClockwise_Difficulty);
+        all_difficulties.Add(Half_Shuriken_Clockwise_Difficulty);
+        all_difficulties.Add(Half_Shuriken_AntiClockwise_Difficulty);
+        all_difficulties.Add(Half2_Shuriken_Clockwise_Difficulty);
+        all_difficulties.Add(Half2_Shuriken_AntiClockwise_Difficulty);
+        all_difficulties.Add(Crusher_Top_Difficulty);
+        all_difficulties.Add(Crusher_Bot_Difficulty);
+        all_difficulties.Add(Spiral_Clockwise_Difficulty);
+        all_difficulties.Add(Spiral_AntiClockwise_Difficulty);
+        all_difficulties.Add(circle_Weighted_Shoot_Difficulty);
+        all_difficulties.Add(Star_Weighted_Difficulty);
+        all_difficulties.Add(Shotgun_Clockwise_Difficulty);
+        all_difficulties.Add(Shotgun_AntiClockwise_Difficulty);
+        all_difficulties.Add(Circle_Weighted_Random_Difficulty);
+        all_difficulties.Add(Eruption_Difficulty);
 
-        adjust_difficulty_settings();
-        set_moves_and_bullets();
-        
+
+
+       
+        if (selected_indexes.Count==0 || selected_indexes == null)
+        {
+
+            set_moves_and_bullets(new List<int> {-1,-1,-1} , new List<int> { -1, -1, -1 });
+            
+        }
+        else
+        {
+            
+            set_moves_and_bullets(selected_indexes, selected_difficulties);
+            
+        }
+
 
     }
-    public void set_moves_and_bullets(List<int> indexes =null)
+    public void set_moves_and_bullets(List<int> indexes = null, List<int> difficulties = null)
     {
         bossMoves = new List<System.Action>();
-        moveDurations= new List<float>();
-        restTimes= new List<float>();
-        moveSpeeds= new List<float>();
-        spawnIntervals= new List<float>();
-        int randomIndex = 0;
-        for (int i = 0; i < 30; i++)
+        moveDurations = new List<float>();
+        restTimes = new List<float>();
+        moveSpeeds = new List<float>();
+        spawnIntervals = new List<float>();
+        randomIndex = 0;
+
+
+
+        List<int> indices = Enumerable.Range(0, allMoves.Count).ToList();
+        indices = indices.OrderBy(x => Random.value).ToList(); // Shuffle the indices.
+
+        if (indexes[0] == -1 || indexes == null)
         {
-            if (indexes == null)
+            for (int i = 0; i < number_of_moves; i++)
             {
-                randomIndex = 0;
+                selected_indexes[i] = indices[i];
+            }
+        }
+
+        for (int i = 0; i < number_of_moves; i++)
+        {
+
+            if (selected_difficulties[i] == -1 || selected_difficulties == null)
+            {
+
+
+                randomIndex = selected_indexes[i];
+                all_difficulties[randomIndex] = Random.Range(1, 5);
+                selected_difficulties[i] = all_difficulties[randomIndex];
+                update_difficulties();
+
             }
             else
             {
-                randomIndex = indexes[i];
+                randomIndex = selected_indexes[i];
+                all_difficulties[randomIndex] =selected_difficulties[i];
+                //selected_difficulties[i] = all_difficulties[randomIndex];
+                update_difficulties();
             }
+            //else
+            //{
+            //    check_this_fuckery3 = true;
+
+            //    randomIndex = indexes[i];
+            //    all_difficulties[randomIndex] = difficulties[i];
+            //    update_difficulties();
+            //}
+           
             bossMoves.Add(allMoves[randomIndex]);
             moveDurations.Add(allDurations[randomIndex]);
             restTimes.Add(allRestTimes[randomIndex]);
             moveSpeeds.Add(allSpeeds[randomIndex]);
-            spawnIntervals.Add(spawnInterval[randomIndex]);
+            spawnIntervals.Add(spawnInterval[randomIndex]); 
 
-            allMoves.RemoveAt(randomIndex);
-            allDurations.RemoveAt(randomIndex);
-            allRestTimes.RemoveAt(randomIndex);
-            allSpeeds.RemoveAt(randomIndex);
-            spawnInterval.RemoveAt(randomIndex);
+            if (indexes == null)
+            {
+                allMoves.RemoveAt(randomIndex);
+                allDurations.RemoveAt(randomIndex);
+                allRestTimes.RemoveAt(randomIndex);
+                allSpeeds.RemoveAt(randomIndex);
+                spawnInterval.RemoveAt(randomIndex);
+            }
+
         }
+        
 
         while (projectile_int_1 == projectile_int_2 || projectile_int_1 == projectile_int_3 || projectile_int_2 == projectile_int_3)
         {
@@ -990,6 +1251,44 @@ public class boss_moves_script : MonoBehaviour
         }
         WeightedBulletPrefab = WeightedprojectilePrefab[projectile_weighted1];
     }
+
+
+
+    public void update_difficulties()
+    {
+        int i = 0;
+        rain_Top_difficulty = all_difficulties[i++];
+        rain_Left_difficulty = all_difficulties[i++];
+        rain_Right_difficulty = all_difficulties[i++];
+        bull_Left_difficulty = all_difficulties[i++];
+        bull_Right_difficulty = all_difficulties[i++];
+        circleShoot_Difficulty = all_difficulties[i++];
+        Star_Difficulty = all_difficulties[i++];
+        circle_Random_Difficulty = all_difficulties[i++];
+        circle_AntiClockwise_Difficulty = all_difficulties[i++];
+        circle_Clockwise_Difficulty = all_difficulties[i++];
+        Shotgun_Difficulty = all_difficulties[i++];
+        Uzi_Difficulty = all_difficulties[i++];
+        M4_Difficulty = all_difficulties[i++];
+        Pump_Shotgun_Difficulty = all_difficulties[i++];
+        Shuriken_Clockwise_Difficulty = all_difficulties[i++];
+        Shuriken_AntiClockwise_Difficulty = all_difficulties[i++];
+        Half_Shuriken_Clockwise_Difficulty = all_difficulties[i++];
+        Half_Shuriken_AntiClockwise_Difficulty = all_difficulties[i++];
+        Half2_Shuriken_Clockwise_Difficulty = all_difficulties[i++];
+        Half2_Shuriken_AntiClockwise_Difficulty = all_difficulties[i++];
+        Crusher_Top_Difficulty = all_difficulties[i++];
+        Crusher_Bot_Difficulty = all_difficulties[i++];
+        Spiral_Clockwise_Difficulty = all_difficulties[i++];
+        Spiral_AntiClockwise_Difficulty = all_difficulties[i++];
+        circle_Weighted_Shoot_Difficulty = all_difficulties[i++];
+        Star_Weighted_Difficulty = all_difficulties[i++];
+        Shotgun_Clockwise_Difficulty = all_difficulties[i++];
+        Shotgun_AntiClockwise_Difficulty = all_difficulties[i++];
+        Circle_Weighted_Random_Difficulty = all_difficulties[i++];
+        Eruption_Difficulty = all_difficulties[i++];
+        adjust_difficulty_settings();
+    }
     public void adjust_difficulty_settings()
     {
 
@@ -998,7 +1297,7 @@ public class boss_moves_script : MonoBehaviour
         rain_Right_Spawn_interval = 0.7f - rain_Right_difficulty * 0.1f;
         //rain_Bottom_Spawn_interval = 0.5f - rain_Bottom_difficulty * 0.1f;
 
-        bull_Left_Duration = (2f + bull_Left_difficulty)*1.5f;
+        bull_Left_Duration = (2f + bull_Left_difficulty) * 1.5f;
         bull_Right_Duration = (2f + bull_Right_difficulty) * 1.5f;
 
         circle_Random_Spawn_interval = 0.3f - circle_Random_Difficulty * 0.05f;
@@ -1006,7 +1305,7 @@ public class boss_moves_script : MonoBehaviour
         Eruption_Spawn_interval = 0.3f - Eruption_Difficulty * 0.05f;
 
         Uzi_Spawn_interval = 0.2f;
-        Uzi_Duration =1 + Uzi_Difficulty/2f;
+        Uzi_Duration = 1 + Uzi_Difficulty / 2f;
 
         M4_Spawn_interval = 0.3f;
         M4_Duration = 1 + M4_Difficulty / 2;
@@ -1022,26 +1321,26 @@ public class boss_moves_script : MonoBehaviour
 
             if (enemy == null) return;
 
-        if (isWaitingForNextMove) return;
+            if (isWaitingForNextMove) return;
 
-        moveTimer += Time.deltaTime;
+            moveTimer += Time.deltaTime;
 
-        if (moveTimer < moveDurations[currentMoveIndex])
-        {
-            if (currentMoveIndex < 30)
+            if (moveTimer < moveDurations[currentMoveIndex])
             {
-                spawnTimer += Time.deltaTime;
-                if (spawnTimer >= spawnIntervals[currentMoveIndex])
+                if (currentMoveIndex < 30)
                 {
-                    bossMoves[currentMoveIndex]();
-                    spawnTimer = 0f;
+                    spawnTimer += Time.deltaTime;
+                    if (spawnTimer >= spawnIntervals[currentMoveIndex])
+                    {
+                        bossMoves[currentMoveIndex]();
+                        spawnTimer = 0f;
+                    }
                 }
             }
-        }
-        else
-        {
-            StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
-        }
+            else
+            {
+                StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
+            }
         }
     }
     public void SetCanUpdate(bool value)
@@ -1085,7 +1384,7 @@ public class boss_moves_script : MonoBehaviour
 
 
 
-        
+
 
         isWaitingForNextMove = false;
         enemy_script.SetCanPatrol(true);
@@ -1166,7 +1465,7 @@ public class boss_moves_script : MonoBehaviour
     void circleShoot()
     {
 
-        int numBullets = 10 + 2 * Circle_Difficulty;
+        int numBullets = 10 + 2 * circleShoot_Difficulty;
         float angleStep = 360f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 
@@ -1174,7 +1473,7 @@ public class boss_moves_script : MonoBehaviour
         {
             float angle = i * angleStep;
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-            SpawnAndShootBullet(bossPosition, direction, Circle_Speed, BulletPrefab, Circle_damage);
+            SpawnAndShootBullet(bossPosition, direction, circleShoot_Speed, BulletPrefab, circleShoot_damage);
         }
 
 
@@ -1250,10 +1549,13 @@ public class boss_moves_script : MonoBehaviour
         if (projectileScript != null)
         {
             projectileScript.set_enemy(enemy);
-        //    projectileScript.SetCharacterAgent(agent);
+
+            characterAgent.bullets.Add(newProjectile);
+
             projectileScript.Shoot(direction, speed, damage);
         }
     }
+
 
 
     void Shotgun()
@@ -1698,7 +2000,7 @@ public class boss_moves_script : MonoBehaviour
         for (int i = 0; i < numBullets; i++)
         {
             Vector2 bossPosition = enemy.transform.position;
-            float angle =- i * angleStep;
+            float angle = -i * angleStep;
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             SpawnAndShootBullet(bossPosition, direction, Spiral_Clockwise_Speed, BulletPrefab, Spiral_Clockwise_damage);
 
@@ -1728,7 +2030,7 @@ public class boss_moves_script : MonoBehaviour
     void circle_Weighted_Shoot()
     {
 
-        int numBullets = 10 + 2 * Circle_Weighted_Difficulty;
+        int numBullets = 10 + 2 * circle_Weighted_Shoot_Difficulty;
         float angleStep = 360f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 
@@ -1736,7 +2038,7 @@ public class boss_moves_script : MonoBehaviour
         {
             float angle = i * angleStep;
             Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-            SpawnAndShootBullet(bossPosition, direction, Circle_Weighted_Speed, WeightedBulletPrefab, Circle_Weighted_damage);
+            SpawnAndShootBullet(bossPosition, direction, circleShoot_Speed, WeightedBulletPrefab, circleShoot_damage);
         }
 
 
