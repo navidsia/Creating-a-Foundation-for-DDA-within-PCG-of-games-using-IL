@@ -335,7 +335,36 @@ public class boss_moves_script : MonoBehaviour
         minY = Buttom_wall.transform.position.y + 0.5f;
         maxY = Top_wall.transform.position.y;
 
-
+        rain_Top_RestTime = 7;
+        rain_Left_RestTime = 7;
+        rain_Right_RestTime = 7;
+        bull_Left_RestTime = 6.5f;
+        bull_Right_RestTime = 6.5f;
+        circleShoot_RestTime = 2;
+        Star_RestTime = 3.5f;
+        circle_Random_RestTime = 7;
+        circle_AntiClockwise_RestTime = 4;
+        circle_Clockwise_RestTime = 4;
+        Shotgun_RestTime = 2;
+        Uzi_RestTime = 3.5f;
+        M4_RestTime = 3.5f;
+        Pump_Shotgun_RestTime = 3.5f;
+        Shuriken_Clockwise_RestTime = 3.5f;
+        Shuriken_AntiClockwise_RestTime = 3.5f;
+        Half_Shuriken_Clockwise_RestTime = 3.5f;
+        Half_Shuriken_AntiClockwise_RestTime = 3.5f;
+        Half2_Shuriken_Clockwise_RestTime = 3.5f;
+        Half2_Shuriken_AntiClockwise_RestTime = 3.5f;
+        //Crusher_Top_RestTime = 0;
+        //Crusher_Bot_RestTime = 0;
+        //Spiral_Clockwise_RestTime = 0;
+        //Spiral_AntiClockwise_RestTime = 0;
+        //circle_Weighted_Shoot_RestTime = 0;
+        //Star_Weighted_RestTime = 0;
+        //Shotgun_Clockwise_RestTime = 0;
+        //Shotgun_AntiClockwise_RestTime = 0;
+        Circle_Weighted_Random_RestTime = 7;
+        Eruption_RestTime = 7;
 
 
         if (scenario == 0)
@@ -1114,7 +1143,7 @@ public class boss_moves_script : MonoBehaviour
     };
         }
 
-
+        all_difficulties = new List<int>();
         all_difficulties.Add(rain_Top_difficulty);
         all_difficulties.Add(rain_Left_difficulty);
         all_difficulties.Add(rain_Right_difficulty);
@@ -1178,24 +1207,27 @@ public class boss_moves_script : MonoBehaviour
 
             if (isWaitingForNextMove) return;
 
-            moveTimer += Time.deltaTime;
+            bossMoves[currentMoveIndex]();
+            StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
 
-            if (moveTimer < moveDurations[currentMoveIndex])
-            {
-                if (currentMoveIndex < 30)
-                {
-                    spawnTimer += Time.deltaTime;
-                    if (spawnTimer >= spawnIntervals[currentMoveIndex])
-                    {
-                        bossMoves[currentMoveIndex]();
-                        spawnTimer = 0f;
-                    }
-                }
-            }
-            else
-            {
-                StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
-            }
+            //moveTimer += Time.deltaTime;
+
+            //if (moveTimer < moveDurations[currentMoveIndex])
+            //{
+            //    if (currentMoveIndex < 30)
+            //    {
+            //        spawnTimer += Time.deltaTime;
+            //        if (spawnTimer >= spawnIntervals[currentMoveIndex])
+            //        {
+            //            bossMoves[currentMoveIndex]();
+            //            spawnTimer = 0f;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
+            //}
         }
     }
 
@@ -1397,32 +1429,112 @@ public class boss_moves_script : MonoBehaviour
     void rain_Top()
     {
         // Generate a random x position within the screen bounds
-        float randomX = Random.Range(minX, maxX);
-        Vector2 spawnPosition = new Vector2(randomX, maxY);
+        float wait_time = 0.7f - rain_Top_difficulty * 0.1f;
 
         // Instantiate and shoot the projectile with the appropriate speed
-        SpawnAndShootBullet(spawnPosition, Vector2.down, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Top_bulletDamage);
+        //  SpawnAndShootBullet(spawnPosition, Vector2.down, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Top_bulletDamage);
+        StartCoroutine(shoot_rain_Top(wait_time));
     }
+    IEnumerator shoot_rain_Top(float wait_time)
+    {
+
+
+        float elapsedTime = 0f; // Track elapsed time
+
+        while (elapsedTime < 5f && can_update)
+        {
+            float randomX = Random.Range(minX, maxX);
+            Vector2 spawnPosition = new Vector2(randomX, maxY);
+            // Spawn and shoot the bullet
+            SpawnAndShootBullet(spawnPosition, Vector2.down, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Top_bulletDamage);
+
+            yield return new WaitForSeconds(wait_time); // Delay between each shot
+
+            elapsedTime += wait_time; // Increment elapsed time
+        }
+    }
+
+
 
     void rain_Left()
     {
-        // Generate a random y position within the screen bounds
-        float randomY = Random.Range(minY, maxY);
-        Vector2 spawnPosition = new Vector2(minX, randomY);
+        // Generate a random x position within the screen bounds
+        float wait_time = 0.7f - rain_Left_difficulty * 0.1f;
 
         // Instantiate and shoot the projectile with the appropriate speed
-        SpawnAndShootBullet(spawnPosition, Vector2.right, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Left_bulletDamage);
+        //  SpawnAndShootBullet(spawnPosition, Vector2.down, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Top_bulletDamage);
+        StartCoroutine(shoot_rain_Left(wait_time));
     }
+    IEnumerator shoot_rain_Left(float wait_time)
+    {
+
+
+        float elapsedTime = 0f; // Track elapsed time
+
+        while (elapsedTime < 5f && can_update)
+        {
+            float randomY = Random.Range(minY, maxY);
+            Vector2 spawnPosition = new Vector2(maxX, randomY);
+            // Spawn and shoot the bullet
+            SpawnAndShootBullet(spawnPosition, Vector2.left, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Left_bulletDamage);
+
+            yield return new WaitForSeconds(wait_time); // Delay between each shot
+
+            elapsedTime += wait_time; // Increment elapsed time
+        }
+    }
+
 
     void rain_Right()
     {
-        // Generate a random y position within the screen bounds
-        float randomY = Random.Range(minY, maxY);
-        Vector2 spawnPosition = new Vector2(maxX, randomY);
+        // Generate a random x position within the screen bounds
+        float wait_time = 0.7f - rain_Right_difficulty * 0.1f;
 
         // Instantiate and shoot the projectile with the appropriate speed
-        SpawnAndShootBullet(spawnPosition, Vector2.left, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Right_bulletDamage);
+        //  SpawnAndShootBullet(spawnPosition, Vector2.down, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Top_bulletDamage);
+        StartCoroutine(shoot_rain_Right(wait_time));
     }
+    IEnumerator shoot_rain_Right(float wait_time)
+    {
+
+
+        float elapsedTime = 0f; // Track elapsed time
+
+        while (elapsedTime < 5f && can_update)
+        {
+            float randomY = Random.Range(minY, maxY);
+            Vector2 spawnPosition = new Vector2(minX, randomY);
+            // Spawn and shoot the bullet
+            SpawnAndShootBullet(spawnPosition, Vector2.right, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Right_bulletDamage);
+
+            yield return new WaitForSeconds(wait_time); // Delay between each shot
+
+            elapsedTime += wait_time; // Increment elapsed time
+        }
+    }
+
+
+
+
+    //void rain_Left()
+    //{
+    //    // Generate a random y position within the screen bounds
+    //    float randomY = Random.Range(minY, maxY);
+    //    Vector2 spawnPosition = new Vector2(minX, randomY);
+
+    //    // Instantiate and shoot the projectile with the appropriate speed
+    //    SpawnAndShootBullet(spawnPosition, Vector2.right, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Left_bulletDamage);
+    //}
+
+    //void rain_Right()
+    //{
+    //    // Generate a random y position within the screen bounds
+    //    float randomY = Random.Range(minY, maxY);
+    //    Vector2 spawnPosition = new Vector2(maxX, randomY);
+
+    //    // Instantiate and shoot the projectile with the appropriate speed
+    //    SpawnAndShootBullet(spawnPosition, Vector2.left, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Right_bulletDamage);
+    //}
 
     //void rain_Bottom()
     //{
@@ -1434,36 +1546,90 @@ public class boss_moves_script : MonoBehaviour
     //    SpawnAndShootBullet(spawnPosition, Vector2.up, moveSpeeds[currentMoveIndex], BulletPrefab, rain_Top_bulletDamage);
     //}
 
+
+
+
+
     void bull_Left()
     {
-        // Spawn the bull on the left side, glued to the ground
-        Vector2 spawnPosition = new Vector2(minX, minY + 0.5f);
 
-        // Instantiate the projectile at the spawn position
-        GameObject newProjectile = Instantiate(BullPrefab, spawnPosition, Quaternion.identity);
-
-        // Flip the X-axis by inverting the local scale
-        Vector3 localScale = newProjectile.transform.localScale;
-        localScale.x *= -1; // Flip the x-axis
-        newProjectile.transform.localScale = localScale;
-
-        // Get the Projectile component from the instantiated object and shoot it with the given speed
-        var projectileScript = newProjectile.GetComponent<Projectile>();
-        if (projectileScript != null)
-        {
-            projectileScript.Shoot(Vector2.right, moveSpeeds[currentMoveIndex], bull_Left_damage); // Shoot the projectile in the specified direction with the specified speed and damage
-        }
-
+        StartCoroutine(shoot_bull_Left(1.5f));
     }
+    IEnumerator shoot_bull_Left(float wait_time)
+    {
+        bull_Left_Speed = 4f + bull_Right_difficulty;
+        for (int i = 0; i < 3; i++)
+        {
+            if (can_update)
+            {
+
+            
+            // Spawn the bull on the left side, glued to the ground
+            Vector2 spawnPosition = new Vector2(minX, minY + 0.5f);
+
+            // Instantiate the projectile at the spawn position
+            GameObject newProjectile = Instantiate(BullPrefab, spawnPosition, Quaternion.identity);
+
+            // Flip the X-axis by inverting the local scale
+            Vector3 localScale = newProjectile.transform.localScale;
+            localScale.x *= -1; // Flip the x-axis
+            newProjectile.transform.localScale = localScale;
+
+            // Get the Projectile component from the instantiated object and shoot it with the given speed
+            var projectileScript = newProjectile.GetComponent<Projectile>();
+            if (projectileScript != null)
+            {
+                projectileScript.Shoot(Vector2.right, bull_Left_Speed, bull_Left_damage); // Shoot the projectile in the specified direction with the specified speed and damage
+            }
+            yield return new WaitForSeconds(wait_time);
+            }
+        }
+    }
+
+
 
     void bull_Right()
     {
-        // Spawn the bull on the right side, glued to the ground
-        Vector2 spawnPosition = new Vector2(maxX, minY + 0.5f);
 
-        // Instantiate and shoot the bull projectile to the left
-        SpawnAndShootBullet(spawnPosition, Vector2.left, moveSpeeds[currentMoveIndex], BullPrefab, bull_Right_damage);
+        StartCoroutine(shoot_bull_Right(1.5f));
     }
+    IEnumerator shoot_bull_Right(float wait_time)
+    {
+        bull_Right_Speed = 4f + bull_Right_difficulty;
+        for (int i = 0; i < 3; i++)
+        {
+            if (can_update)
+            {
+                // Spawn the bull on the left side, glued to the ground
+                Vector2 spawnPosition = new Vector2(maxX, minY + 0.5f);
+
+                // Instantiate the projectile at the spawn position
+                GameObject newProjectile = Instantiate(BullPrefab, spawnPosition, Quaternion.identity);
+
+                // Flip the X-axis by inverting the local scale
+                Vector3 localScale = newProjectile.transform.localScale;
+                //localScale.x *= -1; // Flip the x-axis
+                newProjectile.transform.localScale = localScale;
+
+                // Get the Projectile component from the instantiated object and shoot it with the given speed
+                var projectileScript = newProjectile.GetComponent<Projectile>();
+                if (projectileScript != null)
+                {
+                    projectileScript.Shoot(Vector2.left, bull_Right_Speed, bull_Right_damage); // Shoot the projectile in the specified direction with the specified speed and damage
+                }
+                yield return new WaitForSeconds(wait_time);
+            }
+        }
+    }
+
+    //void bull_Right()
+    //{
+    //    // Spawn the bull on the right side, glued to the ground
+    //    Vector2 spawnPosition = new Vector2(maxX, minY + 0.5f);
+
+    //    // Instantiate and shoot the bull projectile to the left
+    //    SpawnAndShootBullet(spawnPosition, Vector2.left, moveSpeeds[currentMoveIndex], BullPrefab, bull_Right_damage);
+    //}
 
     void circleShoot()
     {
@@ -1488,13 +1654,33 @@ public class boss_moves_script : MonoBehaviour
 
     void circle_Random()
     {
-        float angle = Random.Range(0, 360);
-        Vector2 bossPosition = enemy.transform.position;
+        float wait_time = 0.3f - circle_Random_Difficulty * 0.05f;
 
 
-        Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-        SpawnAndShootBullet(bossPosition, direction, circle_Random_Speed, BulletPrefab, circle_Random_damage);
+        StartCoroutine(shoot_circle_Random(wait_time));
     }
+
+
+    IEnumerator shoot_circle_Random(float wait_time)
+    {
+
+
+        float elapsedTime = 0f; // Track elapsed time
+
+        while (elapsedTime < 5f && can_update)
+        {
+            float angle = Random.Range(0, 360);
+            Vector2 bossPosition = enemy.transform.position;
+
+            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            SpawnAndShootBullet(bossPosition, direction, circle_Random_Speed, BulletPrefab, circle_Random_damage);
+
+            yield return new WaitForSeconds(wait_time); // Delay between each shot
+
+            elapsedTime += wait_time; // Increment elapsed time
+        }
+    }
+
 
 
     void circle_Clockwise()
@@ -1590,37 +1776,96 @@ public class boss_moves_script : MonoBehaviour
 
     void Uzi()
     {
-        // enemy_script.SetCanPatrol(false);
-        StartCoroutine(set_enemy_patrol(Uzi_Duration + 0.2f));
+
+        float wait_time = 0.2f - circle_Random_Difficulty * 0.03f;
 
 
-        Vector2 bossPosition = enemy.transform.position;
-        Vector2 characterPosition = Charachter.transform.position;
-        Vector2 directionToCharacter = characterPosition - bossPosition;
-        float baseAngle = Mathf.Atan2(directionToCharacter.y, directionToCharacter.x) * Mathf.Rad2Deg;
-        baseAngle = Random.Range(baseAngle - 15, baseAngle + 15);
-
-
-
-        Vector2 direction = new Vector2(Mathf.Cos(baseAngle * Mathf.Deg2Rad), Mathf.Sin(baseAngle * Mathf.Deg2Rad));
-        SpawnAndShootBullet(bossPosition, direction, Uzi_Speed, BulletPrefab, Uzi_damage);
+        StartCoroutine(shoot_Uzi(wait_time));
     }
+
+
+    IEnumerator shoot_Uzi(float wait_time)
+    {
+
+        enemy_script.SetCanPatrol(false);
+
+        float elapsedTime = 0f; // Track elapsed time
+
+        while (elapsedTime < 1.5f && can_update)
+        {
+            Vector2 bossPosition = enemy.transform.position;
+            Vector2 characterPosition = Charachter.transform.position;
+            Vector2 directionToCharacter = characterPosition - bossPosition;
+            float baseAngle = Mathf.Atan2(directionToCharacter.y, directionToCharacter.x) * Mathf.Rad2Deg;
+            baseAngle = Random.Range(baseAngle - 15, baseAngle + 15);
+
+
+
+            Vector2 direction = new Vector2(Mathf.Cos(baseAngle * Mathf.Deg2Rad), Mathf.Sin(baseAngle * Mathf.Deg2Rad));
+            SpawnAndShootBullet(bossPosition, direction, Uzi_Speed, BulletPrefab, Uzi_damage);
+
+            yield return new WaitForSeconds(wait_time); // Delay between each shot
+
+            elapsedTime += wait_time; // Increment elapsed time
+        }
+        enemy_script.SetCanPatrol(true);
+
+
+    }
+
+    //void M4()
+    //{
+    //    // enemy_script.SetCanPatrol(false);
+    //    StartCoroutine(set_enemy_patrol(M4_Duration + 0.2f));
+
+
+    //    Vector2 bossPosition = enemy.transform.position;
+    //    Vector2 characterPosition = Charachter.transform.position;
+    //    Vector2 directionToCharacter = characterPosition - bossPosition;
+    //    float baseAngle = Mathf.Atan2(directionToCharacter.y, directionToCharacter.x) * Mathf.Rad2Deg;
+
+
+    //    Vector2 direction = new Vector2(Mathf.Cos(baseAngle * Mathf.Deg2Rad), Mathf.Sin(baseAngle * Mathf.Deg2Rad));
+    //    SpawnAndShootBullet(bossPosition, direction, M4_Speed, BulletPrefab, M4_damage);
+    //}
+
 
     void M4()
     {
-        // enemy_script.SetCanPatrol(false);
-        StartCoroutine(set_enemy_patrol(M4_Duration + 0.2f));
+
+        float wait_time = 0.35f - circle_Random_Difficulty * 0.05f;
 
 
-        Vector2 bossPosition = enemy.transform.position;
-        Vector2 characterPosition = Charachter.transform.position;
-        Vector2 directionToCharacter = characterPosition - bossPosition;
-        float baseAngle = Mathf.Atan2(directionToCharacter.y, directionToCharacter.x) * Mathf.Rad2Deg;
-
-
-        Vector2 direction = new Vector2(Mathf.Cos(baseAngle * Mathf.Deg2Rad), Mathf.Sin(baseAngle * Mathf.Deg2Rad));
-        SpawnAndShootBullet(bossPosition, direction, M4_Speed, BulletPrefab, M4_damage);
+        StartCoroutine(shoot_M4(wait_time));
     }
+
+
+    IEnumerator shoot_M4(float wait_time)
+    {
+
+        enemy_script.SetCanPatrol(false);
+        float elapsedTime = 0f; // Track elapsed time
+
+        while (elapsedTime < 1.5f && can_update)
+        {
+            Vector2 bossPosition = enemy.transform.position;
+            Vector2 characterPosition = Charachter.transform.position;
+            Vector2 directionToCharacter = characterPosition - bossPosition;
+            float baseAngle = Mathf.Atan2(directionToCharacter.y, directionToCharacter.x) * Mathf.Rad2Deg;
+
+
+            Vector2 direction = new Vector2(Mathf.Cos(baseAngle * Mathf.Deg2Rad), Mathf.Sin(baseAngle * Mathf.Deg2Rad));
+            SpawnAndShootBullet(bossPosition, direction, M4_Speed, BulletPrefab, M4_damage);
+
+            yield return new WaitForSeconds(wait_time); // Delay between each shot
+
+            elapsedTime += wait_time; // Increment elapsed time
+        }
+        enemy_script.SetCanPatrol(true);
+
+    }
+
+
 
     void Star()
     {
@@ -1670,30 +1915,46 @@ public class boss_moves_script : MonoBehaviour
     void Pump_Shotgun()
     {
 
-        
-
-        enemy_script.SetCanPatrol(false);
-        int numBullets = 5;
-        Shotgun_Speed = 4f + Pump_Shotgun_Difficulty;
-        float angleStep = 20f / numBullets;
-        Vector2 bossPosition = enemy.transform.position;
-        Vector2 characterPosition = Charachter.transform.position;
-        Vector2 directionToCharacter = characterPosition - bossPosition;
-        float baseAngle = Mathf.Atan2(directionToCharacter.y, directionToCharacter.x) * Mathf.Rad2Deg;
-        float startAngle = baseAngle - 10f;
 
 
-
-        for (int i = 0; i < numBullets; i++)
-        {
-            float bulletAngle = startAngle + i * angleStep;
-            Vector2 direction = new Vector2(Mathf.Cos(bulletAngle * Mathf.Deg2Rad), Mathf.Sin(bulletAngle * Mathf.Deg2Rad));
-            SpawnAndShootBullet(bossPosition, direction, Pump_Shotgun_Speed, BulletPrefab, Pump_Shotgun_damage);
-        }
-       // enemy_script.SetCanPatrol(true);
+        // enemy_script.SetCanPatrol(true);
+        StartCoroutine(shoot_Pump_Shotgun());
     }
 
+    IEnumerator shoot_Pump_Shotgun()
+    {
 
+
+        enemy_script.SetCanPatrol(false);
+
+        for (int z = 0; z < 3; z++)
+        {
+            int numBullets = 5;
+            Pump_Shotgun_Speed = 4f + Pump_Shotgun_Difficulty;
+            float angleStep = 20f / numBullets;
+            Vector2 bossPosition = enemy.transform.position;
+            Vector2 characterPosition = Charachter.transform.position;
+            Vector2 directionToCharacter = characterPosition - bossPosition;
+            float baseAngle = Mathf.Atan2(directionToCharacter.y, directionToCharacter.x) * Mathf.Rad2Deg;
+            float startAngle = baseAngle - 10f;
+
+
+
+            for (int i = 0; i < numBullets; i++)
+            {
+                float bulletAngle = startAngle + i * angleStep;
+                Vector2 direction = new Vector2(Mathf.Cos(bulletAngle * Mathf.Deg2Rad), Mathf.Sin(bulletAngle * Mathf.Deg2Rad));
+                SpawnAndShootBullet(bossPosition, direction, Pump_Shotgun_Speed, BulletPrefab, Pump_Shotgun_damage);
+            }
+
+            yield return new WaitForSeconds(0.5f); // Delay between each shot
+        }
+
+
+        enemy_script.SetCanPatrol(true);
+
+
+    }
 
 
 
@@ -1776,7 +2037,7 @@ public class boss_moves_script : MonoBehaviour
 
     void Crusher_Top()
     {
-        int numBullets = 4 + 2 * Crusher_Top_Difficulty;
+        int numBullets = 4 + Crusher_Top_Difficulty;
         float angleStep = 180f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 
@@ -1787,7 +2048,7 @@ public class boss_moves_script : MonoBehaviour
 
     void Crusher_Bot()
     {
-        int numBullets = 4 + 2 * Crusher_Bot_Difficulty;
+        int numBullets = 4 + Crusher_Bot_Difficulty;
         float angleStep = 180f / numBullets;
         Vector2 bossPosition = enemy.transform.position;
 
@@ -1837,7 +2098,7 @@ public class boss_moves_script : MonoBehaviour
     void Half_Shuriken_Clockwise()
     {
 
-        int numBullets = 8 + 4 * Half_Shuriken_Clockwise_Difficulty;
+        int numBullets = 6 + 3 * Half_Shuriken_Clockwise_Difficulty;
 
         float angleStep = 4f;
 
@@ -1848,7 +2109,7 @@ public class boss_moves_script : MonoBehaviour
 
     void Half_Shuriken_AntiClockwise()
     {
-        int numBullets = 8 + 4 * Half_Shuriken_AntiClockwise_Difficulty;
+        int numBullets = 6 + 3 * Half_Shuriken_AntiClockwise_Difficulty;
         float angleStep = 4f;
 
         StartCoroutine(Half_Shuriken_AntiClockwise_BulletsWithDelay(numBullets, angleStep));
@@ -1908,7 +2169,7 @@ public class boss_moves_script : MonoBehaviour
     void Half2_Shuriken_Clockwise()
     {
 
-        int numBullets = 8 + 4 * Half2_Shuriken_Clockwise_Difficulty;
+        int numBullets = 6 + 3 * Half2_Shuriken_Clockwise_Difficulty;
 
         float angleStep = 4f;
 
@@ -1919,7 +2180,7 @@ public class boss_moves_script : MonoBehaviour
 
     void Half2_Shuriken_AntiClockwise()
     {
-        int numBullets = 8 + 4 * Half2_Shuriken_AntiClockwise_Difficulty;
+        int numBullets = 6 + 3 * Half2_Shuriken_AntiClockwise_Difficulty;
         float angleStep = 4f;
 
         StartCoroutine(Half2_Shuriken_AntiClockwise_BulletsWithDelay(numBullets, angleStep));
@@ -1980,7 +2241,7 @@ public class boss_moves_script : MonoBehaviour
 
     void Spiral_Clockwise()
     {
-        int numBullets = 8 + 4 * Spiral_Clockwise_Difficulty;
+        int numBullets = 8 + 3 * Spiral_Clockwise_Difficulty;
         float angleStep = 45f;
         Vector2 bossPosition = enemy.transform.position;
 
@@ -1991,7 +2252,7 @@ public class boss_moves_script : MonoBehaviour
 
     void Spiral_AntiClockwise()
     {
-        int numBullets = 8 + 4 * Spiral_AntiClockwise_Difficulty;
+        int numBullets = 8 + 3 * Spiral_AntiClockwise_Difficulty;
         float angleStep = 45f;
         Vector2 bossPosition = enemy.transform.position;
 
@@ -2174,30 +2435,89 @@ public class boss_moves_script : MonoBehaviour
         enemy_script.SetCanPatrol(true);
     }
 
+    //void Circle_Weighted_Random()
+    //{
+    //    StartCoroutine(set_enemy_patrol(Circle_Weighted_Random_Duration));
+    //    float angle = Random.Range(0, 360);
+    //    Vector2 bossPosition = enemy.transform.position;
+
+
+    //    Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+    //    SpawnAndShootBullet(bossPosition, direction, Circle_Weighted_Random_Speed, WeightedBulletPrefab, Circle_Weighted_Random_damage);
+    //}
+
+
     void Circle_Weighted_Random()
     {
-        StartCoroutine(set_enemy_patrol(Circle_Weighted_Random_Duration));
-        float angle = Random.Range(0, 360);
-        Vector2 bossPosition = enemy.transform.position;
+        float wait_time = 0.3f - circle_Random_Difficulty * 0.05f;
 
 
-        Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-        SpawnAndShootBullet(bossPosition, direction, Circle_Weighted_Random_Speed, WeightedBulletPrefab, Circle_Weighted_Random_damage);
+        StartCoroutine(shoot_Circle_Weighted_Random(wait_time));
     }
+
+
+    IEnumerator shoot_Circle_Weighted_Random(float wait_time)
+    {
+
+        enemy_script.SetCanPatrol(false);
+
+        float elapsedTime = 0f; // Track elapsed time
+
+        while (elapsedTime < 5f && can_update)
+        {
+            //StartCoroutine(set_enemy_patrol(Circle_Weighted_Random_Duration));
+            float angle = Random.Range(0, 360);
+            Vector2 bossPosition = enemy.transform.position;
+
+
+            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            SpawnAndShootBullet(bossPosition, direction, Circle_Weighted_Random_Speed, WeightedBulletPrefab, Circle_Weighted_Random_damage);
+
+            yield return new WaitForSeconds(wait_time); // Delay between each shot
+
+            elapsedTime += wait_time; // Increment elapsed time
+        }
+        enemy_script.SetCanPatrol(true);
+
+    }
+
+
+
 
 
     void Eruption()
     {
-        StartCoroutine(set_enemy_patrol(Eruption_Duration));
-        float angle = Random.Range(45, 135);
-        Vector2 bossPosition = enemy.transform.position;
+        float wait_time = 0.3f - circle_Random_Difficulty * 0.05f;
 
 
-        Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-        SpawnAndShootBullet(bossPosition, direction, Eruption_Speed, WeightedBulletPrefab, Eruption_damage);
+        StartCoroutine(shoot_Eruption(wait_time));
     }
 
 
+    IEnumerator shoot_Eruption(float wait_time)
+    {
+
+        enemy_script.SetCanPatrol(false);
+
+        float elapsedTime = 0f; // Track elapsed time
+
+        while (elapsedTime < 5f && can_update)
+        {
+            //StartCoroutine(set_enemy_patrol(Eruption_Duration));
+            float angle = Random.Range(45, 135);
+            Vector2 bossPosition = enemy.transform.position;
+
+
+            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            SpawnAndShootBullet(bossPosition, direction, Eruption_Speed, WeightedBulletPrefab, Eruption_damage);
+
+            yield return new WaitForSeconds(wait_time); // Delay between each shot
+
+            elapsedTime += wait_time; // Increment elapsed time
+        }
+        enemy_script.SetCanPatrol(true);
+
+    }
 
 
     IEnumerator set_enemy_patrol(float time)
