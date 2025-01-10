@@ -1467,13 +1467,16 @@ MonoBehaviour:
   models:
   - {fileID: 5022602860645237092, guid: c9f8c895c62798941ba2cc5395650e08, type: 3}
   saving_main: 1
-  saving_models: 0
+  saving_models: 1
+  saving_training: 0
   number_of_moves: 3
   model_results: []
   filePath: G:/final arshad git/final_arshad_game_git/Assets/SceneResults.csv
   dynamic_adjustment: 0
+  training: 0
+  constant_levels: 1
   current_constant_level: 0
-  constant_max_level: 10
+  constant_max_level: 1000
 --- !u!4 &325118400
 Transform:
   m_ObjectHideFlags: 0
@@ -3831,7 +3834,7 @@ MonoBehaviour:
   Pump_Shotgun_Difficulty: 1
   Pump_Shotgun_Duration: 2.1
   Pump_Shotgun_Spawn_interval: 0.7
-  Pump_Shotgun_RestTime: 3
+  Pump_Shotgun_RestTime: 0.1
   Pump_Shotgun_Speed: 5
   Pump_Shotgun_damage: 1
   Shuriken_Clockwise_Difficulty: 1
@@ -5110,7 +5113,7 @@ MonoBehaviour:
   jumpForce: 16
   groundDetectionRange: 1.3
   damage: 1
-  health: 1
+  health: 10
   groundMask:
     serializedVersion: 2
     m_Bits: 128
@@ -5122,7 +5125,7 @@ MonoBehaviour:
   limitFallingSpeed: -19.9
   cameraFallingSpeed: -5
   total_input: 0
-  max_health: 1
+  max_health: 10
   BulletPrefab: {fileID: 0}
   attackPoint: {fileID: 175962298}
   attackRange: 2.5

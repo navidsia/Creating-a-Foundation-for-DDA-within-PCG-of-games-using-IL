@@ -11,7 +11,7 @@ public class ResultSaver : MonoBehaviour
 {
     private float sceneStartTime;
     private string filePath;
-    private float player_winner = 0; // 0 for enemy won and 1 for player won
+    private string player_winner = ""; // 0 for enemy won and 1 for player won
 
     [SerializeField] Enemy enemy;
     [SerializeField] CharacterController characterController;
@@ -121,7 +121,9 @@ public class ResultSaver : MonoBehaviour
             int difficulty3 = boss_moves.selected_difficulties[2];
 
 
-            player_winner = playerHP > enemyHP ? 1 : 0;
+            if (playerHP == 0) player_winner = "0";
+            else if (enemyHP == 0) player_winner = "1";
+            else player_winner = "";
 
             string resultData = $"{nnModelName},{sceneDuration},{playerHP},{enemyHP},{player_winner},{move1},{move2},{move3},{difficulty1},{difficulty2},{difficulty3}";
 

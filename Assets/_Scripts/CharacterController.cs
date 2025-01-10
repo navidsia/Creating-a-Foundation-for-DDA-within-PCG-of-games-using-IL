@@ -59,6 +59,9 @@ public class CharacterController : MonoBehaviour
     public void Start_function()
     {
 
+        Vector3 newPosition = transform.localPosition;
+        newPosition.x = -7f;
+        transform.localPosition = newPosition;
 
         isHittable = true;
         health = max_health;

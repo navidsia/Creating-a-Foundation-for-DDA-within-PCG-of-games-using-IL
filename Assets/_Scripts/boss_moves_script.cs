@@ -409,36 +409,36 @@ public class boss_moves_script : MonoBehaviour
                 //Circle_Weighted_Random,
                 //Eruption
 
-            rain_Top,
-            rain_Left,
-            rain_Right,
-            bull_Left,
-            bull_Right,
-            circleShoot,
-            Star,
-            circle_Random,
-            circle_AntiClockwise,
-            circle_Clockwise,
-            Shotgun,
-            Uzi,
-            M4,
-            Pump_Shotgun,
-            Shuriken_Clockwise,
-            Shuriken_AntiClockwise,
-            Half_Shuriken_Clockwise,
-            Half_Shuriken_AntiClockwise,
-            Half2_Shuriken_Clockwise,
-            Half2_Shuriken_AntiClockwise,
-            Crusher_Top,
-            Crusher_Bot,
-            Spiral_Clockwise,
-            Spiral_AntiClockwise,
-            circle_Weighted_Shoot,
-            Star_Weighted,
-            Shotgun_Clockwise,
-            Shotgun_AntiClockwise,
-            Circle_Weighted_Random,
-            Eruption
+            rain_Top, // 0
+            rain_Left, // 1
+            rain_Right, // 2
+            bull_Left, // 3
+            bull_Right, // 4
+            circleShoot, // 5
+            Star, // 6
+            circle_Random, // 7
+            circle_AntiClockwise, // 8
+            circle_Clockwise, // 9
+            Shotgun, // 10
+            Uzi, // 11
+            M4, // 12
+            Pump_Shotgun, // 13
+            Shuriken_Clockwise, // 14
+            Shuriken_AntiClockwise, // 15
+            Half_Shuriken_Clockwise, // 16
+            Half_Shuriken_AntiClockwise, // 17
+            Half2_Shuriken_Clockwise, // 18
+            Half2_Shuriken_AntiClockwise, // 19
+            Crusher_Top, // 20
+            Crusher_Bot, // 21
+            Spiral_Clockwise, // 22
+            Spiral_AntiClockwise, // 23
+            circle_Weighted_Shoot, // 24
+            Star_Weighted, // 25
+            Shotgun_Clockwise, // 26
+            Shotgun_AntiClockwise, // 27
+            Circle_Weighted_Random, // 28
+            Eruption //29
 
         };
 
@@ -1164,6 +1164,41 @@ public class boss_moves_script : MonoBehaviour
 
 
     }
+
+    private void Update()
+    {
+        if (can_update)
+        {
+            minX = Left_wall.transform.position.x;
+            maxX = Right_wall.transform.position.x;
+            minY = Buttom_wall.transform.position.y + 0.5f;
+            maxY = Top_wall.transform.position.y;
+
+            if (enemy == null) return;
+
+            if (isWaitingForNextMove) return;
+
+            moveTimer += Time.deltaTime;
+
+            if (moveTimer < moveDurations[currentMoveIndex])
+            {
+                if (currentMoveIndex < 30)
+                {
+                    spawnTimer += Time.deltaTime;
+                    if (spawnTimer >= spawnIntervals[currentMoveIndex])
+                    {
+                        bossMoves[currentMoveIndex]();
+                        spawnTimer = 0f;
+                    }
+                }
+            }
+            else
+            {
+                StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
+            }
+        }
+    }
+
     public void set_moves_and_bullets(List<int> indexes = null, List<int> difficulties = null)
     {
         bossMoves = new List<System.Action>();
@@ -1310,39 +1345,7 @@ public class boss_moves_script : MonoBehaviour
         M4_Spawn_interval = 0.3f;
         M4_Duration = 1 + M4_Difficulty / 2;
     }
-    private void Update()
-    {
-        if (can_update)
-        {
-            minX = Left_wall.transform.position.x;
-            maxX = Right_wall.transform.position.x;
-            minY = Buttom_wall.transform.position.y + 0.5f;
-            maxY = Top_wall.transform.position.y;
-
-            if (enemy == null) return;
-
-            if (isWaitingForNextMove) return;
-
-            moveTimer += Time.deltaTime;
-
-            if (moveTimer < moveDurations[currentMoveIndex])
-            {
-                if (currentMoveIndex < 30)
-                {
-                    spawnTimer += Time.deltaTime;
-                    if (spawnTimer >= spawnIntervals[currentMoveIndex])
-                    {
-                        bossMoves[currentMoveIndex]();
-                        spawnTimer = 0f;
-                    }
-                }
-            }
-            else
-            {
-                StartCoroutine(WaitForNextMove(restTimes[currentMoveIndex]));
-            }
-        }
-    }
+    
     public void SetCanUpdate(bool value)
     {
         can_update = value;
@@ -1667,7 +1670,7 @@ public class boss_moves_script : MonoBehaviour
     void Pump_Shotgun()
     {
 
-        StartCoroutine(set_enemy_patrol(2.2f));
+        
 
         enemy_script.SetCanPatrol(false);
         int numBullets = 5;
@@ -1687,7 +1690,7 @@ public class boss_moves_script : MonoBehaviour
             Vector2 direction = new Vector2(Mathf.Cos(bulletAngle * Mathf.Deg2Rad), Mathf.Sin(bulletAngle * Mathf.Deg2Rad));
             SpawnAndShootBullet(bossPosition, direction, Pump_Shotgun_Speed, BulletPrefab, Pump_Shotgun_damage);
         }
-
+       // enemy_script.SetCanPatrol(true);
     }
 
 
