@@ -47,28 +47,28 @@ public class dynamic_difficulty_adjustment_script : MonoBehaviour
 
         constant_moves = new List<List<int>>
         {
-           
-            //new List<int> { 18, 5, 23 },
-            //new List<int> { 2, 14, 27 },
-            //new List<int> { 9, 20, 1 },
-            //new List<int> { 6, 22, 13 },
-            //new List<int> { 19, 12, 4 },
-            //new List<int> { 3, 28, 7 },
-            //new List<int> { 16, 25, 10 },
-            //new List<int> { 29, 8, 0 },
-            //new List<int> { 17, 11, 21 },
-            //new List<int> { 26, 24, 15 }
 
-             new List<int> { 9, 10, 11 },
-            new List<int> { 12, 13, 14 },
-            new List<int> { 15, 16, 17 },
-            new List<int> { 18, 19, 20 },
-            new List<int> { 21, 22, 23 },
-            new List<int> { 24, 25, 26 },
-            new List<int> { 27, 28, 29 },
-            new List<int> { 0, 1, 2 },
-            new List<int> { 3, 4, 5 },
-            new List<int> { 6, 7, 8 }
+            new List<int> { 18, 5, 23 },
+            new List<int> { 2, 14, 27 },
+            new List<int> { 9, 20, 1 },
+            new List<int> { 6, 22, 13 },
+            new List<int> { 19, 12, 4 },
+            new List<int> { 3, 28, 7 },
+            new List<int> { 16, 25, 10 },
+            new List<int> { 29, 8, 0 },
+            new List<int> { 17, 11, 21 },
+            new List<int> { 26, 24, 15 }
+
+            // new List<int> { 9, 10, 11 },
+            //new List<int> { 12, 13, 14 },
+            //new List<int> { 15, 16, 17 },
+            //new List<int> { 18, 19, 20 },
+            //new List<int> { 21, 22, 23 },
+            //new List<int> { 24, 25, 26 },
+            //new List<int> { 27, 28, 29 },
+            //new List<int> { 0, 1, 2 },
+            //new List<int> { 3, 4, 5 },
+            //new List<int> { 6, 7, 8 }
 
 
 
