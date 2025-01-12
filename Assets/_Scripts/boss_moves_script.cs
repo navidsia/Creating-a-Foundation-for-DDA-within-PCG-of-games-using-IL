@@ -306,7 +306,7 @@ public class boss_moves_script : MonoBehaviour
 
     [SerializeField] public int number_of_moves = 3;
 
-
+    [SerializeField] public bool is_main = false;
 
     [SerializeField] public int randomIndex;
     private void Start()
@@ -315,11 +315,38 @@ public class boss_moves_script : MonoBehaviour
     }
     public void Start_function()
     {
-        if (selected_indexes.Count == 0)
+        //if (selected_indexes.Count == 0)
+        //{
+            //selected_indexes = Enumerable.Repeat(-1, number_of_moves).ToList();
+            //selected_difficulties = Enumerable.Repeat(-1, number_of_moves).ToList();
+        //}
+
+
+
+
+        GameObject dynamicDifficultyObject = GameObject.Find("dynamic_difficulty_adjustment");
+
+        if (dynamicDifficultyObject != null)
         {
-            selected_indexes = Enumerable.Repeat(-1, number_of_moves).ToList();
-            selected_difficulties = Enumerable.Repeat(-1, number_of_moves).ToList();
+            // Get the script component from the GameObject
+            dynamic_difficulty_adjustment_script ddaScript = dynamicDifficultyObject.GetComponent<dynamic_difficulty_adjustment_script>();
+
+            if (ddaScript != null)
+            {
+                // Call the level_request function
+                List<List<int>> level = ddaScript.level_request(this, is_main);
+
+                selected_indexes = level[0];
+                selected_difficulties = level[1];
+            }
+
         }
+
+
+
+
+
+
 
 
 

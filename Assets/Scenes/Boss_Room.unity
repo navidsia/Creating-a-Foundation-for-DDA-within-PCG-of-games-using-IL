@@ -183,6 +183,7 @@ MonoBehaviour:
   models: []
   current_model: 0
   charachter_model: {fileID: 1824300339}
+  is_main: 1
 --- !u!1001 &105484896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1467,16 +1468,17 @@ MonoBehaviour:
   models:
   - {fileID: 5022602860645237092, guid: c9f8c895c62798941ba2cc5395650e08, type: 3}
   saving_main: 1
-  saving_models: 1
+  saving_models: 0
   saving_training: 0
   number_of_moves: 3
   model_results: []
+  main_result: 
   filePath: G:/final arshad git/final_arshad_game_git/Assets/SceneResults.csv
   dynamic_adjustment: 0
   training: 0
   constant_levels: 1
   current_constant_level: 0
-  constant_max_level: 1000
+  constant_max_level: 10
 --- !u!4 &325118400
 Transform:
   m_ObjectHideFlags: 0
@@ -3965,6 +3967,7 @@ MonoBehaviour:
   can_update: 1
   scenario: 0
   number_of_moves: 3
+  is_main: 1
   randomIndex: 0
 --- !u!4 &1097246199
 Transform:
@@ -5303,7 +5306,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: c9f8c895c62798941ba2cc5395650e08, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: My Behavior

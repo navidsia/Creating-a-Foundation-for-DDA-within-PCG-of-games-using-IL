@@ -30,6 +30,7 @@ public class ResultSaver : MonoBehaviour
     [SerializeField] List<NNModel> models;
     [SerializeField] int current_model;
     [SerializeField] BehaviorParameters charachter_model;
+    [SerializeField] bool is_main = false;
     void Start()
     {
         current_model = 0;
@@ -120,12 +121,14 @@ public class ResultSaver : MonoBehaviour
             int move3 = boss_moves.selected_indexes[2];
             int difficulty3 = boss_moves.selected_difficulties[2];
 
+            int ismainint = 0;
+            if(is_main) ismainint = 1;
 
             if (playerHP == 0) player_winner = "0";
             else if (enemyHP == 0) player_winner = "1";
             else player_winner = "";
 
-            string resultData = $"{nnModelName},{sceneDuration},{playerHP},{enemyHP},{player_winner},{move1},{move2},{move3},{difficulty1},{difficulty2},{difficulty3}";
+            string resultData = $"{nnModelName},{sceneDuration},{playerHP},{enemyHP},{player_winner},{move1},{move2},{move3},{difficulty1},{difficulty2},{difficulty3},{ismainint}";
 
             // Append the time to the file
             //File.AppendAllText(filePath, resultData + "\n");

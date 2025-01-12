@@ -6,7 +6,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using UnityEditor;
-
+using System.Linq;
 public class dynamic_difficulty_adjustment_script : MonoBehaviour
 {
     [SerializeField] GameObject Main_Env;
@@ -19,6 +19,7 @@ public class dynamic_difficulty_adjustment_script : MonoBehaviour
     [SerializeField] bool saving_training = false;
     [SerializeField] public int number_of_moves = 3;
     [SerializeField] List<string> model_results = new List<string>();
+    [SerializeField] string main_result;
     public string filePath = Application.dataPath + "/SceneResults.csv";
     [SerializeField] bool dynamic_adjustment = false;
     [SerializeField] bool training = true;
@@ -79,12 +80,12 @@ public class dynamic_difficulty_adjustment_script : MonoBehaviour
         {
 
 
-            string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"},{"move1"},{"move2"},{"move3"},{"difficulty1"},{"difficulty2"},{"difficulty3"}";
+            string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"},{"move1"},{"move2"},{"move3"},{"difficulty1"},{"difficulty2"},{"difficulty3"},{"is main"}";
             File.WriteAllText(filePath, headers + "\n"); // Add header
         }
         else
         {
-            string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"},{"move1"},{"move2"},{"move3"},{"difficulty1"},{"difficulty2"},{"difficulty3"}";
+            string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"},{"move1"},{"move2"},{"move3"},{"difficulty1"},{"difficulty2"},{"difficulty3"},{"is main"}";
             File.AppendAllText(filePath, headers + "\n"); // Add header
         }
 
@@ -119,27 +120,28 @@ public class dynamic_difficulty_adjustment_script : MonoBehaviour
         }
 
 
-        if (!dynamic_adjustment)
-        {
-            GameObject bossMovesObject = Main_Env.transform.Find("Boss_moves").gameObject;
-            var bossMovesScript = bossMovesObject.GetComponent<boss_moves_script>();
+        //if (!dynamic_adjustment)
+        //{
+        //    GameObject bossMovesObject = Main_Env.transform.Find("Boss_moves").gameObject;
+        //    var bossMovesScript = bossMovesObject.GetComponent<boss_moves_script>();
 
-            if (bossMovesScript != null)
-            {
-                bossMovesScript.selected_indexes = constant_moves[current_constant_level];
-                bossMovesScript.selected_difficulties = constant_difficulties[current_constant_level];
-                current_constant_level++;
-            }
-        }
+        //    if (bossMovesScript != null)
+        //    {
+        //        bossMovesScript.selected_indexes = constant_moves[current_constant_level];
+        //        bossMovesScript.selected_difficulties = constant_difficulties[current_constant_level];
+        //        current_constant_level++;
+        //    }
+        //}
     }
 
     // Update is called once per frame
     void Update()
     {
     }
-    IEnumerator next_level(string resultData)
-    {
 
+
+    public void reset_enviorments()
+    {
         if (!training)
         {
             foreach (GameObject env in enviorments)
@@ -154,7 +156,15 @@ public class dynamic_difficulty_adjustment_script : MonoBehaviour
                 }
             }
 
+        }
+    }
 
+
+
+    IEnumerator next_level_main(string resultData)
+    {
+
+     
 
             yield return new WaitForSeconds(0.2f);
             if (dynamic_adjustment)
@@ -206,11 +216,11 @@ public class dynamic_difficulty_adjustment_script : MonoBehaviour
                 }
 
                 model_results = new List<string>();
-                string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"},{"move1"},{"move2"},{"move3"},{"difficulty1"},{"difficulty2"},{"difficulty3"}";
+                string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"},{"move1"},{"move2"},{"move3"},{"difficulty1"},{"difficulty2"},{"difficulty3"},{"is main"}";
                 File.AppendAllText(filePath, headers + "\n");
 
             }
-            else
+            else if(constant_levels)
             {
                 if (current_constant_level < constant_max_level - 1)
                 {
@@ -229,46 +239,196 @@ public class dynamic_difficulty_adjustment_script : MonoBehaviour
                     EditorApplication.isPlaying = false;
                 }
             }
-        }
+            else
+            {
+
+            }
+        
+        
        
 
     }
 
-        public void save_results(string resultData)
+
+    public List<List<int>> level_request(boss_moves_script the_script , bool is_main)
+    {
+
+
+
+
+
+        List<List<int>> level = new List<List<int>>();
+
+        //List<int> selected_indexes = Enumerable.Repeat(-1, number_of_moves).ToList();
+        //List<int> selected_difficulties = Enumerable.Repeat(-1, number_of_moves).ToList();
+        List<int> selected_indexes = new List<int>();     
+        List<int> selected_difficulties = new List<int>();
+
+        if (is_main)
+        {
+
+
+             if (constant_levels)
+            {
+                if (current_constant_level < constant_max_level)
+                {
+                    GameObject bossMovesObject = Main_Env.transform.Find("Boss_moves").gameObject;
+                    var bossMovesScript = bossMovesObject.GetComponent<boss_moves_script>();
+
+                    if (bossMovesScript != null)
+                    {
+                        selected_indexes = constant_moves[current_constant_level];
+                        selected_difficulties = constant_difficulties[current_constant_level];
+                        current_constant_level++;
+                    }
+                }
+                else
+                {
+                    EditorApplication.isPlaying = false;
+                }
+
+
+                model_results = new List<string>();
+                string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"},{"move1"},{"move2"},{"move3"},{"difficulty1"},{"difficulty2"},{"difficulty3"},{"is main"}";
+                File.AppendAllText(filePath, headers + "\n");
+            }
+
+
+
+
+             else if (dynamic_adjustment && model_results.Count>0)
+            {
+                int closest_match = 0;
+                int min_abs_hp_difference = 1000;
+                int i = 0;
+                foreach (string model_result in model_results)
+                {
+                    string[] model_result_parts = model_result.Split(',');
+
+                    int current_abs_hp_difference = Math.Abs(int.Parse(model_result_parts[2]) - int.Parse(model_result_parts[3]));
+                    if (current_abs_hp_difference < min_abs_hp_difference)
+                    {
+                        min_abs_hp_difference = current_abs_hp_difference;
+                        closest_match = i;
+                    }
+                    i++;
+                }
+
+
+                string[] model_closest_match_parts = model_results[closest_match].Split(',');
+                selected_indexes.Add(int.Parse(model_closest_match_parts[5]));
+                selected_indexes.Add(int.Parse(model_closest_match_parts[6]));
+                selected_indexes.Add(int.Parse(model_closest_match_parts[7]));
+
+
+                selected_difficulties.Add(int.Parse(model_closest_match_parts[8]));
+                selected_difficulties.Add(int.Parse(model_closest_match_parts[9]));
+                selected_difficulties.Add(int.Parse(model_closest_match_parts[10]));
+
+
+
+                model_results = new List<string>();
+                string headers = $"{"model name or player"},{"time"},{"player hp"},{"enemy hp"},{"player winner"},{"move1"},{"move2"},{"move3"},{"difficulty1"},{"difficulty2"},{"difficulty3"},{"is main"}";
+                File.AppendAllText(filePath, headers + "\n");
+            }
+
+
+
+
+
+            else
+            {
+                List<int> indices = Enumerable.Range(0, 30).ToList();
+                indices = indices.OrderBy(x => UnityEngine.Random.value).ToList(); // Shuffle the indices.
+
+
+                for (int i = 0; i < number_of_moves; i++)
+                {
+                    selected_indexes.Add(indices[i]);
+                }
+                selected_difficulties.Add( UnityEngine.Random.Range(1, 5));
+                selected_difficulties.Add( UnityEngine.Random.Range(1, 5));
+                selected_difficulties.Add( UnityEngine.Random.Range(1, 5));
+            }
+
+
+
+
+
+
+
+            model_results = new List<string>();
+
+        }
+
+
+
+
+        else
+        {
+
+
+            List<int> indices = Enumerable.Range(0, 30).ToList();
+            indices = indices.OrderBy(x => UnityEngine.Random.value).ToList(); // Shuffle the indices.
+
+
+                for (int i = 0; i < number_of_moves; i++)
+                {
+                    selected_indexes.Add(indices[i]);
+                }
+            selected_difficulties.Add(UnityEngine.Random.Range(1, 5));
+            selected_difficulties.Add(UnityEngine.Random.Range(1, 5));
+            selected_difficulties.Add(UnityEngine.Random.Range(1, 5));
+
+
+
+        }
+
+
+
+        level.Add(selected_indexes);
+        level.Add(selected_difficulties);
+
+
+
+        return level;
+    }
+
+    public void save_results(string resultData)
     {
         string[] resultParts = resultData.Split(',');
 
-        string nnModelName = resultParts[0];
-        bool train_situation = false;
+        string is_main = resultParts[11];
+        //bool train_situation = false;
 
-        if(saving_training && training)
-        {
-            train_situation = true;
-        }
-        else if(!saving_training && !training)
-        {
-            train_situation = true;
-        }
-
-
+        //if(saving_training && training)
+        //{
+        //    train_situation = true;
+        //}
+        //else if(!saving_training && !training)
+        //{
+        //    train_situation = true;
+        //}
 
 
-        if (train_situation)
-        {
+
+
+        //if (train_situation)
+        //{
 
         
-        if (nnModelName == "player")
+        if (is_main == "1")
         {
             if (saving_main)
             {
                 File.AppendAllText(filePath, resultData + "\n");
             }
-            StartCoroutine(next_level(resultData));
-              
+            main_result = resultData;
+            reset_enviorments();
 
 
         }
-        else if (nnModelName != "player" )
+        else
         {
             model_results.Add(resultData);
             if (saving_models)
@@ -278,7 +438,7 @@ public class dynamic_difficulty_adjustment_script : MonoBehaviour
             
         }
 
-        }
+        //}
     }
 
 }
