@@ -6123,11 +6123,11 @@ PrefabInstance:
       objectReference: {fileID: 906964218}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: Health
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: MaxHealth
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4422724219887745573, guid: 12ecc6d0baae59c4eb80101ab69dc752, type: 3}
       propertyPath: Environment
