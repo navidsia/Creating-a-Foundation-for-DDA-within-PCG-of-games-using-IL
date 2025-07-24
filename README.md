@@ -36,3 +36,8 @@ Unity ML-Agents Toolkit (Python)
 GAIL algorithm
 
 PPO trainer
+
+# Note
+This project is a research prototype and currently a work in progress. As we may expand it into a full-fledged game in the future, some parts of the codebase are incomplete or experimental. You may encounter bugs or missing features.
+
+We appreciate your interest and thank you for your understanding!
